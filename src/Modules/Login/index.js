@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import LoginForm from "../Login/components/LoginForm";
-import { actionLogin } from "../Login/redux/Action";
+import { actionLogin, actionCheckIsLoggedIn } from "../Login/redux/Action";
 
 class Login extends React.Component {
 	render() {
@@ -22,5 +22,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{ actionLogin }
+	{ actionLogin, actionCheckIsLoggedIn }
 )(Login);

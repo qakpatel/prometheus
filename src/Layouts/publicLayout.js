@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { actionCheckIsLoggedIn } from "../Modules/Login/redux/Action";
 
 class PublicLayout extends Component {
+	componentDidMount() {
+		this.props.actionCheckIsLoggedIn();
+	}
 	render() {
 		const Component = this.props.component;
 		const route = this.props.route;
@@ -13,12 +17,10 @@ class PublicLayout extends Component {
 		);
 	}
 }
-function mapStateToProps(state, props) {
-	return { login: state.login };
-}
+
 export default withRouter(
 	connect(
-		mapStateToProps,
-		null
+		null,
+		{ actionCheckIsLoggedIn }
 	)(PublicLayout)
 );

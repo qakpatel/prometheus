@@ -7,5 +7,13 @@ export default {
             SIGNIN : "Sign IN",
             FORGET_PASSWORD : "Forgot password?"
         },
+        ALERTS : {
+            ERROR : "Error!!"
+        },
+        BUTTONS : {
+            CANCEL : "Cancel",
+            OK : "OK",
+            CLOSE : "Close",
+        }
     }
 }

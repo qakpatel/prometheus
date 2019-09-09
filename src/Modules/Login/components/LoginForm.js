@@ -1,40 +1,9 @@
 import React from "react";
-import { Container, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Typography } from "@material-ui/core";
+import { Container, Button, CssBaseline, TextField, Link, Grid, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import logo from "../../../Assets/images/logo.png";
 import Lang from "../../../Lang/en";
-const loginFormStyles = theme => ({
-	"@global": {
-		body: {
-			backgroundColor: "#eee"
-		}
-	},
-	paper: {
-		marginTop: theme.spacing(7),
-		display: "flex",
-		flexDirection: "column",
-		alignItems: "center",
-		boxShadow: "1px 1px 20px #ddd",
-		borderRadius: 5,
-		backgroundColor: "#fff",
-		paddingLeft: 100,
-		paddingRight: 100,
-		paddingTop: 50,
-		paddingBottom: 50
-	},
-	logo: {
-		margin: theme.spacing(1),
-		backgroundImage: `url(${logo})`,
-		backgroundRepeat: "no-repeat",
-		backgroundSize: "auto 90%",
-		width: 150,
-		height: 150
-	},
-	submit: {
-		margin: theme.spacing(3, 0, 2)
-	}
-});
+import { loginFormStyles } from "../styles";
 
 class LoginForm extends React.Component {
 	constructor(props) {
@@ -44,20 +13,27 @@ class LoginForm extends React.Component {
 			password: ""
 		};
 	}
+	componentDidMount() {
+		this.onChangeField(null);
+	}
 	loginClick = () => {
 		let { email, password } = this.state;
 		this.props.actionLogin(email, password);
 	};
-	onChangeEmail = () => {
-
-	}
+	onChangeField = e => {
+		this.setState({
+			email: document.getElementById("email").value,
+			password: document.getElementById("password").value
+		});
+	};
 	render() {
 		const { classes } = this.props;
+		const { email, password } = this.state;
 		const LABELS = Lang.LABELS.LOGIN_FORM;
-		const { email } = this.state;
-		const { loginClick, onChangePassword, onChangeEmail } = this;
+		const { loginClick, onChangeField } = this;
 		return (
 			<Container component="main" maxWidth="sm">
+				<div className={classes.bgOverlay} />
 				<CssBaseline />
 				<div className={classes.paper}>
 					<Typography component="div" className={classes.logo} />
@@ -68,10 +44,9 @@ class LoginForm extends React.Component {
 						onSubmit={() => {
 							return false;
 						}}>
-						<TextField onChange={} variant="outlined" margin="normal" fullWidth label={LABELS.EMAIL} type="email" autoComplete="off" autoFocus />
-						<TextField variant="outlined" margin="normal" fullWidth label={LABELS.PASSWORD} type="password" autoComplete="off" />
-						<FormControlLabel control={<Checkbox value="remember" color="primary" />} label={LABELS.REMEMBER_ME} />
-						<Button type="button" onClick={loginClick} fullWidth variant="contained" color="primary" className={classes.submit}>
+						<TextField id="email" onChange={onChangeField} variant="outlined" margin="normal" fullWidth label={LABELS.EMAIL} type="email" autoComplete="off" autoFocus />
+						<TextField id="password" onChange={onChangeField} variant="outlined" margin="normal" fullWidth label={LABELS.PASSWORD} type="password" autoComplete="off" />
+						<Button disabled={!(email && password)} type="button" onClick={loginClick} fullWidth variant="contained" color="primary" className={classes.submit}>
 							{LABELS.SIGNIN}
 						</Button>
 						<Grid container>

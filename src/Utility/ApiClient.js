@@ -1,39 +1,46 @@
 import ApiConfig from "../Config/ApiConfig";
 import axios from "axios";
+axios.defaults.baseURL = ApiConfig.API_BASE_URL;
+axios.defaults.headers.common["Authorization"] = "";
+axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.timeout = 5000;
 const ApiClient = {
-	executeRequest: (endpoint, headers = {}, params = {}, method = ApiConfig.METHODS.GET) => {
+	executeRequest: (endpoint, headers = {}, params = {}, method = ApiConfig.METHODS.GET, token = null) => {
 		return new Promise(function(resolve, reject) {
-			let url = ApiConfig.API_BASE_URL + endpoint;
-			axios.request({
+			let requestData = {
 				method: method,
-				url: url,
-				params: params,
+				url: endpoint,
 				headers: headers
-			}).then(function(response) {
-                // to do handle
-            }).catch(function(error) {
-                // to do handle
-            });
+			};
+			if (method === ApiConfig.METHODS.GET) {
+				requestData["params"] = params;
+			} else {
+				requestData["data"] = params;
+			}
+
+			if (token) {
+				headers["Authorization"] = `Bearer ${token}"`;
+			}
+			axios
+				.request(requestData)
+				.then(function(response) {
+					resolve({
+						isError: false,
+						data: response.data,
+						statusCode: response.status
+					});
+				})
+				.catch(function(error) {
+					let response = error.response;
+					resolve({
+						isError: true,
+						errorCode: response.data.error,
+						errorMessage: response.data.message,
+						statusCode: response.status
+					});
+				});
 		});
-	},
-	executeMulipartRequest: (endpoint, headers = {}, params = {}, method = ApiConfig.METHODS.POST) => {
-        let url = ApiConfig.API_BASE_URL + endpoint;
-        let formData = new FormData();
-        let keys = Object.keys(params);
-        keys.forEach(function(key){
-            formData.append(key, params[key]);
-        });
-        axios.request({
-            method: method,
-            url: url,
-            params: formData,
-            headers: headers
-        }).then(function(response) {
-            // to do handle
-        }).catch(function(error) {
-            // to do handle
-        });
-    }
+	}
 };
 
 export default ApiClient;

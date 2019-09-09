@@ -7,9 +7,25 @@ const LoginService = {
 			password: password,
 			client_id: ApiConfig.CLIENT_ID,
 			client_secret: ApiConfig.CLIENT_SECRET,
-			grant_type: "password"
+			grant_type: "password",
+			scope: ""
 		};
-		return ApiClient.executeRequest(ApiConfig.ENDPOINTS.LOGIN, {}, params, ApiConfig.METHODS.POST);
+		return new Promise((resolve, reject) => {
+			ApiClient.executeRequest(ApiConfig.ENDPOINTS.LOGIN, {}, params, ApiConfig.METHODS.POST).then(function(response) {
+				if (response.isError) {
+					resolve(response);
+					return;
+				}
+				ApiClient.executeRequest(ApiConfig.ENDPOINTS.USERINFO, {}, {}, ApiConfig.METHODS.GET, response.data.access_token).then(function(responseMe) {
+					if (responseMe.isError) {
+						resolve(responseMe);
+						return;
+					}
+					let data = Object.assign(responseMe.data, response.data);
+					resolve({ ...responseMe, data: data });
+				});
+			});
+		});
 	}
 };
 
