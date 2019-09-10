@@ -2,16 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Route, Switch, Redirect } from "react-router-dom";
 import _ from "lodash";
-import PrivateLayout from "./privateLayout";
-import PublicLayout from "./publicLayout";
+import PrivateLayout from "./PrivateLayout";
+import PublicLayout from "./PublicLayout";
 import { withRouter } from "react-router-dom";
-import privateRoutes from "../Routes/privateRoutes";
 import NotFound from "../Modules/Common/components/NotFound";
 import PublicRoutes from "../Routes/publicRoutes";
 import PrivateRoutes from "../Routes/privateRoutes";
 import ContentDialog from "../Modules/Common/components/ContentDialog";
 import FullScreenLoader from "../Modules/Common/components/FullScreenLoader";
-import { actionHideCommonErrorDialog } from "../Modules/Common/redux/Action";
+import { actionSetErrorDialogDisplayState } from "../Modules/Common/redux/Action";
 import Lang from "../Lang/en";
 class Layouts extends Component {
 	
@@ -39,7 +38,7 @@ class Layouts extends Component {
 		});
 	}
 	onErrorDialogClose = () => {
-		this.props.actionHideCommonErrorDialog();
+		this.props.actionSetErrorDialogDisplayState(null);
 	};
 
 	render() {
@@ -85,6 +84,6 @@ const mapStateToProps = state => {
 export default withRouter(
 	connect(
 		mapStateToProps,
-		{ actionHideCommonErrorDialog }
+		{ actionSetErrorDialogDisplayState }
 	)(Layouts)
 );

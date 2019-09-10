@@ -2,7 +2,7 @@ import LoginService from "../api/LoginService";
 import LocalStorageConfig from "../../../Config/LocalStorageConfig";
 import LocalStorageHelper from "../../../Utility/LocalStorageHelper";
 import { ACTION_LOGIN_SUCCESS, ACTION_LOGIN_FAILED } from "./Types";
-import { actionShowCommonErrorDialog, actionSetLoaderDisplayState } from "../../Common/redux/Action";
+import { actionSetErrorDialogDisplayState, actionSetLoaderDisplayState } from "../../Common/redux/Action";
 
 export const actionLogin = (email, password) => {
 	return async dispatch => {
@@ -14,14 +14,13 @@ export const actionLogin = (email, password) => {
 			dispatch(actionCheckIsLoggedIn());
 			return;
 		}
-		dispatch(actionShowCommonErrorDialog(response.errorMessage));
+		dispatch(actionSetErrorDialogDisplayState(response.errorMessage));
 	};
 };
 
 export const actionCheckIsLoggedIn = () => {
 	return dispatch => {
 		let user = LocalStorageHelper.get(LocalStorageConfig.KEY_USER);
-		console.log(user);
 		if (user) {
 			dispatch({
 				type: ACTION_LOGIN_SUCCESS,
