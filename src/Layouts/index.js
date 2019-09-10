@@ -6,9 +6,8 @@ import PrivateLayout from "./privateLayout";
 import PublicLayout from "./publicLayout";
 import { withRouter } from "react-router-dom";
 import privateRoutes from "../Routes/privateRoutes";
-import publicRoutes from "../Routes/publicRoutes";
-import Login from "../Modules/Login";
 import NotFound from "../Modules/Common/components/NotFound";
+import PublicRoutes from "../Routes/publicRoutes";
 import PrivateRoutes from "../Routes/privateRoutes";
 import ContentDialog from "../Modules/Common/components/ContentDialog";
 import FullScreenLoader from "../Modules/Common/components/FullScreenLoader";
@@ -48,6 +47,7 @@ class Layouts extends Component {
 		let { error, loader } = this.state;
 		let { onErrorDialogClose } = this;
 		let dashboardPath = PrivateRoutes.Dashboard.path;
+		let loginPath = PublicRoutes.Login.path;
 		return (
 			<div>
 				{error && (
@@ -57,14 +57,14 @@ class Layouts extends Component {
 				)}
 				{loader && <FullScreenLoader visible={loader} />}
 				<Switch>
-					{_.map(publicRoutes, (route, key) => {
+					{_.map(PublicRoutes, (route, key) => {
 						const { component, path } = route;
 						return <Route exact path={path} key={key} render={route => (user.id ? <Redirect to={dashboardPath} /> : <PublicLayout component={component} route={route} />)} />;
 					})}
 
-					{_.map(privateRoutes, (route, key) => {
+					{_.map(PrivateRoutes, (route, key) => {
 						const { component, path } = route;
-						return <Route exact path={path} key={key} render={route => (user.id ? <PrivateLayout component={component} route={route} /> : <PublicLayout component={Login} route={route} />)} />;
+						return <Route exact path={path} key={key} render={route => (user.id ? <PrivateLayout component={component} route={route} /> : <Redirect to={loginPath} />)} />;
 					})}
 					{<Route component={NotFound} />}
 				</Switch>
