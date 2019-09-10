@@ -17,5 +17,8 @@ export default {
     },
     ERROR_CODES : {
 
+    },
+    ERROR_MESSAGES : {
+        DEFAULT : 'Some error occured.'
     }
 }

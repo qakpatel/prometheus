@@ -31,13 +31,23 @@ const ApiClient = {
 					});
 				})
 				.catch(function(error) {
-					let response = error.response;
-					resolve({
-						isError: true,
-						errorCode: response.data.error,
-						errorMessage: response.data.message,
-						statusCode: response.status
-					});
+					let response = error.response || {};
+					if(response.data){
+						resolve({
+							isError: true,
+							errorCode: response.data.error,
+							errorMessage: response.data.message,
+							statusCode: response.status
+						});
+					}else{
+						resolve({
+							isError: true,
+							errorCode: 0,
+							errorMessage: ApiConfig.ERROR_MESSAGES.DEFAULT,
+							statusCode: 500
+						});
+					}
+					
 				});
 		});
 	}
