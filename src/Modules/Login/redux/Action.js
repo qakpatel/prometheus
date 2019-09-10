@@ -21,6 +21,7 @@ export const actionLogin = (email, password) => {
 export const actionCheckIsLoggedIn = () => {
 	return dispatch => {
 		let user = LocalStorageHelper.get(LocalStorageConfig.KEY_USER);
+		console.log(user);
 		if (user) {
 			dispatch({
 				type: ACTION_LOGIN_SUCCESS,

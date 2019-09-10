@@ -18,7 +18,7 @@ class Layouts extends Component {
 	
 	state = {
 		error: null,
-		loader: false
+		loader: false,
 	};
 
 	componentDidMount() {
@@ -44,11 +44,10 @@ class Layouts extends Component {
 	};
 
 	render() {
-		let { login } = this.props;
+		let { user } = this.props;
 		let { error, loader } = this.state;
 		let { onErrorDialogClose } = this;
 		let dashboardPath = PrivateRoutes.Dashboard.path;
-		console.log(login);
 		return (
 			<div>
 				{error && (
@@ -60,12 +59,12 @@ class Layouts extends Component {
 				<Switch>
 					{_.map(publicRoutes, (route, key) => {
 						const { component, path } = route;
-						return <Route exact path={path} key={key} render={route => (login.user ? <Redirect to={dashboardPath} /> : <PublicLayout component={component} route={route} />)} />;
+						return <Route exact path={path} key={key} render={route => (user.id ? <Redirect to={dashboardPath} /> : <PublicLayout component={component} route={route} />)} />;
 					})}
 
 					{_.map(privateRoutes, (route, key) => {
 						const { component, path } = route;
-						return <Route exact path={path} key={key} render={route => (login.verified ? <PrivateLayout component={component} route={route} /> : <PublicLayout component={Login} route={route} />)} />;
+						return <Route exact path={path} key={key} render={route => (user.id ? <PrivateLayout component={component} route={route} /> : <PublicLayout component={Login} route={route} />)} />;
 					})}
 					{<Route component={NotFound} />}
 				</Switch>
@@ -75,10 +74,11 @@ class Layouts extends Component {
 }
 
 const mapStateToProps = state => {
+	console.log(state);
 	return {
 		loader: state.loaderState.show,
 		error: state.errorState.error,
-		login: state.loginState.user
+		user: state.loginState.user || {}
 	};
 };
 

@@ -4,6 +4,9 @@ import LoginForm from "../Login/components/LoginForm";
 import { actionLogin, actionCheckIsLoggedIn } from "../Login/redux/Action";
 
 class Login extends React.Component {
+	componentDidMount(){
+		this.props.actionCheckIsLoggedIn();
+	}
 	render() {
 		const { actionLogin, error } = this.props;
 		return (
