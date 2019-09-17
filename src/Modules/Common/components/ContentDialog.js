@@ -33,6 +33,7 @@ const DialogStyles = theme => ({
 		borderTop: "solid 1px #eee"
 	}
 });
+
 class ContentDialog extends React.Component {
 	state = {
 		open: false

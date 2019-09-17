@@ -1,0 +1,37 @@
+[
+    {
+        "value": "Nursery",
+        "key": "Nursery",
+        "sortOrder": 0
+    },
+    {
+        "value": "Kindergarten",
+        "key": "Kindergarten",
+        "sortOrder": 1
+    },
+    {
+        "value": "Grade 1",
+        "key": "Grade 1",
+        "sortOrder": 2
+    },
+    {
+        "value": "Grade 2",
+        "key": "Grade 2",
+        "sortOrder": 3
+    },
+    {
+        "value": "Grade 3",
+        "key": "Grade 3",
+        "sortOrder": 4
+    },
+    {
+        "value": "Grade 4",
+        "key": "Grade 4",
+        "sortOrder": 5
+    },
+    {
+        "value": "Grade 5",
+        "key": "Grade 5",
+        "sortOrder": 6
+    }
+]

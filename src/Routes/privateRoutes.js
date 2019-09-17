@@ -1,13 +1,14 @@
-import LeadManagement from "../Modules/LeadManagement";
 import Dashboard from "../Modules/Dashboard";
+import UnitPlanner from './../Modules/UnitPlanner'
+
 const PrivateRoutes = {
-	Leads: {
-		component: LeadManagement,
-		path: "/leads-management"
-	},
 	Dashboard: {
 		component: Dashboard,
 		path: "/dashboard"
+	},
+	UnitPlanner: {
+		component: UnitPlanner,
+		path: "/unit-planner"
 	}
 };
 
