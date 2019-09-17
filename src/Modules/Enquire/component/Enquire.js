@@ -1,11 +1,12 @@
+import { loginFormStyles } from "../../Login/styles";
+
 import React from "react";
 import { Container, Button, CssBaseline, TextField, Link, Grid, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import Lang from "../../../Lang/en";
-import { loginFormStyles } from "../styles";
 
-class LoginForm extends React.Component {
+class Enquire extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -30,14 +31,13 @@ class LoginForm extends React.Component {
 	render() {
 		const { classes } = this.props;
 		const { email, password } = this.state;
-		const LABELS = Lang.LABELS.LOGIN_FORM;
+		const LABELS = Lang.LABELS.LEAD_FORM;
 		const { loginClick, onChangeField } = this;
 		return (
 			<Container component="main" maxWidth="sm">
 				<div className={classes.bgOverlay} />
 				<CssBaseline />
 				<div className={classes.paper}>
-					<Typography component="div" className={classes.logo} />
 					<Typography
 						component="form"
 						autoComplete={"off"}
@@ -45,8 +45,7 @@ class LoginForm extends React.Component {
 						onSubmit={() => {
 							return false;
 						}}>
-						<TextField id="email" onChange={onChangeField} variant="outlined" margin="normal" fullWidth label={LABELS.EMAIL} type="email" autoComplete="off" autoFocus />
-						<TextField id="password" onChange={onChangeField} variant="outlined" margin="normal" fullWidth label={LABELS.PASSWORD} type="password" autoComplete="off" />
+						<TextField id="email" onChange={onChangeField} variant="outlined" margin="normal" fullWidth label={LABELS.ENQUIRER_EMAIL} type="email" autoComplete="off" autoFocus />
 						<Button disabled={!(email && password)} type="button" onClick={loginClick} fullWidth variant="contained" color="primary" className={classes.submit}>
 							{LABELS.SIGNIN}
 						</Button>
@@ -63,8 +62,8 @@ class LoginForm extends React.Component {
 		);
 	}
 }
-LoginForm.propTypes = {
+Enquire.propTypes = {
 	actionLogin: PropTypes.func.isRequired,
 	error: PropTypes.string.isRequired
 };
-export default withStyles(loginFormStyles)(LoginForm);
+export default withStyles(loginFormStyles)(Enquire);
