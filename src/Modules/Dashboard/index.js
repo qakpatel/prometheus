@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { withStyles } from '@material-ui/styles';
 import Barchart from "./Barchart";
 import LeadCard from "./LeadCard";
+import Arcchart from "./Arcchart";
 
 const useStyles = theme => ({
   root: {
@@ -21,33 +22,34 @@ const useStyles = theme => ({
 
 class dashboard extends React.Component {
 	componentDidMount() {
-		console.log(this.props.getAllLeads(),111111);
 		 this.props.getAllLeads();
 	}
 render(){
-	
+	let LeadNodes = this.props.dashboardState.leadsData.prioritiesWithCount ? (this.props.dashboardState.leadsData.prioritiesWithCount.map((item)=> {
+		return (
+			<LeadCard
+	 			message={item.title}
+	 			calculatedNumber={item.total}
+				 key={item.lead_priority_id}
+	 	   />
+		)		
+	 })
+	) : (
+		''
+	) 
 	return (
 		<div >
 		  <Grid container item xs={12}>
-		  <LeadCard
-			message={"Active Leads"}
-			calculatedNumber={10}
-		   />
-			 <LeadCard
-			 message={"Inactive Leads"}
-			 calculatedNumber={13}
-			 />
-			 <LeadCard
-			 message={"Dead Leads"}
-			 calculatedNumber={15}
-			 />
+			  {
+				LeadNodes
+			  }		 
 		  </Grid>	  	
 		  <Grid container item xs={12}>
 			<Grid item xs={6} className="dashboard_col">
 			 <Barchart />
 			</Grid>
 			<Grid item xs={6} className="dashboard_col">
-			<Barchart />
+			<Arcchart />
 			</Grid>
 		  </Grid>
 		</div>
@@ -55,7 +57,12 @@ render(){
 }
 }
 dashboard = withStyles(useStyles)(dashboard)
+function mapStateToProps (state,props)  {
+	return {
+		dashboardState: state.dashboardReducer
+	}
+}
 export default connect(
-	null,
+	mapStateToProps,
 	{ getAllLeads }
 )(dashboard);

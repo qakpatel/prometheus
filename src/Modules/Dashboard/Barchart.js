@@ -1,30 +1,60 @@
-import React, { Component } from 'react';
-//import './App.css';
-//import '../node_modules/react-vis/dist/style.css';
-import {XYPlot, VerticalBarSeries} from 'react-vis';
 
-class Barchart extends Component {
-  render() {
-    const data = [
-      {x: 0, y: 8},
-      {x: 1, y: 5},
-      {x: 2, y: 4},
-      {x: 3, y: 9},
-      {x: 4, y: 1},
-      {x: 5, y: 7},
-      {x: 6, y: 6},
-      {x: 7, y: 3},
-      {x: 8, y: 2},
-      {x: 9, y: 0}
-    ];
+import React from 'react';
+
+import {
+  XYPlot,
+  XAxis,
+  YAxis,
+  VerticalGridLines,
+  HorizontalGridLines,
+  VerticalBarSeries,
+  VerticalBarSeriesCanvas,
+  DiscreteColorLegend
+} from 'react-vis';
+import { getAllLeads } from "./action";
+import { connect } from "react-redux";
+
+class Barchart extends React.Component {
+  componentDidMount() {
+    this.props.getAllLeads();
+ }
+ render() {
+
+  const data = this.props.dashboardState.leadsData.sourcesWithCount ? this.props.dashboardState.leadsData.sourcesWithCount.map((item) => ({
+    x:item.title , y:item.total
+  })):''
     return (
-      <div className="App">
-        <XYPlot height={300} width={300}>
-          <VerticalBarSeries data={data} />
+      <div>
+        <XYPlot
+          className="clustered-stacked-bar-chart-example"
+          xType="ordinal"
+          stackBy="y"
+          width={300}
+          height={300}
+        >
+
+          <XAxis />
+          <YAxis />
+          <VerticalBarSeries
+            color="#79C7E3"
+            data={data}
+          />
+
         </XYPlot>
       </div>
     );
   }
 }
 
-export default Barchart;
+function mapStateToProps (state,props)  {
+	return {
+		dashboardState: state.dashboardReducer
+	}
+}
+
+export default  connect(
+	  mapStateToProps,
+	  { getAllLeads }
+)(Barchart)
+
+

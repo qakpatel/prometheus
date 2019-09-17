@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import LoginReducer from "./Login/redux/Reducer";
+import { dashboardReducer } from "./Dashboard/reducer";
 import { ACTION_LOADER_DISPLAY_STATE, ACTION_ERROR_DISPLAY_STATE } from "./Common/redux/Types";
 export default combineReducers({
 	loginState: LoginReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
 			default:
 				return state;
 		}
-	}
+	},
+	dashboardReducer
 });
