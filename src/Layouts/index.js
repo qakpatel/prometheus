@@ -45,7 +45,7 @@ class Layouts extends Component {
 		let { user } = this.props;
 		let { error, loader } = this.state;
 		let { onErrorDialogClose } = this;
-		let dashboardPath = PrivateRoutes.LeadForm.path;
+		let dashboardPath = PrivateRoutes.Dashboard.path;
 		let loginPath = PublicRoutes.Login.path;
 		return (
 			<div>
