@@ -9,6 +9,7 @@ const style = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
+    padding:"0px 20px 0px 20px"
   },
   formControl: {
     marginTop: "15px",
@@ -36,7 +37,7 @@ class SimpleSelect extends Component {
     const { value } = this.state;
     return (
       <form className={classes.root} autoComplete="off">
-      <FormControl variant="outlined" className={classes.formControl}>
+      <FormControl className={classes.formControl}>
       <InputLabel ref={this.inputLabel} htmlFor="outlined-age-simple" required={required} margin="normal  ">
         {title}
       </InputLabel>

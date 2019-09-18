@@ -3,10 +3,9 @@ import ApiConfig from "../../../Config/ApiConfig";
 import LocalStorageHelper from "../../../Utility/LocalStorageHelper";
 import LocalStorageConfig from "../../../Config/LocalStorageConfig";
 
-const token = LocalStorageHelper.get(LocalStorageConfig.KEY_USER).access_token;
-
 export const UnitPlannerService = {
     getUnitPlansByGrade : params => {
+        const token = LocalStorageHelper.get(LocalStorageConfig.KEY_USER).access_token;
         return new Promise((resolve , reject) => {
             ApiClient.executeRequest(ApiConfig.ENDPOINTS.UNITPLAN, {}, params, ApiConfig.METHODS.GET, token).then(response => {
 				if (response.isError) {
@@ -21,6 +20,7 @@ export const UnitPlannerService = {
 
     deleteUnitPlanById : params => {
         return new Promise((resolve , reject) => {
+            const token = LocalStorageHelper.get(LocalStorageConfig.KEY_USER).access_token;
             ApiClient.executeRequest(ApiConfig.ENDPOINTS.UNITPLAN,{},params,ApiConfig.METHODS.DELETE, token).then(response => {
                 if (response.isError) {
 					resolve(response);
