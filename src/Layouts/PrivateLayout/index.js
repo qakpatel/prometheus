@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import DashboardDrawer from "./components/DashboardDrawer";
 import DashboardAppBar from "./components/DashboardAppBar";
 import { contentStyles } from "./styles";
+
 class PrivateLayout extends Component {
 	constructor(props) {
 		super(props);
@@ -34,7 +35,7 @@ class PrivateLayout extends Component {
 					
 					<Container maxWidth="lg" className={classes.container}>
 						<Grid container spacing={3}>
-							<Grid item>
+							<Grid item xs="12">
 								{<Component route={route} /> }
 							</Grid>
 						</Grid>

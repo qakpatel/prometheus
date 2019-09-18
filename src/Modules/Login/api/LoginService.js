@@ -1,7 +1,7 @@
 import ApiClient from "../../../Utility/ApiClient";
 import ApiConfig from "../../../Config/ApiConfig";
 const LoginService = {
-	executeLogin: function(email, password) {
+	executeLogin: (email, password) => {
 		let params = {
 			username: email,
 			password: password,

@@ -7,6 +7,42 @@ export default {
             SIGNIN : "Sign IN",
             FORGET_PASSWORD : "Forgot password?"
         },
+        OVERVIEW_FORM : {
+            TITLE : "Title",
+            GRADE : "GRADE",
+            TIMELINE : "Timeline",
+            Transdisciplinary_THEME : "Transdisciplinary theme",
+            CENTRAL_IDEA : "Central idea",
+            LINE_OF_ENQUIRY : "Lines of enquiry",
+            KEY_CONCEPT : "Key concepts",
+            RELATED_CONCEPTS : "Related concepts",
+            LEARNER_PROFILE_ATTRIBUTES : "Learner profile attributes",
+            APPROACHES_TO_LEARNING : "Approaches to learning",
+            ACTION : "Action"
+        },
+        REFLECTION_AND_PLANNING_FORM : {
+            INITIAL_REFLECTION :  "Initial reflections", 
+            PRIOR_LEARNING : "Prior learning", 
+            CONNECTIONS_TRANSDISCIPLINARY_AND_PAST:"Connections: Transdisciplinary and past" ,
+            LEARNING_GOALS_AND_SUCCESS_CRITERIA:"Learning goals and success criteria", 
+            TEACHER_QUESTION:"Teacher questions" ,
+            STUDENT_QUESTION:"Student questions"
+        },
+        DESIGNING_AND_IMPLEMENTING_FORM : {
+            DESIGNING_ENGAGING_LEARNING_EXPERIENCES:"Designing engaging learning experiences", 
+            SUPPORTING_STUDENT_AGENCY:"Supporting student agency", 
+            TEACHER_AND_STUDENT_QUESTION:"Teacher and student questions", 
+            ONGOING_ASSESSMENT:"Ongoing assessment", 
+            MAKING_FLEXIBLE_USE_FOR_RESOURCES:"Making flexible use of resources",
+            ONGOING_REFLECTION_FOR_ALL_TEACHERS:"Ongoing reflections for all teachers", 
+            ADDITIONAL_SUBJECT_SPECIFIC_REFLECTIONl:"Additional subject specific reflections"
+        },
+        REFLECTING_FORM : {
+            TEACHER_REFLECTION : "Teacher reflections", 
+            STUDENT_REFLECTION : "Student reflections", 
+            ASSESSMENT_REFLECTIONS : "Assessment reflections", 
+            NOTES : "Notes"
+        },
         ALERTS : {
             ERROR : "Error!!"
         },
@@ -14,6 +50,11 @@ export default {
             CANCEL : "Cancel",
             OK : "OK",
             CLOSE : "Close",
+            SUBMIT : "Submit",
+            SAVE_DRAFT : "Save Draft",
+            VIEW_PDF : "View PDF",
+            EDIT : "Edit",
+            DELETE : "Delete"
         },
         LEAD_FORM : {
             ENQUIRER_EMAIL : "Email",
@@ -38,6 +79,25 @@ export default {
             SOURCE_ID: "Source id",
             LEAD_PRIORITY: "Lead Priority",
             CREATE: "CREATE"
+        },
+        DROP_DOWN : {
+            SELECT_GRADE : "Select Grade",
+            SELECT_PLAN : "Select Plan",
+            GRADE_NURSERY : "Grade Nursery", 
+            GRADE_PREK : "Grade PreK", 
+            GRADE_1 : "Grade 1" , 
+            GRADE_2 : "Grade 2", 
+            GRADE_3 : "Grade 3", 
+            GRADE_4 : "Grade 4", 
+            GRADE_5 : "Grade 5",
+            UNIT_PLAN : "Unit Plan",
+            WEEKLY_PLAN : "Weekly Plan"
+        },
+        TABLE:{
+          HEADERS:{
+            TITLE:"Title",
+            ACTIONS:"Action(s)"
+          }
         }
     }
 }

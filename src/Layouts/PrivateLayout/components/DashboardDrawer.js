@@ -24,6 +24,11 @@ const menuItems = [
 		name: "Lead Managment",
 		icon: <PeopleIcon />,
 		link: "/lead-managment"
+	},
+	{
+		name: "Unit Planner",
+		icon: <PeopleIcon />,
+		link: "/unit-planner"
 	}
 ]
 
