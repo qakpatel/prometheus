@@ -1,7 +1,8 @@
-//import LeadManagement from "../Modules/LeadManagement";
+import LeadManagement from './../Modules/LeadManagment'
 import Dashboard from "../Modules/Dashboard";
 import LeadForm from '../Modules/LeadForm'
 import UnitPlanner from './../Modules/UnitPlanner'
+import Timeline from './../Modules/LeadManagment/Timeline'
 
 const PrivateRoutes = {
 	Dashboard: {
@@ -12,10 +13,14 @@ const PrivateRoutes = {
 		component: LeadForm,
 		path: "/lead-form"
 	},
-	// Leads: {
-	// 	component: LeadManagement,
-	// 	path: "/leads-management"
-	// },
+	Leads: {
+		component: LeadManagement,
+		path: "/leads-management"
+	},
+	Timeline: {
+		component: Timeline,
+		path: "/leads-management/timeline"
+	},
 	UnitPlanner: {
 		component: UnitPlanner,
 		path: "/unit-planner"

@@ -23,7 +23,7 @@ const menuItems = [
 	{
 		name: "Lead Managment",
 		icon: <PeopleIcon />,
-		link: "/lead-managment"
+		link: "/leads-management"
 	},
 	{
 		name: "Unit Planner",
@@ -56,6 +56,7 @@ const DashboardDrawer = props => {
 				</div>
 				<Divider />
 				<List>{menuItems.map((item) => {
+					console.log(item)
 					return <ListItem 
 							button 
 							link={item.link}
