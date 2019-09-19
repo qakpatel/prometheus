@@ -10,7 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
+import { Link ,withRouter} from 'react-router-dom';
 
 
 const StyledTableCell = withStyles(theme => ({
@@ -80,7 +80,8 @@ const useStyles = makeStyles(theme => ({
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   function handleClick(event) {
-    setAnchorEl(event.currentTarget);
+    const { location } = props.history
+    props.history.push(location.pathname + "/create")
   }
  
 
@@ -141,4 +142,4 @@ const useStyles = makeStyles(theme => ({
 }
 
 
-export default CustomizedTables; 
+export default withRouter(CustomizedTables); 
