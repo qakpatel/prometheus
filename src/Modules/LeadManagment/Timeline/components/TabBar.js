@@ -10,12 +10,12 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 import Dialog from './../../Dialog' 
-import Button from '@material-ui/core/Button';
+import { Button } from 'reactstrap';
 import { FormLabel } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 
 function TabPanel(props) {
-    
     const { children, value, index, ...other } = props;
 
     return (
@@ -50,9 +50,15 @@ const useStyles = makeStyles(theme => ({
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper,
     },
+    reject:{
+        '&:hover':{
+            textDecoration:'none'
+        }
+    }
 }));
 
 function SimpleTab(props) {
+    console.log(props)
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
     const [open, setOpen] = React.useState(false);
@@ -80,13 +86,13 @@ function SimpleTab(props) {
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-            <Button variant="contained" color="primary" style={{marginBottom:'16px'}} onClick={handleClickOpen} className={classes.taskbutton} > Add task</Button>
                 <div style={{ overflowY: 'scroll', height: 'auto',maxHeight:'400px' }}>
+                <Button variant="contained" style={{marginBottom:'16px',backgroundColor:'#3b5998'}} onClick={handleClickOpen} className={classes.taskbutton} > Add task</Button>
                     <ListGroup style={{style:'none'}}>
                         {props.data.map((a, i) => (
                             <ListGroupItem key={i}>
                             <div>
-                            <FormLabel><span style={{fontWeight:'bold'}}>Assigned To:</span>{a.lead.assigned_to.name}{' { '}{a.lead.assigned_to.email}{' } '}</FormLabel><br/>
+                            <FormLabel><span style={{fontWeight:'bold'}}>Assigned To:</span>{a.lead.assigned_to.name}{' { '}<a href={"mailto:"+a.lead.assigned_to.email} target="_top">{a.lead.assigned_to.email}</a>{' } '}</FormLabel><br/>
                             <FormLabel><span style={{fontWeight:'bold'}}>Schedule On: </span> {a.schedule_date}{'   '}{'   '} <span style={{fontWeight:'bold'}}>at: </span> {a.schedule_time}</FormLabel><br/>
                             <FormLabel><span style={{fontWeight:'bold'}}>Task Status: </span> {a.task_status_id==1?'Complete':'Pending'}</FormLabel><br/>
                             <FormLabel><span style={{fontWeight:'bold'}}>Comments: </span> {a.comment}</FormLabel><br />
@@ -97,13 +103,14 @@ function SimpleTab(props) {
                     </ListGroup>
                 </div>
                 <div style={{ padding: '40px' }}>
-                    <Button variant="contained" color="primary" outline color="danger" style={{ display: 'inline' }} >Reject</Button>
+                <Link to="/leads-management" className={classes.reject}><Button variant="contained" color="primary" outline color="danger" style={{ display: 'inline' }} >Reject</Button></Link>
                     <Button outline color="info" style={{ display: 'inline', float: 'right' }} onClick={() => { setValue(1) }}>Move To next step</Button>
                 </div>
 
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <div style={{ overflowY: 'scroll', height: 'auto',maxHeight:'400px' }}>
+                <Button variant="contained" style={{marginBottom:'16px',backgroundColor:'#3b5998'}} onClick={handleClickOpen} className={classes.taskbutton} > Add task</Button>
                     <ListGroup>
                         {props.data.map((a, i) => (
                             <ListGroupItem key={i}>
@@ -115,11 +122,11 @@ function SimpleTab(props) {
                     </ListGroup>
                 </div>
                 <div style={{ padding: '40px' }}>
-                    <Button outline color="danger" style={{ display: 'inline' }} >Reject</Button>
+                    <Link to="/leads-management" className={classes.reject}><Button outline color="danger" style={{ display: 'inline' }}>Reject</Button></Link>
                     <Button outline color="info" style={{ display: 'inline', float: 'right' }}>Move To Skolaro</Button>
                 </div>
             </TabPanel>
-            <Dialog open={open} closeDailog={closeDailog}/>
+            <Dialog open={open} closeDailog={closeDailog} lead_data={props.lead_data}/>
         </div>
     );
 }

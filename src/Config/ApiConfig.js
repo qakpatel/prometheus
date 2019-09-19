@@ -8,7 +8,7 @@ export default {
         USERINFO : "user",
         LEADS : "leads",
         LEAD_FORM : "leads/create",
-        UNITPLAN : "unit-plan"
+        UNITPLAN : "unit-plan",
     },
     METHODS : {
         GET: 'GET',

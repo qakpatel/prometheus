@@ -60,6 +60,18 @@ const useStyles = makeStyles(theme => ({
       setTableData(props.data[0])
     });
     
+  function filterTableData(tableData){
+    let c=[],d=[];
+    tableData.forEach(a=>{
+      if(a.priority_label==='Hot Lead'){
+        c.push(a)
+      }else{
+        d.push(a)
+      }
+    })
+    return c.concat(d);
+  }
+
   const classes = useStyles(); 
 
   const [values, setValues] = React.useState({
@@ -82,7 +94,7 @@ const useStyles = makeStyles(theme => ({
   return (
     <Paper className={classes.root}>
       <div className={classes.button1}>
-      <Button variant="contained" color="#3f8db5" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+      <Button variant="contained" style={{backgroundColor:'#3b5998',color:'#ffffff'}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
       Create lead
       
       </Button>
@@ -98,7 +110,7 @@ const useStyles = makeStyles(theme => ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {tableData?tableData.map((data,index) => (
+          {tableData?filterTableData(tableData).map((data,index) => (
             <StyledTableRow key={index}>
               <StyledTableCell component="th" scope="row">
                 {data.context_id}

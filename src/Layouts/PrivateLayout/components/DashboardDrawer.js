@@ -38,7 +38,6 @@ const handleNavItemLink = (link, history) => {
 
 const DashboardDrawer = props => {
 	const { classes, open, closeDrawer, history } = props;
-	console.log('hdjskdhj', props);
 	return (
 		<div>
 			<Drawer
@@ -56,7 +55,6 @@ const DashboardDrawer = props => {
 				</div>
 				<Divider />
 				<List>{menuItems.map((item) => {
-					console.log(item)
 					return <ListItem 
 							button 
 							link={item.link}
