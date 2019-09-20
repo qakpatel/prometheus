@@ -10,19 +10,26 @@ import { loginFormStyles } from "../style";
 import LocalStorageHelper from "../../../Utility/LocalStorageHelper"
 import LocalStorageConfig from "../../../Config/LocalStorageConfig";
 import SimpleSelect from "../../Common/components/simpleselect";
+import moment from "moment";
+import update from "immutability-helper";
+import { withRouter} from 'react-router-dom';
 
 class LeadForm extends React.Component {
+
 	constructor(props) {
 		super(props);
 		this.state = {};
 	}
 	componentDidMount() {
+		const { leadFormData } = this.props;
 		//TODO
-		this.props.actionGetCreateLeadData();
-		//this.onChangeField(null);
+		this.props.actionGetCreateLeadData()
+		// .then((result) => {
+		// 	console.log("fetched result " ,result);
+		// this.setState(result);
+		// });
+		this.setState({["context_type"]:"App\\Models\\StudentEnquiry"})
 		console.log("Lead form componentDidMount")
-		//this.setState(LocalStorageHelper.get(LocalStorageConfig.KEY_LEAD_FORM_DATA))
-		//console.log(this.state.student_gender)
 	}
 
 	componentWillUpdate(nextProps, nextState) {
@@ -49,24 +56,44 @@ class LeadForm extends React.Component {
 	submitClick = () => {
 		// TODO
 		this.props.actionCreateLead(this.state);
+		this.props.history.push("/leads-management")
 	};
+
+	onChangeDropDownObject = (label, value )=> {
+		console.log("e.target.value", value);
+		console.log("e.target.label", label);
+		this.setState({
+			[label]: value
+		},()=>console.log("current state ", this.state));
+	};
+
+	onChangeDropDown = (label, value ) => {
+		this.setState({
+			[label]: value
+		},()=>console.log("current state " ,this.state));
+	};
+
 	onChangeField = e => {
 		this.setState({
 			[e.target.name]: e.target.value
 		},()=>console.log(this.state));
 	};
 
-	handleDateChange = (date) => {
-		console.log(date.toString())
+
+	handleDateChange = (keyName,date) => {
+		console.log("selected date",date.toString())
+		console.log("selected date converted", moment(date).format("YYYY/MM/DD"))
+		//this.setState(prevState => update(prevState, { $merge: { student_dob: moment(date).format("ddd MMM DD YYYY HH:mm:ss zzZZ")}}));
+		this.setState({[keyName] : moment(date).format("YYYY/MM/DD")}, ()=>console.log("current state " ,this.state));
 	}
-
-
 
 	render() {
 		console.log("Lead form render")
 		const { classes, leadFormData } = this.props;
 		const leadFormDataFetched = leadFormData && leadFormData.leadFormData && leadFormData.leadFormData.data;
+		console.log("leadFormDataFetched", leadFormDataFetched)
 		const leadFormFetchedData = leadFormDataFetched ? leadFormData.leadFormData.data : null;
+		console.log("state lead form data", this.state);
 		console.log('test data', leadFormFetchedData)
 		const LABELS = Lang.LABELS.LEAD_FORM;
 		const { loginClick, onChangeField } = this;
@@ -87,7 +114,6 @@ class LeadForm extends React.Component {
 								<Grid container spacing={3}>
 									<Grid item xs={4}>
 										<TextField
-											id="enquirer_first_name"
 											onChange={onChangeField}
 											required
 											name="enquirer_first_name"
@@ -148,14 +174,16 @@ class LeadForm extends React.Component {
 											margin="normal"
 											fullWidth
 											label={LABELS.ENQUIRER_PHONE_NUMBER}
-											type="email"
-											autoComplete="off" />
+											type="phone"
+											autoComplete="off">
+										</TextField>		
 									</Grid>
 									<Grid item xs={4}>
 										<SimpleSelect
 											options={leadFormFetchedData.relationship_with_child}
 											title={LABELS.RELATIONSHIP_WITH_CHILD}
-											onSelectChange={(param) => this.onChangeField()} />
+											onSelectChange={this.onChangeDropDown} 
+											jsonkeyName={"relationship_with_child"}/>
 									</Grid>
 									<Grid item xs={4}>
 										<TextField
@@ -199,8 +227,9 @@ class LeadForm extends React.Component {
 										<SimpleSelect
 											options={leadFormFetchedData.student_gender}
 											title={LABELS.STUDENT_GENDER}
-											onSelectChange={(param) => this.onChangeField()}
+											onSelectChange={this.onChangeDropDown}
 											required={true}
+											jsonkeyName={"student_gender"}
 											displayNon={false}
 											isArrayOfObject={false}
 										/>
@@ -211,9 +240,10 @@ class LeadForm extends React.Component {
 												id="date_of_birth"
 												margin="normal"
 												name="student_dob"
-												value={leadFormFetchedData.student_dob ? leadFormFetchedData.student_dob : null}
+												value={this.state.student_dob ? moment(this.state.student_dob).format("ddd MMM DD YYYY HH:mm:ss zzZZ") : null}
 												required
-												onChange={date => this.handleDateChange(date)}
+												format="dd/MM/yyyy"
+												onChange={date => this.handleDateChange("student_dob",date)}
 												label={LABELS.STUDENT_DOB}
 												fullWidth />
 										</MuiPickersUtilsProvider>
@@ -222,7 +252,8 @@ class LeadForm extends React.Component {
 										<SimpleSelect
 											options={leadFormFetchedData.grade_apply_for}
 											title={LABELS.STUDENT_GRADE_APPLY_FOR}
-											onSelectChange={(param) => this.onChangeField()}
+											onSelectChange={this.onChangeDropDownObject}
+											jsonkeyName={"grade_apply_for"}
 											required={true}
 											displayNon={false}
 											isArrayOfObject={true}
@@ -233,10 +264,13 @@ class LeadForm extends React.Component {
 										<SimpleSelect
 											options={leadFormFetchedData.academic_year_apply_for}
 											title={LABELS.ACADEMIC_YEAR_APPLY_FOR}
-											onSelectChange={(param) => this.onChangeField()}
+											onSelectChange={this.onChangeDropDownObject}
+											jsonkeyName={"academic_year_apply_for"}
 											required={true}
 											displayNon={false}
-											isArrayOfObject={false} />
+											isArrayOfObject={true} 
+											optionLabel='id'
+											optionValue='title'/>
 									</Grid>
 									<Grid item xs={4}>
 										<TextField
@@ -253,16 +287,18 @@ class LeadForm extends React.Component {
 									</Grid>
 									<Grid item xs={4}>
 										<SimpleSelect
-											options={leadFormFetchedData.curriculum_apply_for ? leadFormFetchedData.curriculum_apply_for : []}
+											options={leadFormFetchedData.curriculum_apply_for}
 											title={LABELS.CURRUCULUM_APPLY_FOR}
-											onSelectChange={(param) => this.onChangeField()}
+											jsonkeyName={"curriculum_apply_for"}
+											onSelectChange={this.onChangeDropDown}
 											optionLabel='name' />
 									</Grid>
 									<Grid item xs={4}>
 										<SimpleSelect
 											options={leadFormFetchedData.curriculum_current ? leadFormFetchedData.curriculum_current : []}
 											title={LABELS.CURRICULUM_CURRENT}
-											onSelectChange={(param) => this.onChangeField()} />
+											jsonkeyName={"curriculum_current"}
+											onSelectChange={this.onChangeDropDown} />
 									</Grid>
 									<Grid item xs={4}>
 										<MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -270,9 +306,10 @@ class LeadForm extends React.Component {
 												id="tentative_school_visit_date"
 												margin="normal"
 												name="tentative_school_visit_date"
-												value={leadFormFetchedData.tentative_school_visit_date ? leadFormFetchedData.tentative_school_visit_date : null}
+												value={this.state.tentative_school_visit_date ? moment(this.state.tentative_school_visit_date).format("ddd MMM DD YYYY HH:mm:ss zzZZ") : null}
 												required
-												onChange={date => this.handleDateChange(date)}
+												format="dd/MM/yyyy"
+												onChange={date => this.handleDateChange("tentative_school_visit_date",date)}
 												label={LABELS.TENTATIVE_SCHOOL_VISIT_DATE}
 												fullWidth />
 										</MuiPickersUtilsProvider>
@@ -281,19 +318,33 @@ class LeadForm extends React.Component {
 										<SimpleSelect
 											options={leadFormFetchedData.source_id}
 											title={LABELS.SOURCE_TO_REACH_US}
-											onSelectChange={(param) => this.onChangeField()}
+											onSelectChange={this.onChangeDropDownObject}
 											required={true}
 											displayNon={false}
+											jsonkeyName={"source_id"}
 											isArrayOfObject={true}
 											optionLabel='id'
 											optionValue='title' />
 									</Grid>
 									<Grid item xs={4}>
+										<TextField
+											onChange={onChangeField}
+											required
+											margin="normal"
+											name="source_to_reach_us"
+											value={this.state.source_to_reach_us}
+											fullWidth
+											label={LABELS.HOW_DID_YOU_HEAR_ABOUT_US}
+											type="text"
+											autoComplete="off" />
+									</Grid>
+									<Grid item xs={4}>
 										<SimpleSelect
 											options={leadFormFetchedData.lead_priority_id}
 											title={LABELS.LEAD_PRIORITY}
-											onSelectChange={(param) => this.onChangeField()}
+											onSelectChange={this.onChangeDropDownObject}
 											required={true}
+											jsonkeyName={"lead_priority"}
 											display Non={false}
 											isArrayOfObject={true}
 											optionLabel='id'
@@ -315,4 +366,4 @@ LeadForm.propTypes = {
 	actionLogin: PropTypes.func.isRequired,
 	error: PropTypes.string.isRequired
 };
-export default withStyles(loginFormStyles)(LeadForm);
+export default withRouter(withStyles(loginFormStyles)(LeadForm));

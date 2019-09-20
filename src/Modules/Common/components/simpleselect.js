@@ -9,7 +9,6 @@ const style = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    padding:"0px 20px 0px 20px"
   },
   formControl: {
     marginTop: "15px",
@@ -26,10 +25,24 @@ class SimpleSelect extends Component {
     value : ''
   }
 
-  handleChange = (evt) => {
+  handleChangeForArrayOfObj = (evt) => {
+    console.log("handleChangeForArrayOfObj", evt.target.value);
     this.setState({value : evt.target.value});
-    this.props.onSelectChange({ label:this.props.title , value : evt.target.value });
+    this.props.onSelectChange(this.props.jsonkeyName , evt.target.value);
   }
+
+  handleChange = evt => {
+    this.setState({ label: this.props.jsonkeyName, value: evt.target.value });
+    this.props.onSelectChange(this.props.jsonkeyName, evt.target.value);
+  };
+
+  // handleChange = evt => {
+  //   this.setState({ value: evt.target.value });
+  //   this.props.onSelectChange({
+  //     label: this.props.title,
+  //     value: evt.target.value
+  //   });
+  // };
 
   render(){
 
@@ -43,7 +56,7 @@ class SimpleSelect extends Component {
       </InputLabel>
       <Select
         value={value}
-        onChange={this.handleChange}
+        onChange={isArrayOfObject ? this.handleChangeForArrayOfObj : this.handleChange}
         inputProps={{
           name: "age",
           id: "outlined-age-simple"

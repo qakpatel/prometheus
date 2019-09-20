@@ -19,6 +19,7 @@ class LoginForm extends React.Component {
 	}
 	loginClick = () => {
 		let { email, password } = this.state;
+		console.log(this.state)
 		this.props.actionLogin(email, password);
 	};
 	onChangeField = e => {
