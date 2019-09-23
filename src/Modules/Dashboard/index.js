@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/styles';
 import Barchart from "./Barchart";
 import LeadCard from "./LeadCard";
 import Arcchart from "./Arcchart";
+import EnhancedTable from "../Common/components/EnhancedTable";
 
 const useStyles = theme => ({
   root: {
@@ -25,6 +26,7 @@ class dashboard extends React.Component {
 		 this.props.getAllLeads();
 	}
 render(){
+	console.log(this.props.dashboardState.leadsData.recentLeads,'this.props.dashboardState');
 	let LeadNodes = this.props.dashboardState.leadsData.prioritiesWithCount ? (this.props.dashboardState.leadsData.prioritiesWithCount.map((item)=> {
 		return (
 			<LeadCard
@@ -52,6 +54,7 @@ render(){
 			<Arcchart />
 			</Grid>
 		  </Grid>
+			<EnhancedTable tableData={this.props.dashboardState.leadsData.recentLeads}/>
 		</div>
 	  );
 }
