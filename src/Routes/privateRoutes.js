@@ -11,7 +11,7 @@ const PrivateRoutes = {
 	},
 	LeadForm: {
 		component: LeadForm,
-		path: "/lead-form"
+		path: "/leads-management/create"
 	},
 	Leads: {
 		component: LeadManagement,

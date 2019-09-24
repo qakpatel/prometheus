@@ -3,7 +3,7 @@ import axios from "axios";
 axios.defaults.baseURL = ApiConfig.API_BASE_URL;
 axios.defaults.headers.common["Authorization"] = "";
 axios.defaults.headers.post["Content-Type"] = "application/json";
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 50000;
 const ApiClient = {
 	executeRequest: (endpoint, headers = {}, params = {}, method = ApiConfig.METHODS.GET, token = null) => {
 		return new Promise(function(resolve, reject) {

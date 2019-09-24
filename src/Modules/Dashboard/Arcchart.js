@@ -17,7 +17,7 @@ class Arcchart extends Component {
      }
     render() {
         const data = this.props.dashboardState.leadsData.sourcesWithCount ? this.props.dashboardState.leadsData.sourcesWithCount.map((item) => ({
-            label:item.title , angle:item.total
+            label:`${item.title} : ${item.total}` , angle:item.total
           })):''
         const { height, width } = this.state;
         return (

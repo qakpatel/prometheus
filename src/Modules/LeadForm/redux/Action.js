@@ -13,6 +13,7 @@ import { actionSetErrorDialogDisplayState, actionSetLoaderDisplayState } from ".
 import LeadForm from "../api/LeadFormService";
 
 export const actionGetCreateLeadDataSuccess = data => ({type: ACTION_GET_CREATE_LEAD_DATA_SUCCESS, data})
+export const actionGetCreateLeadSuccess = data => ({type: ACTION_CREATE_LEAD_SUBMIT_SUCCESS, data})
 
 export const actionGetCreateLeadData = () => {
 	return async dispatch => {
@@ -23,7 +24,7 @@ export const actionGetCreateLeadData = () => {
 		if (!response.isError) {
 			LocalStorageHelper.add(LocalStorageConfig.KEY_LEAD_FORM_DATA, response.data);
 			dispatch(actionGetCreateLeadDataSuccess(response))
-			return;
+			return response.data;
 		}
 		dispatch(actionSetErrorDialogDisplayState(response.errorMessage));
 	};
@@ -37,7 +38,7 @@ export const actionCreateLead = (state) => {
 		dispatch(actionSetLoaderDisplayState(false));
 		if (!response.isError) {
 			LocalStorageHelper.add(LocalStorageConfig.KEY_USER, response.data);
-			dispatch(null);
+			dispatch(actionGetCreateLeadSuccess(response));
 			return;
 		}
 		dispatch(actionSetErrorDialogDisplayState(response.errorMessage));
