@@ -4,6 +4,7 @@ const AppThemeDefault = createMuiTheme({
 	palette: {
 		primary: { main: "#3b5998", contrastText: "#d5d8e2" },
 		secondary: { main: "#5cb85c" },
+		secondary2: { main: "#fc2c03" },
 		primary2: { main: "#d9534f" }
 	},
 	//appBackgroundImage: "linear-gradient(45deg, rgb(255, 11, 100) 0%, rgb(254, 73, 83) 56%, rgb(253, 105, 60) 95%, rgb(253, 108, 59) 100%)",

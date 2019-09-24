@@ -1,19 +1,23 @@
 import React, { Component } from 'react'
 import Dialog from './components/dialog'
 import { connect } from 'react-redux'
-import { getDialogData } from './redux/dialogaction'
+import { getDialogData, submitDialog } from './redux/dialogaction'
 
  class index extends Component {
 
     componentDidMount(){
-        this.props.getDialogData();
+        console.log(this.props.lead_data)
+        this.props.getDialogData(this.props.lead_data.id);
     }
-
+    submitDialogData=(data)=>{
+        this.props.submitDialog(data);
+        this.props.getDialogData(this.props.lead_data.id);
+    }
     render() {
         console.log(this.props.open)
         return (
             <div>
-                <Dialog open={this.props.open} closeDailog={this.props.closeDailog} data={this.props.dialogData} lead_data={this.props.lead_data}/>
+                <Dialog open={this.props.open} closeDailog={this.props.closeDailog} data={this.props.dialogData} lead_data={this.props.lead_data} onClick={this.submitDialogData}/>
             </div>
         )
     }
@@ -22,8 +26,9 @@ import { getDialogData } from './redux/dialogaction'
 const matStateToProps=state=>{
 console.log(state)
      return{
-         dialogData:state.dialogReducer.dialogData
+         dialogData:state.dialogReducer.dialogData,
+         response:state.dialogReducer.submitDialog
      }
 }
 
-export default connect(matStateToProps,{getDialogData})(index);
+export default connect(matStateToProps,{getDialogData,submitDialog})(index);

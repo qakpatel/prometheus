@@ -4,7 +4,7 @@ const TimelineService = {
 	getTimeline: (state)=> {
 		let token=JSON.parse(localStorage.getItem('USER'))
 		return new Promise((resolve, reject) => {
-			ApiClient.executeRequest(`tasks/${state.lead_id}/${state.status_id}`, {}, {}, ApiConfig.METHODS.GET,token.access_token).then(function(response) {
+			ApiClient.executeRequest(`tasks/${state.lead_id}/${state.status_id}`, {}, {}, ApiConfig.METHODS.GET,token.access_token).then((response)=> {
                 console.log(response)
                 if (response.isError) {
 					resolve(response);
@@ -13,6 +13,18 @@ const TimelineService = {
 				 let data = Object.assign(response.data, response.data);
 				 resolve({ ...response, data: data })
 				
+			})
+		})
+	},
+	updateStatus:(id,lead_status)=>{
+		let token=JSON.parse(localStorage.getItem('USER'))
+		return new Promise((resolve, reject)=>{
+			ApiClient.executeRequest(`leads/${id}`,{},{lead_status_id:++lead_status},ApiConfig.METHODS.PUT,token.access_token).then((res)=>{
+			 console.log(res)
+				if(!res.isError){
+				 resolve(res)
+				 return;
+			 }
 			})
 		})
 	}
