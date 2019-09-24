@@ -11,7 +11,6 @@ import { getTimeline, updateStatus } from './redux/Action';
     } 
     startFollowup=(lead_id,lead_status_id)=>{
         this.props.updateStatus(lead_id,lead_status_id);
-         console.log(lead_id,lead_status_id)
     }
 
   render(){

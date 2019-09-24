@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useEffect }  from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -62,10 +62,13 @@ function SimpleTab(props) {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
     const [open, setOpen] = React.useState(false);
-
+    const [leadStatusId, setLeadStatusId] =React.useState(props.lead_data.lead_status_id)
     const handleClickOpen = () => {
         setOpen(true)
       };
+      useEffect(()=>{
+          console.log('Call use effect')
+      },[leadStatusId])
       const handleClose = () => {
         setOpen(false)
         console.log(open)
@@ -77,6 +80,12 @@ function SimpleTab(props) {
    function closeDailog(){
         setOpen(false);
     }
+
+    function startFollowup(){
+        setLeadStatusId(1);
+        props.onClick()
+    }
+
     return (
         
         <div className={classes.root}>
@@ -87,7 +96,7 @@ function SimpleTab(props) {
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-            {props.lead_data.lead_status_id===0?<Button variant="contained" style={{marginBottom:'16px',backgroundColor:'#3b5998'}} className={classes.button} onClick={props.onClick}>Start Followup
+              {leadStatusId===0?<Button variant="contained" style={{marginBottom:'16px',backgroundColor:'#3b5998'}} className={classes.button} onClick={startFollowup}>Start Followup
                </Button>:
                  <div style={{ overflowY: 'scroll', height: 'auto',maxHeight:'400px' }}>
                  <Button variant="contained" style={{marginBottom:'16px',backgroundColor:'#3b5998'}} onClick={handleClickOpen} className={classes.taskbutton} > Add task</Button>
@@ -97,8 +106,9 @@ function SimpleTab(props) {
                              <div>
                              <FormLabel><span style={{fontWeight:'bold'}}>Assigned To:</span>{a.lead.assigned_to.name}{' { '}<a href={"mailto:"+a.lead.assigned_to.email} target="_top">{a.lead.assigned_to.email}</a>{' } '}</FormLabel><br/>
                              <FormLabel><span style={{fontWeight:'bold'}}>Schedule On: </span> {a.schedule_date}{'   '}{'   '} <span style={{fontWeight:'bold'}}>at: </span> {a.schedule_time}</FormLabel><br/>
-                             <FormLabel><span style={{fontWeight:'bold'}}>Task Status: </span> {a.task_status_id==1?'Complete':'Pending'}</FormLabel><br/>
-                             <FormLabel><span style={{fontWeight:'bold'}}>Comments: </span> {a.comment}</FormLabel><br />
+                             <FormLabel><span style={{fontWeight:'bold'}}>Task Status: </span> {a.task_status_id==1?'Complete':'Pending'}</FormLabel> <Button variant="contained" style={{marginLeft:'16px',float:'Right' , backgroundColor:'#3b5998'}} className={classes.taskbutton} size="small">Completed</Button><br/>
+                             <FormLabel><span style={{fontWeight:'bold'}}>Comments: </span> {a.comment}</FormLabel>
+                            
                              </div>
                              </ListGroupItem>
                          ))}
@@ -110,7 +120,7 @@ function SimpleTab(props) {
               
                 <div style={{ padding: '40px' }}>
                 <Link to="/leads-management" className={classes.reject}><Button variant="contained" color="primary" outline color="danger" style={{ display: 'inline' }} >Reject</Button></Link>
-                    <Button outline color="info" style={{ display: 'inline', float: 'right' }} onClick={() => { setValue(1) }}>Move To next step</Button>
+                    <Button outline color="info" style={{ display: 'inline', float: 'right' }} onClick={() => { setValue(1) }}>Move To Next Step</Button>
                 </div>
 
             </TabPanel>

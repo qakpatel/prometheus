@@ -1,12 +1,12 @@
 
 
-const timelineReducer = (state = { user: [],reponse:{} }, action) => {
+const timelineReducer = (state = { user: [],updateStatus:{} }, action) => {
 	console.log(action.payload);
 	switch (action.type) {
 		case 'GET_TIMELINE':
 			return { ...state, user: action.payload };
 			case 'UPDATE_STATUS':
-			return { ...state, user: action.payload };
+			return { ...state, updateStatus: action.payload };
 		default:
 			return state;
 	}

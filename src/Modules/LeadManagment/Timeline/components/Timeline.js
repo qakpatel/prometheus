@@ -41,6 +41,7 @@ class ActionPage extends Component {
 
     render() {
         const { classes } = this.props;
+        const DATE_OPTIONS = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
         return (
             <div>
                 <div className="maniBox">
@@ -48,34 +49,34 @@ class ActionPage extends Component {
                         <section className="firstSection">
                             <List>
                             <ListItem>
-                                    <FormLabel>Lead ID: {this.props.leadData.context.id}</FormLabel>
+                                    <FormLabel><span style={{fontWeight:'bold'}}>Lead ID:</span> {this.props.leadData.context.id}</FormLabel>
                                 </ListItem>
                               <ListItem>
-                                    <FormLabel>Enquirer: {this.props.leadData.context.enquirer_first_name+' '+this.props.leadData.context.enquirer_last_name}<br/>{' { '}<a href={"mailto:"+this.props.leadData.context.enquirer_email} target="_top">{this.props.leadData.context.enquirer_email}</a>{' } '}</FormLabel>
+                                    <FormLabel><span style={{fontWeight:'bold'}}>Enquirer: </span>{this.props.leadData.context.enquirer_first_name+' '+this.props.leadData.context.enquirer_last_name}<br/>{' { '}<a href={"mailto:"+this.props.leadData.context.enquirer_email} target="_top">{this.props.leadData.context.enquirer_email}</a>{' } '}</FormLabel>
                                 </ListItem>
                                 <ListItem>
-                                    <FormLabel>Assign to: {this.props.leadData.assigned_to.name}<br/>{'{'}<a href={"mailto:"+this.props.leadData.assigned_to.email} target="_top">{this.props.leadData.assigned_to.email}</a>{'}'}</FormLabel>
+                                    <FormLabel><span style={{fontWeight:'bold'}}>Assign to:</span> {this.props.leadData.assigned_to.name}<br/>{'{'}<a href={"mailto:"+this.props.leadData.assigned_to.email} target="_top">{this.props.leadData.assigned_to.email}</a>{'}'}</FormLabel>
                                 </ListItem>
                                 <ListItem>
-                                    <FormLabel>Enquirer phone no:<br/><a href={"tel:"+this.props.leadData.context.enquirer_phone_number}>{this.props.leadData.context.enquirer_phone_number}</a></FormLabel>
+                                    <FormLabel><span style={{fontWeight:'bold'}}>Enquirer phone no:</span><br/><a href={"tel:"+this.props.leadData.context.enquirer_phone_number}>{this.props.leadData.context.enquirer_phone_number}</a></FormLabel>
                                 </ListItem>
                                 <ListItem>
-                                    <FormLabel>Student Name:{this.props.leadData.context.student_first_name+' '+this.props.leadData.context.student_last_name}</FormLabel>
+                                    <FormLabel><span style={{fontWeight:'bold'}}>Student Name:</span>{this.props.leadData.context.student_first_name+' '+this.props.leadData.context.student_last_name}</FormLabel>
                                 </ListItem>
                                 <ListItem>
-                                    <FormLabel>Student DOB:{this.props.leadData.context.student_dob}</FormLabel>
+                                    <FormLabel><span style={{fontWeight:'bold'}}>Student DOB:</span>{ (new Date(this.props.leadData.context.student_dob)).toLocaleDateString('en-US', DATE_OPTIONS)}</FormLabel>
                                 </ListItem>
 
                                 <ListItem>
-                                    <FormLabel>Current City:{this.props.leadData.context.student_current_city}</FormLabel>
+                                    <FormLabel><span style={{fontWeight:'bold'}}>Current City:</span>{this.props.leadData.context.student_current_city}</FormLabel>
                                 </ListItem>
                                 
                                 <ListItem>
-                                    <FormLabel>Created On: {this.props.leadData.created_at}</FormLabel>
+                                    <FormLabel><span style={{fontWeight:'bold'}}>Created On: </span>{this.props.leadData.created_at}</FormLabel>
                                 </ListItem>
                                 <ListItem>
                                     <FormLabel>
-                                    Lead Priority:
+                                    <span style={{fontWeight:'bold'}}>Lead Priority:</span>
                                     </FormLabel>
                                     <Chip label={this.props.leadData.priority_label} color="secondary" className={classes.chip} variant="outlined" />
                           

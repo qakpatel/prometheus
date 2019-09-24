@@ -69,17 +69,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
  function CustomizedTables(props) {
-   
+   console.log(props.data)
   const [tableData, setTableData] = useState();
   const [filterTableData, setFilterTableData] = useState();
   const [hotLeadFilter, setHotLeadFilter] = useState(false);
   const [sortName, setSortName] = useState(false);
   useEffect(() => {
-    setTableData(props.data[0])
-    setFilterTableData(tableData ? tableData.data : [])
-
-    console.log('call useeffect')
-  }, tableData);
+    setTableData(props.data.data)
+    setFilterTableData(tableData ? tableData: [])
+    console.log('call useeffect',tableData)
+  },tableData);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -94,11 +93,11 @@ const useStyles = makeStyles(theme => ({
    
   function leadFilter() {
     setHotLeadFilter(!hotLeadFilter);
-    sortTableData(tableData.data, 'priority');
+    setFilterTableData(sortTableData(tableData, 'priority'));
   }
 
   function sortTableData(tableData, option) {
-    console.log('call')
+    
     if (option === 'priority') {
       let c = [], d = [];
       if (!hotLeadFilter) {
@@ -135,7 +134,7 @@ const useStyles = makeStyles(theme => ({
   function sortByName(){
     console.log('call',!sortName)
     setSortName(!sortName)
-    setFilterTableData(sortTableData(tableData.data,'name'));
+    setFilterTableData(sortTableData(tableData,'name'));
   }
   const classes = useStyles(); 
 
@@ -148,7 +147,7 @@ const useStyles = makeStyles(theme => ({
   }
   function searchIntableData(e){
     const { value } = e.target
-    let dataToSearch = tableData.data.map((a)=>({...a})).filter((data)=>{
+    let dataToSearch = tableData.map((a)=>({...a})).filter((data)=>{
        console.log(data.context.enquirer_phone_number.indexOf(value))                
 
         return data.context.enquirer_first_name.toLowerCase().indexOf(value.toLowerCase()) > -1 ||
@@ -186,7 +185,7 @@ const useStyles = makeStyles(theme => ({
         <TableHead>
           <TableRow>
             <StyledTableCell>Lead ID</StyledTableCell>
-            <StyledTableCell onClick={sortByName}>{sortName?<ArrowDownwardIcon />:<ArrowUpwardIcon />}Name</StyledTableCell>
+            <StyledTableCell style={{cursor:'pointer'}} onClick={sortByName}>{sortName?<ArrowDownwardIcon />:<ArrowUpwardIcon />}Name</StyledTableCell>
             <StyledTableCell align="center">Enquiry Email</StyledTableCell>
             <StyledTableCell align="center">Location</StyledTableCell>
             <StyledTableCell align="center">Contact</StyledTableCell>
@@ -197,7 +196,7 @@ const useStyles = makeStyles(theme => ({
           </TableRow>
         </TableHead>
         <TableBody>
-            {filterTableData?filterTableData.map((data,index) => (
+            {filterTableData?filterTableData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((data,index) => (
             <StyledTableRow key={index}>
               <StyledTableCell component="th" scope="row">
                 {data.context_id}
@@ -215,9 +214,8 @@ const useStyles = makeStyles(theme => ({
 
               </StyledTableCell>
               <StyledTableCell align="center">
-              <Link to={{pathname:'/leads-management/timeline',state:{lead_id: data.id,status_id:data.lead_status_id,lead_data:data}}}>{data.lead_status_id===1?<Button variant="contained" color="primary" className={classes.button}>Open Lead
-               </Button>:
-                <Button variant="contained" color="primary" className={classes.button}>Open Lead</Button>}</Link>
+              <Link to={{pathname:'/leads-management/timeline',state:{lead_id: data.id,status_id:data.lead_status_id,lead_data:data}}}>
+                <Button variant="contained" color="primary" style={{padding:'5px'}}>Open Lead</Button></Link>
               
               </StyledTableCell>
           
@@ -226,9 +224,9 @@ const useStyles = makeStyles(theme => ({
         </TableBody>
       </Table>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[5, 25, 100]}
         component="div"
-       count={tableData?tableData.data.length:10}
+       count={tableData?tableData.length:10}
         rowsPerPage={rowsPerPage}
         page={page}
         backIconButtonProps={{
