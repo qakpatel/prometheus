@@ -12,7 +12,12 @@ import style from '../style';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 const currencies = [
   {
@@ -77,12 +82,16 @@ const styles = theme => ({
     lineHeight: '0em',
   },
 });
+
 class Dialog extends Component {
 
   state = {
     isOpen: this.props.open || false,
     task_type: 'Call',
-    assign_to: 'Ajay Nigam'
+    assign_to: this.props.lead_data.assigned_to.name || '',
+    scheduleDate: new Date(),
+    scheduleTime: new Date().getTime(),
+    comments: ''
 
   }
 
@@ -106,6 +115,38 @@ class Dialog extends Component {
   }
   taskTypeHandle = (e) => {
     this.setState({ task_type: e.target.value })
+  }
+
+  scheduleDateHandler = (e) => {
+    this.setState({ scheduleDate: e.target.value })
+  }
+
+  scheduleTimeHandler = (e) => {
+    this.setState({ scheduleTime: e.target.value })
+  }
+
+  commentsHandler = (e) => {
+    this.setState({ comments: e.target.value })
+  }
+  createTask = () => {
+    let assign_to=this.props.data.assigned_to.filter(a=>a.name===this.state.assign_to)
+    let task_type=this.props.data.task_type_id.filter(a=>a.title===this.state.task_type)
+    console.log(this.props.lead_data)
+    let data = {
+      lead_id: Number(this.props.data.lead_id),
+      assigned_to:assign_to[0].id,
+      task_type_id: task_type[0].id,
+      comment: this.state.comments,
+      schedule_date: this.state.scheduleDate,
+      schedule_time: this.state.scheduleTime,
+      lead_status_id: this.props.lead_data.lead_status.id,
+      lead_task_status_id:1,
+
+    }
+    console.log(data)
+    this.props.onClick(data);
+    this.setState({ isOpen: false });
+    this.props.closeDailog();
   }
   render() {
     console.log(this.props)
@@ -142,7 +183,7 @@ class Dialog extends Component {
                 <div className={classes.formfield}>
                   <Typography variant="h8" noWrap>
                     Lead ID
-</Typography>
+               </Typography>
                 </div>
               </Grid>
               <Grid item xs={12} sm={9}>
@@ -250,10 +291,7 @@ class Dialog extends Component {
                 </TextField>
               </Grid>
               <Grid item xs={12} sm={3}>
-
-                <Typography variant="h8" noWrap>
-                  Comments
-</Typography>
+                <Typography variant="h8" noWrap>Comments</Typography>
               </Grid>
               <Grid item xs={12} sm={9}>
                 <TextField
@@ -262,7 +300,9 @@ class Dialog extends Component {
                   multiline
                   rows="4"
                   fullWidth
+                  value={this.state.comments}
                   className={classes.textField}
+                  onChange={this.commentsHandler}
                   margin="normal"
                   variant="outlined"
                 />
@@ -278,7 +318,8 @@ class Dialog extends Component {
                   id="date"
                   label="Schedule Date"
                   type="date"
-                  defaultValue="2017-05-24"
+                  value={this.state.scheduleDate}
+                  onChange={this.scheduleDateHandler}
                   className={classes.textField}
                   InputLabelProps={{
                     shrink: true,
@@ -297,7 +338,8 @@ class Dialog extends Component {
                   id="date"
                   label="Schedule Time"
                   type="time"
-                  defaultValue="2017-05-24"
+                  value={this.state.scheduleTime}
+                  onChange={this.scheduleTimeHandler}
                   className={classes.textField}
                   InputLabelProps={{
                     shrink: true,
@@ -310,7 +352,7 @@ class Dialog extends Component {
           </DialogContent>
           <DialogActions>
             <Button
-              onClick={this.handleClose}
+              onClick={this.createTask}
               target={'_blank'}
               className={classes.readMoreBtn}>
               Create
@@ -334,3 +376,13 @@ Dialog.defaultProps = {
 }
 
 export default withStyles(style)(Dialog);
+
+
+// 	"assigned_to": 1,
+// "comments": "werwerwe",
+// "lead_id": "1",
+// "lead_status_id": 1,
+// "lead_task_status_id": "",
+// "schedule_date": "2019-09-20",
+// "schedule_time": "23:43",
+// "task_type_id": 1
