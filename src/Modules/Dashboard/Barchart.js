@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React from "react";
 
 import {
   XYPlot,
@@ -10,19 +9,19 @@ import {
   VerticalBarSeries,
   VerticalBarSeriesCanvas,
   DiscreteColorLegend
-} from 'react-vis';
+} from "react-vis";
 import { getAllLeads } from "./action";
 import { connect } from "react-redux";
 
 class Barchart extends React.Component {
-  componentDidMount() {
-    this.props.getAllLeads();
- }
- render() {
-
-  const data = this.props.dashboardState.leadsData.sourcesWithCount ? this.props.dashboardState.leadsData.sourcesWithCount.map((item) => ({
-    x:item.title , y:item.total
-  })):''
+  render() {
+    const { leadsData } = this.props;
+    const data = leadsData.sourcesWithCount
+      ? leadsData.sourcesWithCount.map(item => ({
+          x: item.title,
+          y: item.total
+        }))
+      : "";
     return (
       <div>
         <XYPlot
@@ -32,29 +31,22 @@ class Barchart extends React.Component {
           width={300}
           height={300}
         >
-
           <XAxis />
           <YAxis />
-          <VerticalBarSeries
-            color="#79C7E3"
-            data={data}
-          />
-
+          <VerticalBarSeries color="#79C7E3" data={data} />
         </XYPlot>
       </div>
     );
   }
 }
 
-function mapStateToProps (state,props)  {
-	return {
-		dashboardState: state.dashboardReducer
-	}
+function mapStateToProps(state, props) {
+  return {
+    leadsData: state.dashboardReducer.leadsData
+  };
 }
 
-export default  connect(
-	  mapStateToProps,
-	  { getAllLeads }
-)(Barchart)
-
-
+export default connect(
+  mapStateToProps,
+  { getAllLeads }
+)(Barchart);
