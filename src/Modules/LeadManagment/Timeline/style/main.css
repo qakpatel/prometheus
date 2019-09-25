@@ -1,0 +1,35 @@
+.mainBox{
+    margin:0;
+    padding: 0;
+}
+.main{
+    position: absolute;
+    width: 70%;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    /* width: 100vw;
+    height: 100vh; */
+}
+.firstSection{
+  padding: 10px;
+}
+
+.secondSection{
+   
+}
+.upperP{
+    height: 20%;
+    width:100%;
+    background-color: rgb(231, 220, 206)
+}
+.upper{
+    padding: 10px;
+    position: relative;
+    display: inline-block;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+}
+
+button:focus{
+    outline: none !important
+}

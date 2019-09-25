@@ -1,0 +1,179 @@
+{
+   "OVERVIEW": {
+      "fields": {
+         "is_draft": {
+            "label": "",
+            "value": "",
+            "type": "hidden"
+         },
+         "id": {
+            "label": "",
+            "value": "",
+            "type": "hidden"
+         },
+         "title": {
+            "label": "Title",
+            "value": "",
+            "type": "text",
+            "required": true
+         },
+         "grade": {
+            "label": "Grade/Year/Level",
+            "value": "",
+            "type": "text",
+            "readOnly": true
+         },
+         "timeline": {
+            "name": "timeline",
+            "label": "Timeline",
+            "value": "",
+            "type": "textarea"
+         },
+         "overview_transdisciplinary_theme": {
+            "name": "overview_transdisciplinary_theme",
+            "label": "Transdisciplinary theme ",
+            "value": "",
+            "type": "textarea"
+         },
+         "overview_central_idea": {
+            "name": "overview_central_idea",
+            "label": "Central idea",
+            "value": "",
+            "type": "textarea"
+         },
+         "overview_lines_of_inquiry": {
+            "name": "overview_lines_of_inquiry",
+            "label": "Lines of inquiry",
+            "value": "",
+            "type": "textarea"
+         },
+         "overview_key_concepts": {
+            "name": "overview_key_concepts",
+            "label": "Key concepts",
+            "value": "",
+            "type": "textarea"
+         },
+         "overview_related_concepts": {
+            "name": "overview_related_concepts",
+            "label": "Related concepts",
+            "value": "",
+            "type": "textarea"
+         },
+         "overview_learner_profile_attributes": {
+            "label": "Learner profile attributes",
+            "value": "",
+            "type": "textarea"
+         },
+         "overview_approaches_to_learning": {
+            "name": "overview_approaches_to_learning",
+            "label": "Approaches to learning",
+            "value": "",
+            "type": "textarea"
+         },
+         "overview_action": {
+            "label": "Action",
+            "value": "",
+            "type": "textarea"
+         }
+      }
+   },
+   "REFLECTING_AND_PLANNING": {
+      "fields": {
+         "rnf_initial_reflections": {
+            "label": "Initial reflections",
+            "value": "",
+            "type": "textarea"
+         },
+         "rnf_prior_learning": {
+            "label": "Prior learning",
+            "value": "",
+            "type": "textarea"
+         },
+         "rnf_connections_transdisciplinary_and_past": {
+            "label": "Connections: Transdisciplinary and past",
+            "value": "",
+            "type": "textarea"
+         },
+         "rnf_learning_goals_and_success_criteria": {
+            "label": "Learning goals and success criteria",
+            "value": "",
+            "type": "textarea"
+         },
+         "rnf_teacher_questions": {
+            "label": "Teacher questions",
+            "value": "",
+            "type": "textarea"
+         },
+         "rnf_student_questions": {
+            "label": "Student questions",
+            "value": "",
+            "type": "textarea"
+         }
+      }
+   },
+   "DESIGNING_AND_IMPLEMENTING": {
+      "fields": {
+         "dni_designing_engaging_learning_experiences": {
+            "label": "Designing engaging learning experiences",
+            "value": "",
+            "type": "textarea",
+            "rte" : true
+         },
+         "dni_supporting_student_agency": {
+            "label": "Supporting student agency",
+            "value": "",
+            "type": "textarea"
+         },
+         "dni_teacher_and_student_questions": {
+            "label": "Teacher and student questions",
+            "value": "",
+            "type": "textarea"
+         },
+         "dni_ongoing_assessment": {
+            "label": "Ongoing assessment",
+            "value": "",
+            "type": "textarea"
+         },
+         "dni_making_flexible_use_of_resources": {
+            "label": "Making flexible use of resources",
+            "value": "",
+            "type": "textarea",
+            "rte" : true
+         },
+         "dni_ongoing_reflections_for_all_teachers": {
+            "label": "Ongoing reflections for all teachers",
+            "value": "",
+            "type": "textarea"
+         },
+         "dni_additional_subject_specific_reflections": {
+            "label": "Additional subject specific reflections",
+            "value": "",
+            "type": "textarea"
+         }
+      }
+   },
+   "REFLECTING": {
+      "fields": {
+         "reflecting_teacher_reflections": {
+            "label": "Teacher reflections",
+            "value": "",
+            "type": "textarea"
+         },
+         "reflecting_student_reflections": {
+            "label": "Student reflections",
+            "value": "",
+            "type": "textarea"
+         },
+         "reflecting_assessment_reflections": {
+            "label": "Assessment reflections",
+            "value": "",
+            "type": "textarea"
+         },
+         "notes": {
+            "label": "Notes",
+            "value": "",
+            "type": "textarea"
+         }
+      }
+   }
+}
