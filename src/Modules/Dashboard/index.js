@@ -9,6 +9,8 @@ import Barchart from "./Barchart";
 import LeadCard from "./LeadCard";
 import Arcchart from "./Arcchart";
 import EnhancedTable from "../Common/components/EnhancedTable";
+import ChartsPage from "./ChartsPage";
+import PieChartsPage from "./PieChartPage";
 
 const useStyles = theme => ({
   root: {
@@ -47,12 +49,18 @@ class dashboard extends React.Component {
 
         <Paper >
           <Grid container item xs={12} style={{ width: "100%", padding: 20 }}>
-            <Grid item sm={6} xs={3} style={{ display: "flex", justifyContent: "space-around" }} className="dashboard_col">
+            {/* <Grid item sm={6} xs={3} style={{ display: "flex", justifyContent: "space-around" }} className="dashboard_col">
               <Barchart />
             </Grid>
 
             <Grid item sm={6} xs={3} style={{ display: "flex", justifyContent: "space-around" }} className="dashboard_col">
               <Arcchart />
+            </Grid> */}
+            <Grid item sm={6} xs={3} style={{ display: "flex", justifyContent: "space-around" }} className="dashboard_col">
+              <ChartsPage leadsData={leadsData} />
+            </Grid>
+            <Grid item sm={6} xs={3} style={{ display: "flex", justifyContent: "space-around" }} className="dashboard_col">
+              <PieChartsPage leadsData={leadsData} />
             </Grid>
           </Grid>
         </Paper>

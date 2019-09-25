@@ -15,9 +15,9 @@ class Arcchart extends Component {
     const { leadsData = [] } = this.props;
     const data = leadsData.sourcesWithCount
       ? leadsData.sourcesWithCount.map(item => ({
-          label: `${item.title} : ${item.total}`,
-          angle: item.total
-        }))
+        label: `${item.title} : ${item.total}`,
+        angle: item.total
+      }))
       : "";
     const { height, width } = this.state;
     return (
@@ -34,7 +34,7 @@ class Arcchart extends Component {
           width={300}
           height={300}
           padAngle={0.04}
-          color="#FFC0CB"
+          animation={true}
           showLabels={true}
         />
       </div>

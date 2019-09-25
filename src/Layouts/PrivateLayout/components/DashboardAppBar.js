@@ -37,9 +37,14 @@ class DashboardAppBar extends Component {
   };
   handleClose = () => {
     this.setState({ anchorEl: null });
+  };
+
+  handleCloseAndNavigate = () => {
+    this.setState({ anchorEl: null });
     this.props.postAllNotification();
     this.props.history.push("/leads-management");
-  };
+  }
+
   componentDidMount() {
     this.props.getAllNotification();
   }
@@ -64,10 +69,10 @@ class DashboardAppBar extends Component {
       fontSize: "11px",
       justifyContent: "space-around"
     };
-    let NotificationElement = Notification.length ? (
+    let NotificationElement = Notification && Notification.length ? (
       Notification.map(item => {
         return (
-          <div onClick={this.handleClose} style={{ cursor: "pointer", outline: "none" }}>
+          <div onClick={this.handleCloseAndNavigate} style={{ cursor: "pointer", outline: "none" }}>
 
             <MenuItem style={{ display: "block" }} onClick={this.handleClose}>{item.data.title}
               <div >
@@ -116,7 +121,7 @@ class DashboardAppBar extends Component {
             </Typography>
             <IconButton onClick={this.handleClick}>
               <Badge
-                badgeContent={Notification.length}
+                badgeContent={Notification ? Notification.length : ""}
                 color="secondary"
                 aria-controls="simple-menu"
                 aria-haspopup="true"
@@ -128,6 +133,9 @@ class DashboardAppBar extends Component {
             <Menu
               id="simple-menu"
               anchorEl={anchorEl}
+              getContentAnchorEl={null}
+              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+              transformOrigin={{ vertical: "top", horizontal: "center" }}
               keepMounted
               open={Boolean(anchorEl)}
               onClose={this.handleClose}
