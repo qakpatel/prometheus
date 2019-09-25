@@ -8,16 +8,16 @@ import AppThemeDefault from "./Theme";
 import { HashRouter } from "react-router-dom";
 import Layouts from "./Layouts";
 import RootReducer from "./Modules/RootReducer";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const store = createStore(RootReducer, applyMiddleware(thunk));
 ReactDOM.render(
-	<MuiThemeProvider theme={AppThemeDefault}>
-		<Provider store={store}>
-			<HashRouter>
-				<Layouts />
-			</HashRouter>
-		</Provider>
-	</MuiThemeProvider>,
-	document.getElementById("root")
+  <MuiThemeProvider theme={AppThemeDefault}>
+    <Provider store={store}>
+      <HashRouter>
+        <Layouts />
+      </HashRouter>
+    </Provider>
+  </MuiThemeProvider>,
+  document.getElementById("root")
 );
