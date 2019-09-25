@@ -37,7 +37,7 @@ class DashboardAppBar extends Component {
   };
   handleClose = () => {
     this.setState({ anchorEl: null });
-    //this.props.postAllNotification();
+    this.props.postAllNotification();
     this.props.history.push("/leads-management");
   };
   componentDidMount() {
