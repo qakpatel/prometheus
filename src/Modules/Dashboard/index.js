@@ -30,28 +30,33 @@ class dashboard extends React.Component {
 
     let LeadNodes = leadsData.prioritiesWithCount
       ? leadsData.prioritiesWithCount.map(item => {
-          return (
-            <LeadCard
-              message={item.title}
-              calculatedNumber={item.total}
-              key={item.lead_priority_id}
-            />
-          );
-        })
+        return (
+          <LeadCard
+            message={item.title}
+            calculatedNumber={item.total}
+            key={item.lead_priority_id}
+          />
+        );
+      })
       : "";
     return (
       <div>
         <Grid container item xs={12}>
           {LeadNodes}
         </Grid>
-        <Grid container item xs={12}>
-          <Grid item xs={6} className="dashboard_col">
-            <Barchart />
+
+        <Paper >
+          <Grid container item xs={12} style={{ width: "100%", padding: 20 }}>
+            <Grid item sm={6} xs={3} style={{ display: "flex", justifyContent: "space-around" }} className="dashboard_col">
+              <Barchart />
+            </Grid>
+
+            <Grid item sm={6} xs={3} style={{ display: "flex", justifyContent: "space-around" }} className="dashboard_col">
+              <Arcchart />
+            </Grid>
           </Grid>
-          <Grid item xs={6} className="dashboard_col">
-            <Arcchart />
-          </Grid>
-        </Grid>
+        </Paper>
+
         <EnhancedTable tableData={leadsData.recentLeads} />
       </div>
     );

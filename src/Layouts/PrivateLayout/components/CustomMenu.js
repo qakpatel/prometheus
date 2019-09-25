@@ -21,9 +21,9 @@ export default function CustomMenu(props) {
       open={props.isMenuOpen}
       onClose={props.handleClose}
     >
-      <MenuItem onClick={props.handleProfile} disabled>
+      {/* <MenuItem onClick={props.handleProfile} disabled>
         Profile
-      </MenuItem>
+      </MenuItem> */}
       <MenuItem onClick={props.handleResetPass} disabled>
         Reset Password
       </MenuItem>

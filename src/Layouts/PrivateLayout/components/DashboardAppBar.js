@@ -25,20 +25,20 @@ import {
 import { connect } from "react-redux";
 import CustomMenu from "./CustomMenu";
 import { actionLogout } from "../../../Modules/Login/redux/Action";
-import { async } from "q";
 
 class DashboardAppBar extends Component {
   state = {
     anchorEl: null,
     isMenuOpen: false,
-    location: ""
+    location: "",
   };
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
   handleClose = () => {
     this.setState({ anchorEl: null });
-    this.props.postAllNotification();
+    //this.props.postAllNotification();
+    this.props.history.push("/leads-management");
   };
   componentDidMount() {
     this.props.getAllNotification();
@@ -67,23 +67,25 @@ class DashboardAppBar extends Component {
     let NotificationElement = Notification.length ? (
       Notification.map(item => {
         return (
-          <div>
-            <div>
-              <MenuItem onClick={this.handleClose}>{item.data.title}</MenuItem>
-            </div>
-            <div style={styles}>
-              <span>{item.data.text}</span>
-              <span>{item.created_at}</span>
-            </div>
-            <hr></hr>
+          <div onClick={this.handleClose} style={{ cursor: "pointer", outline: "none" }}>
+
+            <MenuItem style={{ display: "block" }} onClick={this.handleClose}>{item.data.title}
+              <div >
+                <div style={{ fontSize: 11 }}>{item.data.text}</div>
+                <div style={{ fontSize: 10 }}> {item.created_at}</div>
+              </div>
+            </MenuItem>
+
+
+            <hr style={{ margin: 0 }} />
           </div>
         );
       })
     ) : (
-      <div>
-        <MenuItem disabled>No New Notification</MenuItem>
-      </div>
-    );
+        <div>
+          <MenuItem disabled>No New Notification</MenuItem>
+        </div>
+      );
     return (
       <div>
         <AppBar
@@ -112,13 +114,13 @@ class DashboardAppBar extends Component {
             >
               Dashboard
             </Typography>
-            <IconButton>
+            <IconButton onClick={this.handleClick}>
               <Badge
                 badgeContent={Notification.length}
                 color="secondary"
                 aria-controls="simple-menu"
                 aria-haspopup="true"
-                onClick={this.handleClick}
+
               >
                 <NotificationsIcon />
               </Badge>
