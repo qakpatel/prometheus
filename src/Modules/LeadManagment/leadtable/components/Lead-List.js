@@ -182,7 +182,7 @@ const useStyles = makeStyles(theme => ({
       </InputGroup>
       </div>
       <div className={classes.button1}>
-      <Button variant="contained" style={{backgroundColor:'#3b5998',color:'#ffffff'}} aria-controls="simple-menu" aria-haspopup="true" onClick={downloadToExcel}>
+      <Button variant="contained" style={{backgroundColor:'#3b5998',color:'#ffffff', marginRight:'20px'}} aria-controls="simple-menu" aria-haspopup="true" onClick={downloadToExcel}>
        Download to Excel
        </Button>
       <Button variant="contained" style={{backgroundColor:'#3b5998',color:'#ffffff'}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
