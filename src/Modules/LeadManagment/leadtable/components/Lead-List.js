@@ -164,22 +164,31 @@ const useStyles = makeStyles(theme => ({
     setAnchorEl(null);
   }
   
+  function downloadToExcel(){
+    props.downloadToExcel()
+  }
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
   };
   return (
+    <React.Fragment>
+    
     <Paper className={classes.root}>
+    
       <div className={classes.search}>
       <InputGroup>
         <InputGroupAddon addonType="prepend">Search</InputGroupAddon>
-        <Input placeholder="search..."  onChange={searchIntableData}/>
+        <Input placeholder="Search"  onChange={searchIntableData}/>
       </InputGroup>
       </div>
       <div className={classes.button1}>
+      <Button variant="contained" style={{backgroundColor:'#3b5998',color:'#ffffff'}} aria-controls="simple-menu" aria-haspopup="true" onClick={downloadToExcel}>
+       Download to Excel
+       </Button>
       <Button variant="contained" style={{backgroundColor:'#3b5998',color:'#ffffff'}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
       Create lead
-      
       </Button>
+      
       </div>
       <Table className={classes.table}>
         <TableHead>
@@ -239,7 +248,7 @@ const useStyles = makeStyles(theme => ({
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
     </Paper>
-   
+    </React.Fragment>
   );
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import LeadList from './components/Lead-List'
 import PropTypes from "prop-types";
-import { getTableData } from './redux/TableAction'
+import { getTableData,downloadToExcel } from './redux/TableAction'
 import { connect } from "react-redux";
 
 class index extends Component {
@@ -9,10 +9,13 @@ class index extends Component {
     componentDidMount(){
         this.props.getTableData()
     }
+    downloadToExcel=()=>{
+        this.props.downloadToExcel(); 
+    }
     render() {
         return (
             <div>
-               <LeadList data={this.props.tabledata}/> 
+               <LeadList data={this.props.tabledata} downloadToExcel={this.downloadToExcel}/> 
             </div>
         )
     }
@@ -25,4 +28,4 @@ const mapStateToPros=state=>{
     }
 }
 
-export default connect(mapStateToPros,{getTableData})(index);
+export default connect(mapStateToPros,{getTableData, downloadToExcel})(index);

@@ -130,11 +130,11 @@ class Dialog extends Component {
   }
 
   scheduleDateHandler = (e) => {
-    this.setState({ selectedDate: e.target.value })
+    this.setState({ scheduleDate: e.target.value })
   }
 
   scheduleTimeHandler = (e) => {
-    this.setState({ selectedTime: e.target.value })
+    this.setState({ scheduleTime: e.target.value })
   }
 
   commentsHandler = (e) => {
@@ -144,16 +144,17 @@ class Dialog extends Component {
   createTask = () => {
     let assign_to=this.props.data.assigned_to.filter(a=>a.name===this.state.assign_to)
     let task_type=this.props.data.task_type_id.filter(a=>a.title===this.state.task_type)
-    console.log(this.props)
+    console.log(this.props.lead_data)
     let data = {
       lead_id: Number(this.props.data.lead_id),
       assigned_to:assign_to[0].id,
       task_type_id: task_type[0].id,
       comment: this.state.comments,
-      schedule_date: this.state.selectedDate,
-      schedule_time: this.state.selectedTime,
+      schedule_date: this.state.selectedDate.toLocaleDateString(),
+      schedule_time: this.state.selectedTime.getHours()+':'+this.state.selectedTime.getMinutes(),
       lead_status_id: this.props.lead_data.lead_status.id,
-      lead_task_status_id:this.props.where || 1,
+      lead_task_status_id:1,
+
     }
     console.log(data)
     this.props.onClick(data);
@@ -218,7 +219,7 @@ class Dialog extends Component {
 
                 <Typography variant="h8" noWrap>
                   Lead Status
-                 </Typography>
+</Typography>
               </Grid>
               <Grid item xs={12} sm={9}>
                 <TextField
@@ -326,29 +327,29 @@ class Dialog extends Component {
 </Typography>
               </Grid>
               <Grid item xs={12} sm={9}>
-                { <TextField
+                {/* { <TextField
                   id="date"
                   label="Schedule Date"
                   type="date"
-                  value={this.state.selectedDate}
+                  value={this.state.scheduleDate}
                   onChange={this.scheduleDateHandler}
                   className={classes.textField}
                   InputLabelProps={{
                     shrink: true,
                   }}
-                /> }
-                {/* { <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                /> } */}
+                { <MuiPickersUtilsProvider utils={DateFnsUtils}>
 											<KeyboardDatePicker
 												id="date"
 												margin="normal"
 												name="scheduled_date"
 											  value={this.state.selectedDate}
 												required
-												format="yyyy-mm-dd"
+												format="dd/MM/yyyy"
                         onChange={this.handleDateChange}
                         label="Schedule Date"
 												 />
-										</MuiPickersUtilsProvider> } */}
+										</MuiPickersUtilsProvider> }
               </Grid>
 
               <Grid item xs={12} sm={3}>
@@ -358,18 +359,18 @@ class Dialog extends Component {
 </Typography>
               </Grid>
               <Grid item xs={12} sm={9}>
-                <TextField
+                {/* <TextField
                   id="date"
                   label="Schedule Time"
                   type="time"
-                  value={this.state.selectedTime}
+                  value={this.state.scheduleTime}
                   onChange={this.scheduleTimeHandler}
                   className={classes.textField}
                   InputLabelProps={{
                     shrink: true,
                   }}
-                />
-                {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                /> */}
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <KeyboardTimePicker
                   margin="normal"
                   id="time-picker"
@@ -380,7 +381,7 @@ class Dialog extends Component {
                     'aria-label': 'change time',
                   }}
                 />
-                </MuiPickersUtilsProvider> */}
+                </MuiPickersUtilsProvider>
               </Grid>
 
             </Grid>
