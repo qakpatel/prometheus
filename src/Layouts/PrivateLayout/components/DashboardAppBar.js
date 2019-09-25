@@ -37,9 +37,14 @@ class DashboardAppBar extends Component {
   };
   handleClose = () => {
     this.setState({ anchorEl: null });
+  };
+
+  handleCloseAndNavigate = () => {
+    this.setState({ anchorEl: null });
     this.props.postAllNotification();
     this.props.history.push("/leads-management");
-  };
+  }
+
   componentDidMount() {
     this.props.getAllNotification();
   }
@@ -67,7 +72,7 @@ class DashboardAppBar extends Component {
     let NotificationElement = Notification.length ? (
       Notification.map(item => {
         return (
-          <div onClick={this.handleClose} style={{ cursor: "pointer", outline: "none" }}>
+          <div onClick={this.handleCloseAndNavigate} style={{ cursor: "pointer", outline: "none" }}>
 
             <MenuItem style={{ display: "block" }} onClick={this.handleClose}>{item.data.title}
               <div >

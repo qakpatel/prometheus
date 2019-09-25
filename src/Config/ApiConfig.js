@@ -9,7 +9,9 @@ export default {
     LEADS: "leads",
     LEAD_FORM: "leads/create",
     UNITPLAN: "unit-plan",
-    LOGOUT: "logout"
+    LOGOUT: "logout",
+    DASHBOARD: "dashboard",
+    NOTIFICATIONS: "notifications"
   },
   METHODS: {
     GET: "GET",
