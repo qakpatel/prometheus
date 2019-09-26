@@ -33,3 +33,12 @@
 button:focus{
     outline: none !important
 }
+
+.footerSection {
+    position: absolute;
+   left: 0;
+   bottom: 10px;
+   width: 100%;
+   background-color:"primary";
+   text-align: center;
+}

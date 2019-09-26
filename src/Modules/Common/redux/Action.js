@@ -10,6 +10,7 @@ export const actionSetErrorDialogDisplayState = (errorMessage = null) => {
 };
 
 export const actionSetLoaderDisplayState = (show = false) => {
+	console.log('ekjr')
 	return dispatch => {
 		dispatch({
 			type: ACTION_LOADER_DISPLAY_STATE,

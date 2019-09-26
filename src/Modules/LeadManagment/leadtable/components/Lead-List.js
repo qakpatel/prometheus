@@ -16,7 +16,10 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import TablePagination from '@material-ui/core/TablePagination';
 import { InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
-
+// import {
+//   JsonToExcel
+// } from 'react-json-excel';
+// let aaaaaa  = [{"id":1,"context_type":"App\\Models\\StudentEnquiry","context_id":1,"lead_status_id":1,"assigned_to":{"id":1,"name":"Neelesh Arora","email":"neelesharora@qainfotech.com","email_verified_at":null,"created_at":"2019-09-19 15:27:56","updated_at":"2019-09-19 15:27:56"},"lead_priority_id":2,"source_id":2,"creator":1,"created_at":"2019-09-19 15:37:58","updated_at":"2019-09-24 13:57:06","deleted_at":null,"priority_label":"Cold Lead","creator_label":"Neelesh Arora","status_label":"Face To Face Round","source_label":"Email","context":{"id":1,"enquirer_email":"abhij@gmail.com","enquirer_first_name":"abhi","enquirer_middle_name":"ku","enquirer_last_name":"mai","enquirer_phone_number":"+919694853855","relationship_with_child":"Father","student_first_name":"asfsad","student_middle_name":"sda","student_last_name":"sadfsd","student_gender":"Male","student_dob":"2019-09-19 00:00:00","grade_apply_for":"5","academic_year_apply_for":"1","student_current_city":"sdfsd","curriculum_apply_for":"ICE","curriculum_current":"IB","tentative_school_visit_date":"2019-09-26 00:00:00","source_to_reach_us":"sdfsd","created_at":"2019-09-19 15:37:58","updated_at":"2019-09-19 15:37:58","deleted_at":null},"lead_priority":{"id":2,"title":"Cold Lead","description":"Medium Priority Lead. This is not so important!","created_at":null,"updated_at":null,"deleted_at":null},"created_by":{"id":1,"name":"Neelesh Arora","email":"neelesharora@qainfotech.com","email_verified_at":null,"created_at":"2019-09-19 15:27:56","updated_at":"2019-09-19 15:27:56"},"lead_status":{"id":1,"title":"Face To Face Round","description":"Face to Face scheduled for Lead.","creator":1,"created_at":null,"updated_at":null,"deleted_at":null},"lead_source":{"id":2,"title":"Email","description":"Leads generated from enquiries via email","created_at":null,"updated_at":null,"deleted_at":null}}];
 const StyledTableCell = withStyles(theme => ({
   head: {
     backgroundColor: '#3b5998',
@@ -59,9 +62,7 @@ const useStyles = makeStyles(theme => ({
     paddingTop: 20,
     paddingBottom: 30,
   },
-  button: {
-    padding: '6px',
-  },
+ 
   chip: {
     margin: theme.spacing(1),
     outlineColor:theme.secondary2
@@ -165,7 +166,7 @@ const useStyles = makeStyles(theme => ({
   }
   
   function downloadToExcel(){
-    props.downloadToExcel()
+    props.downloadToExcel();
   }
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
@@ -182,9 +183,13 @@ const useStyles = makeStyles(theme => ({
       </InputGroup>
       </div>
       <div className={classes.button1}>
-      <Button variant="contained" style={{backgroundColor:'#3b5998',color:'#ffffff', marginRight:'20px'}} aria-controls="simple-menu" aria-haspopup="true" onClick={downloadToExcel}>
+      <Button variant="contained" style={{backgroundColor:'#3b5998',color:'#ffffff',marginRight:'16px'}} aria-controls="simple-menu" aria-haspopup="true" onClick={downloadToExcel}>
        Download to Excel
-       </Button>
+                </Button>
+                {/* <JsonToExcel
+            data={aaaaaa}
+            filename={'ss.xlsx'}
+          /> */}
       <Button variant="contained" style={{backgroundColor:'#3b5998',color:'#ffffff'}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
       Create lead
       </Button>
@@ -195,37 +200,31 @@ const useStyles = makeStyles(theme => ({
           <TableRow>
             <StyledTableCell>Lead ID</StyledTableCell>
             <StyledTableCell style={{cursor:'pointer'}} onClick={sortByName}>{sortName?<ArrowDownwardIcon />:<ArrowUpwardIcon />}Name</StyledTableCell>
-            <StyledTableCell align="center">Enquiry Email</StyledTableCell>
+            <StyledTableCell align="center" style={{cursor:'pointer'}}>Enquiry Email</StyledTableCell>
             <StyledTableCell align="center">Location</StyledTableCell>
             <StyledTableCell align="center">Contact</StyledTableCell>
            <StyledTableCell align="center" onClick={leadFilter} style={{cursor:'pointer'}}>{hotLeadFilter?<ArrowDownwardIcon />:<ArrowUpwardIcon />}Priority</StyledTableCell>
             <StyledTableCell align="center">Actions</StyledTableCell>
-
-           
           </TableRow>
         </TableHead>
         <TableBody>
             {filterTableData?filterTableData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((data,index) => (
             <StyledTableRow key={index}>
-              <StyledTableCell component="th" scope="row">
+              <StyledTableCell component="th">
                 {data.context_id}
               </StyledTableCell>
-              <StyledTableCell component="th" scope="row">
+              <StyledTableCell component="th">
                 {data.context.enquirer_first_name+' '+data.context.enquirer_last_name}
               </StyledTableCell>
-              <StyledTableCell align="center"><a href={"mailto:"+data.context.enquirer_email} target="_top">{data.context.enquirer_email}</a></StyledTableCell>
+              <StyledTableCell align="center" style={{padding:'0px'}}><a href={"mailto:"+data.context.enquirer_email} target="_top">{data.context.enquirer_email}</a></StyledTableCell>
               <StyledTableCell align="center">{data.context.student_current_city}</StyledTableCell>
-              <StyledTableCell align="center"><a href={"tel:"+data.context.enquirer_phone_number}>{data.context.enquirer_phone_number}</a></StyledTableCell>
+              <StyledTableCell align="center" style={{padding:'0px'}}><a href={"tel:"+data.context.enquirer_phone_number}>{data.context.enquirer_phone_number}</a></StyledTableCell>
               <StyledTableCell align="center">
               <Chip label={data.priority_label}  color="secondary" className={classes.chip} variant="outlined" />
-              
-     
-
               </StyledTableCell>
-              <StyledTableCell align="center">
+              <StyledTableCell align="center"  style={{paddingLeft:'1px'}}>
               <Link to={{pathname:'/leads-management/timeline',state:{lead_id: data.id,status_id:data.lead_status_id,lead_data:data}}}>
-                <Button variant="contained" color="primary" style={{padding:'5px'}}>Open Lead</Button></Link>
-              
+                <Button variant="contained" color="primary" style={{padding:'5px'}}>Open Lead</Button></Link>           
               </StyledTableCell>
           
             </StyledTableRow>
@@ -233,7 +232,7 @@ const useStyles = makeStyles(theme => ({
         </TableBody>
       </Table>
       <TablePagination
-        rowsPerPageOptions={[5, 25, 100]}
+        rowsPerPageOptions={[10, 25, 100]}
         component="div"
        count={tableData?tableData.length:10}
         rowsPerPage={rowsPerPage}

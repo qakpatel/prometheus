@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import LeadList from './components/Lead-List'
 import PropTypes from "prop-types";
-import { getTableData,downloadToExcel } from './redux/TableAction'
+import { getTableData,downloadToExcel } from './../redux/LeadAction'
 import { connect } from "react-redux";
 
 class index extends Component {
@@ -24,7 +24,7 @@ class index extends Component {
 const mapStateToPros=state=>{
     console.log('index.js table',state)
     return {
-        tabledata:state.tableReducer.data
+        tabledata:state.leadReducer.data
     }
 }
 

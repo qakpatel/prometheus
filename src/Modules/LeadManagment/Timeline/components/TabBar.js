@@ -13,6 +13,8 @@ import Dialog from './../../Dialog'
 import { Button } from 'reactstrap';
 import { FormLabel } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import SwipeableViews from 'react-swipeable-views';
+
 
 
 function TabPanel(props) {
@@ -90,7 +92,7 @@ function SimpleTab(props) {
         
         <div className={classes.root}>
             <AppBar position="static">
-                <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" >
+                <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered  variant="fullWidth">
                     <Tab label={props.label[0]} {...a11yProps(0)} style={{ width: '50%' }} />
                     <Tab label={props.label[1]} {...a11yProps(1)} style={{ width: '50%' }} />
                 </Tabs>

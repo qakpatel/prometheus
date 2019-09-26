@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import Dialog from './components/dialog'
 import { connect } from 'react-redux'
-import { getDialogData, submitDialog } from './redux/dialogaction'
+import { getDialogData, submitDialog } from './../redux/LeadAction';
+
 
  class index extends Component {
 
@@ -11,8 +12,9 @@ import { getDialogData, submitDialog } from './redux/dialogaction'
     }
     submitDialogData=(data)=>{
         this.props.submitDialog(data);
-        this.props.getDialogData(this.props.lead_data.id);
+        this.props.getDialogData(this.props.lead_data.id); 
     }
+     
     render() {
         console.log(this.props.open)
         return (
@@ -26,8 +28,8 @@ import { getDialogData, submitDialog } from './redux/dialogaction'
 const matStateToProps=state=>{
 console.log(state)
      return{
-         dialogData:state.dialogReducer.dialogData,
-         response:state.dialogReducer.submitDialog
+         dialogData:state.leadReducer.dialogData,
+         response:state.leadReducer.submitDialog
      }
 }
 
