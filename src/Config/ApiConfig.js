@@ -1,7 +1,7 @@
 export default {
   API_BASE_URL: "https://api.prometheusschool.com/api/v1/",
   CLIENT_ID: 2,
-  CLIENT_SECRET: "lCMBZyVNcQq2nhJ2pHz7zxxbJ0TenqhMceox8fZ7", //"wj9clx4iZtMbenoC6c8tSLmV08FzkxxujwK39ArU",
+  CLIENT_SECRET: "9Dm89T4aSrQ277MZegOEulEyzjqe24CX3wtV61jr",
   ENDPOINTS: {
     LOGIN: "oauth/token",
     REFRESH_TOKEN: "oauth/token",

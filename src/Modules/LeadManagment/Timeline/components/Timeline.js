@@ -91,7 +91,7 @@ class ActionPage extends Component {
                                                 id="simple-menu"
                                                 anchorEl={this.state.anchorEl}
                                                 keepMounted
-                                                open={Boolean(this.state.anchorEl)}
+                                                open={false}
                                                 onClose={this.handleClose}
                                             >
                                                 <MenuItem onClick={this.handleClose}>Profile</MenuItem>
