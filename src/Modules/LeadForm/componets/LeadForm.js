@@ -344,7 +344,7 @@ class LeadForm extends React.Component {
 											title={LABELS.LEAD_PRIORITY}
 											onSelectChange={this.onChangeDropDownObject}
 											required={true}
-											jsonkeyName={"lead_priority"}
+											jsonkeyName={"lead_priority_id"}
 											display Non={false}
 											isArrayOfObject={true}
 											optionLabel='id'

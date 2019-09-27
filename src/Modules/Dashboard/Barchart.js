@@ -18,9 +18,9 @@ class Barchart extends React.Component {
     const { leadsData } = this.props;
     const data = leadsData.sourcesWithCount
       ? leadsData.sourcesWithCount.map(item => ({
-          x: item.title,
-          y: item.total
-        }))
+        x: item.title,
+        y: item.total
+      }))
       : "";
     return (
       <div>

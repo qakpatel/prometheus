@@ -17,6 +17,9 @@ export default function CustomMenu(props) {
     <Menu
       id="simple-menu"
       anchorEl={props.location}
+      getContentAnchorEl={null}
+      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      transformOrigin={{ vertical: "top", horizontal: "center" }}
       keepMounted
       open={props.isMenuOpen}
       onClose={props.handleClose}
