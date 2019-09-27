@@ -2,6 +2,7 @@ import ApiClient from "../../../../Utility/ApiClient";
 import ApiConfig from "../../../../Config/ApiConfig";
 const TimelineService = {
 	getTimeline: (state)=> {
+		console.log(state)
 		let token=JSON.parse(localStorage.getItem('USER'))
 		return new Promise((resolve, reject) => {
 			ApiClient.executeRequest(`tasks/${state.lead_id}/${state.status_id}`, {}, {}, ApiConfig.METHODS.GET,token.access_token).then((response)=> {
@@ -20,6 +21,30 @@ const TimelineService = {
 		let token=JSON.parse(localStorage.getItem('USER'))
 		return new Promise((resolve, reject)=>{
 			ApiClient.executeRequest(`leads/${id}`,{},{lead_status_id:++lead_status},ApiConfig.METHODS.PUT,token.access_token).then((res)=>{
+			 console.log(res)
+				if(!res.isError){
+				 resolve(res)
+				 return;
+			 }
+			})
+		})
+	},
+	updateAssign:(id,assigned_to)=>{
+		let token=JSON.parse(localStorage.getItem('USER'))
+		return new Promise((resolve, reject)=>{
+			ApiClient.executeRequest(`leads/${id}`,{},{assigned_to:assigned_to},ApiConfig.METHODS.PUT,token.access_token).then((res)=>{
+			 console.log(res)
+				if(!res.isError){
+				 resolve(res)
+				 return;
+			 }
+			})
+		})
+	},
+	updatePriority:(id,priority_lable)=>{
+		let token=JSON.parse(localStorage.getItem('USER'))
+		return new Promise((resolve, reject)=>{
+			ApiClient.executeRequest(`leads/${id}`,{},{lead_priority_id:priority_lable},ApiConfig.METHODS.PUT,token.access_token).then((res)=>{
 			 console.log(res)
 				if(!res.isError){
 				 resolve(res)

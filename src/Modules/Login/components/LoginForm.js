@@ -12,6 +12,7 @@ import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import Lang from "../../../Lang/en";
 import { loginFormStyles } from "../styles";
+import Footer from "./footer";
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -97,6 +98,7 @@ class LoginForm extends React.Component {
             </Grid>
           </Typography>
         </div>
+        <Footer/>
       </Container>
     );
   }

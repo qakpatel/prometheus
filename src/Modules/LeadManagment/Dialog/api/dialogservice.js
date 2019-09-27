@@ -1,6 +1,5 @@
 import ApiClient from "../../../../Utility/ApiClient";
 import ApiConfig from "../../../../Config/ApiConfig";
-
 const DialogService = {
 	getDialogData: (lead_id) => {
 		let token=JSON.parse(localStorage.getItem('USER'))

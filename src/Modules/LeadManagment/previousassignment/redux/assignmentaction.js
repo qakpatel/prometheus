@@ -1,12 +1,12 @@
-import DialogService from "./../api/dialogservice";
+import AssignmentService from "./../api/assignmentservice";
 import { async } from "q";
 
 const GET_DATA = "GET_DATA";
-const SET_DATA = "SET_DATA"
 
-export const getDialogData = (lead_id) => {
+
+export const gethistoryData = (lead_id) => {
 	return async dispatch => {
-		let response = await DialogService.getDialogData(lead_id);
+		let response = await AssignmentService.gethistoryData(lead_id);
 
 		if (!response.isError) {
 			dispatch({
