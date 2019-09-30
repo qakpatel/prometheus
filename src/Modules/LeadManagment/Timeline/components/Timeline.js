@@ -92,7 +92,7 @@ class ActionPage extends Component {
                         <Paper className={classes.paper}>
                             <List>
                                 <ListItem>
-                                    <FormLabel><span style={{ fontWeight: 'bold' }}>Lead ID:</span> {this.props.leadData.context.id}</FormLabel>
+                                    <FormLabel><span style={{ fontWeight: 'bold' }}>Lead ID: </span> {this.props.leadData.context.id}</FormLabel>
                                 </ListItem>
                                 <ListItem>
                                     <FormLabel><span style={{ fontWeight: 'bold' }}>Enquirer: </span>{this.props.leadData.context.enquirer_first_name + ' ' + this.props.leadData.context.enquirer_last_name}<br />{' { '}<a href={"mailto:" + this.props.leadData.context.enquirer_email} target="_top">{this.props.leadData.context.enquirer_email}</a>{' } '}</FormLabel>
@@ -104,17 +104,17 @@ class ActionPage extends Component {
                                 </ListItem> */}
                             
                                 <ListItem>
-                                    <FormLabel><span style={{ fontWeight: 'bold' }}>Enquirer phone no:</span><br /><a href={"tel:" + this.props.leadData.context.enquirer_phone_number}>{this.props.leadData.context.enquirer_phone_number}</a></FormLabel>
+                                    <FormLabel><span style={{ fontWeight: 'bold' }}>Enquirer Phone Number: </span><br /><a href={"tel:" + this.props.leadData.context.enquirer_phone_number}>{this.props.leadData.context.enquirer_phone_number}</a></FormLabel>
                                 </ListItem>
                                 <ListItem>
-                                    <FormLabel><span style={{ fontWeight: 'bold' }}>Student Name:</span>{this.props.leadData.context.student_first_name + ' ' + this.props.leadData.context.student_last_name}</FormLabel>
+                                    <FormLabel><span style={{ fontWeight: 'bold' }}>Student Name: </span>{this.props.leadData.context.student_first_name + ' ' + this.props.leadData.context.student_last_name}</FormLabel>
                                 </ListItem>
                                 <ListItem>
-                                    <FormLabel><span style={{ fontWeight: 'bold' }}>Student DOB:</span>{(new Date(this.props.leadData.context.student_dob)).toLocaleDateString('en-US', DATE_OPTIONS)}</FormLabel>
+                                    <FormLabel><span style={{ fontWeight: 'bold' }}>Student DOB: </span>{(new Date(this.props.leadData.context.student_dob)).toLocaleDateString('en-US', DATE_OPTIONS)}</FormLabel>
                                 </ListItem>
 
                                 <ListItem>
-                                    <FormLabel><span style={{ fontWeight: 'bold' }}>Current City:</span>{this.props.leadData.context.student_current_city}</FormLabel>
+                                    <FormLabel><span style={{ fontWeight: 'bold' }}>Current City: </span>{this.props.leadData.context.student_current_city}</FormLabel>
                                 </ListItem>
 
                                 <ListItem>
@@ -207,7 +207,7 @@ class ActionPage extends Component {
                        </Grid>
                        <Grid item xs={8}>
                         <Paper className={classes.paper}>
-                            <Tabs label={['Face to Face', 'School Tour']} data={this.props.user} lead_data={this.props.leadData} onClick={this.props.onClick.bind(this, this.props.leadData.context.id, this.props.leadData.lead_status_id)} style={{width:'100%'}}/>
+                            <Tabs label={['Face to Face', 'School Tour']} data={this.props.user} lead_data={this.props.leadData} onClick={this.props.onClick.bind(this, this.props.leadData.context.id, this.props.leadData.lead_status_id)} style={{width:'100%'}} taskComplete={this.props.taskComplete}/>
                         </Paper>
                     </Grid>
                 </Grid>

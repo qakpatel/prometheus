@@ -20,9 +20,9 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
 let counter = 0;
-function createData(FirstName, Email, MobileNumber, LeadPriority, CreatedDate) {
+function createData(FirstName,LastName, Email, MobileNumber,Location, LeadPriority, CreatedDate) {
   counter += 1;
-  return { id: counter, FirstName, Email, MobileNumber, LeadPriority, CreatedDate };
+  return { id: counter, FirstName,LastName, Email, MobileNumber,Location, LeadPriority, CreatedDate };
 }
 
 function desc(a, b, orderBy) {
@@ -37,14 +37,14 @@ function desc(a, b, orderBy) {
 
 function stableSort(array, cmp) {
   const stabilizedThis = array ? (array.map((el, index) => [el, index])) : ('')
-  if (stabilizedThis) {
+  if(stabilizedThis){
     stabilizedThis.sort((a, b) => {
       const order = cmp(a[0], b[0]);
       if (order !== 0) return order;
       return a[1] - b[1];
     });
     return stabilizedThis.map(el => el[0]);
-  }
+  } 
   return ''
 }
 
@@ -54,8 +54,10 @@ function getSorting(order, orderBy) {
 
 const rows = [
   { id: 'FirstName', numeric: false, disablePadding: false, label: 'First Name' },
+  { id: 'LastName', numeric: false, disablePadding: false, label: 'Last Name' },
   { id: 'Email', numeric: false, disablePadding: false, label: 'Email Id' },
   { id: 'MobileNumber', numeric: true, disablePadding: false, label: 'Mobile Number' },
+  { id: 'Location', numeric: true, disablePadding: false, label: 'Location' },
   { id: 'LeadPriority', numeric: false, disablePadding: false, label: 'Lead Priority' },
   { id: 'CreatedDate', numeric: true, disablePadding: false, label: 'Created Date' },
 ];
@@ -111,13 +113,13 @@ const toolbarStyles = theme => ({
   highlight:
     theme.palette.type === 'light'
       ? {
-        color: theme.palette.secondary.main,
-        backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-      }
+          color: theme.palette.secondary.main,
+          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+        }
       : {
-        color: theme.palette.text.primary,
-        backgroundColor: theme.palette.secondary.dark,
-      },
+          color: theme.palette.text.primary,
+          backgroundColor: theme.palette.secondary.dark,
+        },
   spacer: {
     flex: '1 1 100%',
   },
@@ -144,10 +146,10 @@ let EnhancedTableToolbar = props => {
             {numSelected} selected
           </Typography>
         ) : (
-            <Typography variant="h6" id="tableTitle">
-              Recent Leads
+          <Typography variant="h6" id="tableTitle">
+            {props.from===1?'':'Resent Leads'}
           </Typography>
-          )}
+        )}
       </div>
       <div className={classes.spacer} />
       <div className={classes.actions}>
@@ -158,8 +160,8 @@ let EnhancedTableToolbar = props => {
             </IconButton>
           </Tooltip>
         ) : (
-            ''
-          )}
+          ''
+        )}
       </div>
     </Toolbar>
   );
@@ -256,13 +258,13 @@ class EnhancedTable extends React.Component {
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
-
+   
     const { classes, tableData } = this.props;
-    console.log(this.props.tableData, 'enchanced table');
-    var data1 = tableData ? (
+    console.log(this.props.tableData,'enchanced table');
+    var data1 =tableData ? (
       tableData.map((eachrow) => {
         return (
-          createData(eachrow.context.enquirer_first_name, eachrow.context.enquirer_email, eachrow.context.enquirer_phone_number, eachrow.priority_label, eachrow.created_at)
+          createData(eachrow.context.enquirer_first_name,eachrow.context.enquirer_last_name,eachrow.context.enquirer_email,eachrow.context.enquirer_phone_number,eachrow.context.student_current_city,eachrow.priority_label,eachrow.created_at)
         )
       })
     ) : ('')
@@ -270,50 +272,52 @@ class EnhancedTable extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} from={this.props.from}/>
         <div className={classes.tableWrapper}>
           {data1 ? (
             <Table className={classes.table} aria-labelledby="tableTitle">
-              <EnhancedTableHead
-                numSelected={selected.length}
-                order={order}
-                orderBy={orderBy}
-                onSelectAllClick={this.handleSelectAllClick}
-                onRequestSort={this.handleRequestSort}
-                rowCount={data1.length}
-              />
-              <TableBody>
+            <EnhancedTableHead
+              numSelected={selected.length}
+              order={order}
+              orderBy={orderBy}
+              onSelectAllClick={this.handleSelectAllClick}
+              onRequestSort={this.handleRequestSort}
+              rowCount={data1.length}
+            />
+            <TableBody>
                 {stableSort(data1, getSorting(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map(n => {
-                    const isSelected = this.isSelected(n.id);
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        aria-checked={isSelected}
-                        tabIndex={-1}
-                        key={n.id}
-                      >
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map(n => {
+                  const isSelected = this.isSelected(n.id);
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      aria-checked={isSelected}
+                      tabIndex={-1}
+                      key={n.id}
+                    >
 
-                        <TableCell align="center" component="th" scope="row" padding="none">
-                          {n.FirstName}
-                        </TableCell>
-                        <TableCell align="center"><a href={`mailto:${n.Email}`}>{n.Email}</a></TableCell>
-                        <TableCell align="center"><a href={`tel: ${n.MobileNumber}`}>{n.MobileNumber}</a></TableCell>
-                        <TableCell align="center">{n.LeadPriority}</TableCell>
-                        <TableCell align="center">{n.CreatedDate}</TableCell>
-                      </TableRow>
-                    );
-                  })}
+                      <TableCell align="center" component="th" scope="row" padding="none">
+                        {n.FirstName}
+                      </TableCell>
+                      <TableCell align="center">{n.LastName}</TableCell>
+                      <TableCell align="center">{n.Email}</TableCell>
+                      <TableCell align="center">{n.MobileNumber}</TableCell>
+                      <TableCell align="center">{n.Location}</TableCell>
+                      <TableCell align="center">{n.LeadPriority}</TableCell>
+                      <TableCell align="center">{n.CreatedDate}</TableCell>
+                    </TableRow>
+                  );
+                })}
+              
 
 
-
-              </TableBody>
-            </Table>
+            </TableBody>
+          </Table>
           ) : ('')
           }
-
+          
         </div>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}

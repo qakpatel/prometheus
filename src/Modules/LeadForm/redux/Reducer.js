@@ -5,7 +5,7 @@ import {
 	ACTION_CREATE_LEAD_SUBMIT_SUCCESS } from "./Types";
 
 const LeadReducer = (state = { user: {} }, action) => {
-	console.log(action.payload, action.type);
+	console.log(action.payload);
 	switch (action.type) {
 		case ACTION_GET_CREATE_LEAD_DATA:
 			return { ...state, createLead: action.payload };

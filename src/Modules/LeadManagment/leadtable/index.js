@@ -6,16 +6,32 @@ import { connect } from "react-redux";
 
 class index extends Component {
 
-    componentDidMount(){
-        this.props.getTableData()
+    state = {
+        page: 1,
     }
-    downloadToExcel=()=>{
+
+    handlePageChange =(pageNumer) => {
+        this.setState({
+            page: pageNumer+1,
+        })
+    }
+
+    componentDidMount(){
+        alert(this.state.page);
+        this.props.getTableData(this.state.page)
         this.props.downloadToExcel(); 
+    }
+
+    componentDidUpdate(prevProp, prevState){
+        if(prevState.page !== this.state.page) {
+            alert(this.state.page);
+            this.props.getTableData(this.state.page)
+        } 
     }
     render() {
         return (
             <div>
-               <LeadList data={this.props.tabledata} downloadToExcel={this.downloadToExcel}/> 
+               <LeadList data={this.props.tabledata} fileurl={this.props.exceldata?this.props.exceldata.fileUrl:null} handlePageChange= {this.handlePageChange}/> 
             </div>
         )
     }
@@ -24,8 +40,17 @@ class index extends Component {
 const mapStateToPros=state=>{
     console.log('index.js table',state)
     return {
-        tabledata:state.leadReducer.data
+        tabledata:state.leadReducer.data,
+        exceldata:state.leadReducer.excel
+
     }
 }
 
-export default connect(mapStateToPros,{getTableData, downloadToExcel})(index);
+const mapDispatchToProps = dispatch =>  {
+    return {
+        getTableData: (page) => dispatch(getTableData(page)),
+        downloadToExcel: () => dispatch(downloadToExcel())
+    }
+}
+
+export default connect(mapStateToPros,mapDispatchToProps)(index);

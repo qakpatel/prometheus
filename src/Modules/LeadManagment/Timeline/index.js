@@ -2,7 +2,7 @@ import React,{ Component } from 'react'
 import Timeline from './components/Timeline'
 import './style/main.css'
 import { connect } from "react-redux";
-import { getTimeline, updateStatus,getDialogData,updateAssign, updatePriority } from './../redux/LeadAction';
+import { getTimeline, updateStatus,getDialogData,updateAssign, updatePriority,taskComplete } from './../redux/LeadAction';
 
  class index extends Component {
 
@@ -20,12 +20,16 @@ import { getTimeline, updateStatus,getDialogData,updateAssign, updatePriority } 
     updatePriority=(lead_id,priority_id)=>{
        this.props.updatePriority(lead_id,priority_id)
     }
+    taskComplete=(a,e)=>{
+        console.log(a,e);
+      this.props.taskComplete(a.id,a.lead_task_status_id)
+    }
 
   render(){
       console.log(this.props.dialogData)
     return (
         <div>
-            <Timeline user={this.props.timelines.user} leadData={this.props.route.location.state.lead_data} onClick={this.startFollowup} assign_data={this.props.dialogData} updateAssignTo={this.updateAssignTo} updatePriority={this.updatePriority}/>
+            <Timeline user={this.props.timelines.user} leadData={this.props.route.location.state.lead_data} onClick={this.startFollowup} assign_data={this.props.dialogData} updateAssignTo={this.updateAssignTo} updatePriority={this.updatePriority} taskComplete={this.taskComplete}/>
         </div>
     );
   }
@@ -40,4 +44,4 @@ const mapStateToProps=state=>{
     }
 }
 
-export default connect(mapStateToProps,{getTimeline,updateStatus,getDialogData,updateAssign, updatePriority})(index);
+export default connect(mapStateToProps,{getTimeline,updateStatus,getDialogData,updateAssign, updatePriority,taskComplete})(index);

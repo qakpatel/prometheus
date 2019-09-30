@@ -3,14 +3,14 @@ import LoginReducer from "./Login/redux/Reducer";
 import { dashboardReducer } from "./Dashboard/reducer";
 import LeadReducer from "./LeadForm/redux/Reducer"
 import UnitPlannerReducer from "./UnitPlanner/redux/Reducer";
-import LeadManagementReducer from './LeadManagment/redux/LeadReducer'
+import LeadManagmentReducer from './LeadManagment/redux/LeadReducer'
 
 import { ACTION_LOADER_DISPLAY_STATE, ACTION_ERROR_DISPLAY_STATE } from "./Common/redux/Types";
 export default combineReducers({
 	loginState: LoginReducer,
 	leadFormState: LeadReducer,
 	unitPlan: UnitPlannerReducer,
-	leadReducer:LeadManagementReducer,
+	leadReducer: LeadManagmentReducer,
 	dashboardReducer,
 	loaderState: (state = { show: false }, action) => {
 		switch (action.type) {

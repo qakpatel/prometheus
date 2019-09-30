@@ -3,6 +3,7 @@ import Dashboard from "../Modules/Dashboard";
 import LeadForm from '../Modules/LeadForm'
 import UnitPlanner from './../Modules/UnitPlanner'
 import Timeline from './../Modules/LeadManagment/Timeline'
+import Advance from './../Modules/LeadManagment/leadtable/components/AdvanceFilter'
 
 const PrivateRoutes = {
 	Dashboard: {
@@ -20,6 +21,10 @@ const PrivateRoutes = {
 	Timeline: {
 		component: Timeline,
 		path: "/leads-management/timeline"
+	},
+	Advance: {
+		component: Advance,
+		path: "/leads-management/advancefilter"
 	},
 	UnitPlanner: {
 		component: UnitPlanner,

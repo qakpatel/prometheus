@@ -21,6 +21,7 @@ class PrivateLayout extends Component {
 		this.setState({ open: true });
 	};
 	render() {
+		console.log(this.props)
 		const { classes, component, route } = this.props;
 		const { open } = this.state;
 		const { handleDrawerClose, handleDrawerOpen } = this;
@@ -28,7 +29,7 @@ class PrivateLayout extends Component {
 		return (
 			<div style={{ display: "flex" }}>
 				<CssBaseline />
-				<DashboardAppBar open={open} openDrawer={handleDrawerOpen} />
+				<DashboardAppBar open={open} openDrawer={handleDrawerOpen} title={this.props.match.path}/>
 				<DashboardDrawer open={open} closeDrawer={handleDrawerClose} />
 				<main className={classes.content}>
 				<div className={classes.appBarSpacer} />
