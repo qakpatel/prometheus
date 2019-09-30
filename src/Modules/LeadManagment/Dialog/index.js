@@ -19,7 +19,9 @@ import { getDialogData, submitDialog } from './../redux/LeadAction';
         console.log(this.props.open)
         return (
             <div>
-                <Dialog open={this.props.open} closeDailog={this.props.closeDailog} data={this.props.dialogData} lead_data={this.props.lead_data} onClick={this.submitDialogData}/>
+                <Dialog open={this.props.open} closeDailog={this.props.closeDailog} data={this.props.dialogData} lead_data={this.props.lead_data} onClick={this.submitDialogData}
+                 updateStatusData={this.props.updateStatusData}
+                 />
             </div>
         )
     }
@@ -29,7 +31,7 @@ const matStateToProps=state=>{
 console.log(state)
      return{
          dialogData:state.leadReducer.dialogData,
-         response:state.leadReducer.submitDialog
+         response:state.leadReducer.submitDialog,
      }
 }
 

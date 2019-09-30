@@ -76,7 +76,9 @@ function SimpleTab(props) {
         console.log(open)
       };
     function handleChange(event, newValue) {
-        console.log(newValue)
+        if(props.lead_data.lead_status_id===0){
+            return;
+        }
         setValue(newValue);
     }
    function closeDailog(){
@@ -121,7 +123,7 @@ function SimpleTab(props) {
               
                 <div style={{ padding: '40px' }}>
                 <Link to="/leads-management" className={classes.reject}><Button variant="contained" color="primary" outline color="danger" style={{ display: 'inline' }} >Reject</Button></Link>
-                    <Button outline color="info" style={{ display: 'inline', float: 'right' }} onClick={() => { setValue(1) }}>Move To Next Step</Button>
+                    <Button outline color="info" style={{ display: 'inline', float: 'right' }} onClick={() => { setValue(1) }} disabled={props.lead_data.lead_status_id===0}>Move To Next Step</Button>
                 </div>
 
             </TabPanel>
@@ -146,7 +148,7 @@ function SimpleTab(props) {
                     <Button outline color="info" style={{ display: 'inline', float: 'right' }}>Move To Skolaro</Button>
                 </div>
             </TabPanel>
-            <Dialog open={open} closeDailog={closeDailog} lead_data={props.lead_data} lead_status_id={1}/>
+            <Dialog open={open} closeDailog={closeDailog} lead_data={props.lead_data} lead_status_id={1} updateStatusData={props.updateStatusData}/>
         </div>
     );
 }

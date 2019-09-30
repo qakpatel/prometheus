@@ -207,7 +207,7 @@ class ActionPage extends Component {
                        </Grid>
                        <Grid item xs={8}>
                         <Paper className={classes.paper}>
-                            <Tabs label={['Face to Face', 'School Tour']} data={this.props.user} lead_data={this.props.leadData} onClick={this.props.onClick.bind(this, this.props.leadData.context.id, this.props.leadData.lead_status_id)} style={{width:'100%'}} taskComplete={this.props.taskComplete}/>
+                            <Tabs label={['Face to Face', 'School Tour']} data={this.props.user} lead_data={this.props.leadData} onClick={this.props.onClick.bind(this, this.props.leadData.context.id, this.props.leadData.lead_status_id)} style={{width:'100%'}} taskComplete={this.props.taskComplete} updateStatusData={this.props.updateStatusData}/>
                         </Paper>
                     </Grid>
                 </Grid>

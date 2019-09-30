@@ -32,15 +32,15 @@ class LeadForm extends React.Component {
 		console.log("Lead form componentDidMount")
 	}
 
-	componentWillUpdate(nextProps, nextState) {
-		console.log("Lead form componentWillUpdate")
-	}
+	// componentWillUpdate(nextProps, nextState) {
+	// 	console.log("Lead form componentWillUpdate")
+	// }
 
-	componentDidUpdate(prevProps, PrevState) {
-		console.log("Lead form componentDidUpdate")
-		console.log("Lead form componentDidUpdate", LocalStorageHelper.get(LocalStorageConfig.KEY_LEAD_FORM_DATA))
+	// componentDidUpdate(prevProps, PrevState) {
+	// 	console.log("Lead form componentDidUpdate")
+	// 	console.log("Lead form componentDidUpdate", LocalStorageHelper.get(LocalStorageConfig.KEY_LEAD_FORM_DATA))
 
-	}
+	// }
 
 	shouldComponentUpdate(nextProps, nextState) {
 		console.log("Lead form shouldComponentUpdate")
@@ -49,19 +49,16 @@ class LeadForm extends React.Component {
 		return true;
 	}
 
-	componentWillReceiveProps(nextProps, nextContext) {
-		console.log("Lead form componentWillReceiveProps")
-	}
+	// componentWillReceiveProps(nextProps, nextContext) {
+	// 	console.log("Lead form componentWillReceiveProps")
+	// }
 
 	submitClick = () => {
-		// TODO
 		this.props.actionCreateLead(this.state);
 		this.props.history.push("/leads-management")
 	};
 
 	onChangeDropDownObject = (label, value )=> {
-		console.log("e.target.value", value);
-		console.log("e.target.label", label);
 		this.setState({
 			[label]: value
 		},()=>console.log("current state ", this.state));
@@ -81,20 +78,14 @@ class LeadForm extends React.Component {
 
 
 	handleDateChange = (keyName,date) => {
-		console.log("selected date",date.toString())
-		console.log("selected date converted", moment(date).format("YYYY/MM/DD"))
 		//this.setState(prevState => update(prevState, { $merge: { student_dob: moment(date).format("ddd MMM DD YYYY HH:mm:ss zzZZ")}}));
 		this.setState({[keyName] : moment(date).format("YYYY/MM/DD")}, ()=>console.log("current state " ,this.state));
 	}
 
 	render() {
-		console.log("Lead form render")
 		const { classes, leadFormData } = this.props;
 		const leadFormDataFetched = leadFormData && leadFormData.leadFormData && leadFormData.leadFormData.data;
-		console.log("leadFormDataFetched", leadFormDataFetched)
 		const leadFormFetchedData = leadFormDataFetched ? leadFormData.leadFormData.data : null;
-		console.log("state lead form data", this.state);
-		console.log('test data', leadFormFetchedData)
 		const LABELS = Lang.LABELS.LEAD_FORM;
 		const { loginClick, onChangeField } = this;
 		return (
@@ -123,7 +114,10 @@ class LeadForm extends React.Component {
 											label={LABELS.ENQUIRER_FIRST_NAME}
 											type="email"
 											autoComplete="off"
-											autoFocus />
+											autoFocus
+											error={this.state.enquirer_first_name===""?true:false} 
+											helperText={this.state.enquirer_first_name===""?'Enquirer first name required':''}
+											/>
 									</Grid>
 									<Grid item xs={4}>
 										<TextField
@@ -148,7 +142,10 @@ class LeadForm extends React.Component {
 											fullWidth
 											label={LABELS.ENQUIRER_LAST_NAME}
 											type="email"
-											autoComplete="off" />
+											autoComplete="off"
+											error={this.state.enquirer_last_name===""?true:false} 
+											helperText={this.state.enquirer_last_name===""?'Enquirer last name required':''}
+											/>
 									</Grid>
 									<Grid item xs={4}>
 										<TextField
@@ -161,7 +158,10 @@ class LeadForm extends React.Component {
 											fullWidth
 											label={LABELS.ENQUIRER_EMAIL}
 											type="email"
-											autoComplete="off" />
+											autoComplete="off"
+											error={this.state.enquirer_email===""?true:false} 
+											helperText={this.state.enquirer_email===""?'Enquirer email required':''}
+											/>
 									</Grid>
 
 									<Grid item xs={4}>
@@ -175,7 +175,10 @@ class LeadForm extends React.Component {
 											fullWidth
 											label={LABELS.ENQUIRER_PHONE_NUMBER}
 											type="phone"
-											autoComplete="off">
+											autoComplete="off"
+											error={this.state.enquirer_phone===""?true:false} 
+											helperText={this.state.enquirer_phone===""?'Enquirer phone number required':''}
+											>
 										</TextField>		
 									</Grid>
 									<Grid item xs={4}>
@@ -196,7 +199,10 @@ class LeadForm extends React.Component {
 											fullWidth
 											label={LABELS.STUDENT_FIRST_NAME}
 											type="email"
-											autoComplete="off" />
+											autoComplete="off"
+											error={this.state.student_first_name===""?true:false} 
+											helperText={this.state.student_first_name===""?'Student first name required':''}
+											/>
 									</Grid>
 									<Grid item xs={4}>
 										<TextField
@@ -221,7 +227,10 @@ class LeadForm extends React.Component {
 											fullWidth
 											label={LABELS.STUDENT_LAST_NAME}
 											type="email"
-											autoComplete="off" />
+											autoComplete="off"
+											error={this.state.student_last_name===""?true:false} 
+											helperText={this.state.student_last_name===""?'Student last name required':''}
+											/>
 									</Grid>
 									<Grid item xs={4}>
 										<SimpleSelect
@@ -242,6 +251,8 @@ class LeadForm extends React.Component {
 												name="student_dob"
 												value={this.state.student_dob ? moment(this.state.student_dob).format("ddd MMM DD YYYY HH:mm:ss zzZZ") : null}
 												required
+												 maxDate={new Date((new Date().getFullYear()-3)+'/'+(new Date().getMonth()+1)+'/'+(new Date().getDate()))}
+												 minDate={new Date('01/01/1990')}
 												format="dd/MM/yyyy"
 												onChange={date => this.handleDateChange("student_dob",date)}
 												label={LABELS.STUDENT_DOB}
@@ -283,7 +294,10 @@ class LeadForm extends React.Component {
 											fullWidth
 											label={LABELS.STUDENT_CURRENT_CITY}
 											type="email"
-											autoComplete="off" />
+											autoComplete="off"
+											error={this.state.student_current_city===""?true:false} 
+											helperText={this.state.student_current_city===""?'Students current city required':''}
+											/>
 									</Grid>
 									<Grid item xs={4}>
 										<SimpleSelect
@@ -308,6 +322,7 @@ class LeadForm extends React.Component {
 												name="tentative_school_visit_date"
 												value={this.state.tentative_school_visit_date ? moment(this.state.tentative_school_visit_date).format("ddd MMM DD YYYY HH:mm:ss zzZZ") : null}
 												required
+												minDate={new Date()}
 												format="dd/MM/yyyy"
 												onChange={date => this.handleDateChange("tentative_school_visit_date",date)}
 												label={LABELS.TENTATIVE_SCHOOL_VISIT_DATE}
@@ -336,7 +351,10 @@ class LeadForm extends React.Component {
 											fullWidth
 											label={LABELS.HOW_DID_YOU_HEAR_ABOUT_US}
 											type="text"
-											autoComplete="off" />
+											autoComplete="off"
+											error={this.state.source_to_reach_us===""?true:false} 
+											helperText={this.state.source_to_reach_us===""?'Please tell us how you reach':''}
+											/>
 									</Grid>
 									<Grid item xs={4}>
 										<SimpleSelect
