@@ -52,6 +52,18 @@ const TimelineService = {
 			 }
 			})
 		})
+	},
+	taskComplete:(taskID,lead_task_status_id)=>{
+		let token=JSON.parse(localStorage.getItem('USER'))
+		return new Promise((resolve, reject)=>{
+			ApiClient.executeRequest(`tasks/${taskID}`,{},{lead_task_status_id:lead_task_status_id},ApiConfig.METHODS.PUT,token.access_token).then((res)=>{
+			 console.log(res)
+				if(!res.isError){
+				 resolve(res)
+				 return;
+			 }
+			})
+		})
 	}
 };
 

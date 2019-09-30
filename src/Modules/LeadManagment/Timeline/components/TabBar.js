@@ -14,7 +14,7 @@ import { Button } from 'reactstrap';
 import { FormLabel } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
-
+import image from './../../../../Assets/images/download.png'
 
 
 function TabPanel(props) {
@@ -103,12 +103,12 @@ function SimpleTab(props) {
                  <div style={{ overflowY: 'scroll', height: 'auto',maxHeight:'400px' }}>
                  <Button variant="contained" style={{marginBottom:'16px',backgroundColor:'#3b5998'}} onClick={handleClickOpen.bind(this,1)} className={classes.taskbutton} > Add task</Button>
                      <ListGroup style={{style:'none'}}>
-                         {props.data.map((a, i) => (
+                         {props.data.reverse().map((a, i) => (
                              <ListGroupItem key={i}>
                              <div>
                              <FormLabel><span style={{fontWeight:'bold'}}>Assigned To:</span>{a.lead.assigned_to.name}{' { '}<a href={"mailto:"+a.lead.assigned_to.email} target="_top">{a.lead.assigned_to.email}</a>{' } '}</FormLabel><br/>
                              <FormLabel><span style={{fontWeight:'bold'}}>Schedule On: </span> {a.schedule_date}{'   '}{'   '} <span style={{fontWeight:'bold'}}>at: </span> {a.schedule_time}</FormLabel><br/>
-                             <FormLabel><span style={{fontWeight:'bold'}}>Task Status: </span> {a.task_status_id==1?'Complete':'Pending'}</FormLabel> <Button variant="contained" style={{marginLeft:'16px',float:'Right' , backgroundColor:'#3b5998'}} className={classes.taskbutton} size="small">Complete</Button><br/>
+                             <FormLabel><span style={{fontWeight:'bold'}}>Task Status: </span> {a.task_status_id==1?'Complete':'Pending'}</FormLabel>{a.lead_task_status_id===1?<Button variant="contained" style={{marginLeft:'16px',float:'Right' , backgroundColor:'#3b5998'}} className={classes.taskbutton} size="small" onClick={(e)=>{props.taskComplete(a,e)}}>Complete</Button>:<img src={image} width="24px" height="24px"/>} <br/>
                              <FormLabel><span style={{fontWeight:'bold'}}>Comments: </span> {a.comment}</FormLabel>
                             
                              </div>

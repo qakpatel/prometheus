@@ -11,6 +11,11 @@ const GET_DATA = "GET_DATA";
 const TO_EXCEL = "TO_EXCEL";
 const UPDATE_ASSIGN = "UPDATE_ASSIGN";
 const UPDATE_PRIORITY = "UPDATE_PRIORITY";
+const FILTER_BY_DATE = "FILTER_BY_DATE";
+const FILTER_BY_GENDER = "FILTER_BY_GENDER";
+const FILTER_BY_GRADES = "FILTER_BY_GRADES"
+const GET_GRADES = "GET_GRADES"
+
 export const getDialogData = (lead_id) => {
 	return async dispatch => {
 		let response = await DialogService.getDialogData(lead_id);
@@ -40,7 +45,9 @@ export const submitDialog = (data) => {
 
 export const getTableData = () => {
 	return async dispatch => {
+		dispatch(actionSetLoaderDisplayState(true));
 		let response = await TableService.getTableData();
+		dispatch(actionSetLoaderDisplayState(false));
 		if (!response.isError) {
 			dispatch({
 				type: GET_TABLE,
@@ -54,7 +61,9 @@ export const getTableData = () => {
 export const getTimeline=(state)=>{
     console.log('get timeline',state)
     return async dispatch => {
-        let response = await TimelineService.getTimeline(state);
+		dispatch(actionSetLoaderDisplayState(true));
+		let response = await TimelineService.getTimeline(state);
+		dispatch(actionSetLoaderDisplayState(false));
         console.log(response);
 		if (!response.isError) {
 			dispatch({
@@ -81,7 +90,9 @@ export const updateStatus=(lead_id,lead_status_id)=>{
 
 export const downloadToExcel = () => {
 	return async dispatch => {
+		dispatch(actionSetLoaderDisplayState(true));
 		let response = await TableService.downloadToExcel();
+		dispatch(actionSetLoaderDisplayState(false));
 		if (!response.isError) {
 			dispatch({
 				type: TO_EXCEL,
@@ -120,3 +131,78 @@ export const updatePriority=(lead_id,change_to)=>{
         }
     }
 };
+
+export const filterByDate = (startDate,endDate) => {
+	return async dispatch => {
+		dispatch(actionSetLoaderDisplayState(true));
+		let response = await TableService.filterByDate(dateFormat(startDate),dateFormat(endDate));
+		dispatch(actionSetLoaderDisplayState(false));
+		if (!response.isError) {
+			dispatch({
+				type: FILTER_BY_DATE,
+				payload: response.data
+            });
+        }
+    }
+		
+};
+
+export const filterByGender = gender => {
+	return async dispatch => {
+		dispatch(actionSetLoaderDisplayState(true));
+		let response = await TableService.filterByGender(gender);
+		dispatch(actionSetLoaderDisplayState(false));
+		if (!response.isError) {
+			dispatch({
+				type: FILTER_BY_GENDER,
+				payload: response.data
+            });
+        }
+    }
+		
+};
+export const filterByGrades = grade => {
+	return async dispatch => {
+		dispatch(actionSetLoaderDisplayState(true));
+		let response = await TableService.filterByGrades(grade);
+		dispatch(actionSetLoaderDisplayState(false));
+		if (!response.isError) {
+			dispatch({
+				type: FILTER_BY_GRADES,
+				payload: response.data
+            });
+        }
+    }
+		
+};
+
+export const getGrades = grade => {
+	return async dispatch => {
+		dispatch(actionSetLoaderDisplayState(true));
+		let response = await TableService.getGrades();
+		dispatch(actionSetLoaderDisplayState(false));
+		if (!response.isError) {
+			dispatch({
+				type: GET_GRADES,
+				payload: response.data
+            });
+        }
+    }	
+};
+
+export const taskComplete =(taskID,lead_task_status_id)=>{
+	return async dispatch => {
+		dispatch(actionSetLoaderDisplayState(true));
+		let response = await TimelineService.taskComplete(taskID,lead_task_status_id);
+		dispatch(actionSetLoaderDisplayState(false));
+		if (!response.isError) {
+			dispatch({
+				type: 'TASK_COMPLETE',
+				payload: response.data
+            });
+        }
+	}
+}
+const dateFormat =(date)=>{
+	return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()
+}

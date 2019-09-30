@@ -38,7 +38,57 @@ const TableService = {
 				resolve({ ...response, data: data })
 			})
 		})
-	}
+	},
+ filterByDate:(startDate,endDate)=>{
+	let token=JSON.parse(localStorage.getItem('USER'))
+	return new Promise((resolve, reject) => {
+		ApiClient.executeRequest(`leads?start_date=${startDate}&end_date=${endDate}`, {}, {}, ApiConfig.METHODS.GET,token.access_token).then(function(response) {
+			console.log('table service',response)
+			if (!response.isError) {
+				resolve(response);
+				return;
+			}
+		})
+	})
+ },
+ filterByGender:(gender)=>{
+	let token=JSON.parse(localStorage.getItem('USER'))
+	return new Promise((resolve, reject) => {
+		ApiClient.executeRequest(`leads?student_gender=${gender}`, {}, {}, ApiConfig.METHODS.GET,token.access_token).then(function(response) {
+			console.log('table service',response)
+			if (!response.isError) {
+				resolve(response);
+				return;
+			}
+		})
+	})
+ },
+
+ filterByGrades:(grade)=>{
+	let token=JSON.parse(localStorage.getItem('USER'))
+	return new Promise((resolve, reject) => {
+		ApiClient.executeRequest(`leads?grade_apply_for=${grade}`, {}, {}, ApiConfig.METHODS.GET,token.access_token).then(function(response) {
+			console.log('table service',response)
+			if (!response.isError) {
+				resolve(response);
+				return;
+			}
+		})
+	})
+ },
+ getGrades:(grade)=>{
+	let token=JSON.parse(localStorage.getItem('USER'))
+	return new Promise((resolve, reject) => {
+		ApiClient.executeRequest(`grades`, {}, {}, ApiConfig.METHODS.GET,token.access_token).then(function(response) {
+			console.log('table service',response)
+			if (!response.isError) {
+				resolve(response);
+				return;
+			}
+		})
+	})
+ }
+
 };
 
 export default TableService;

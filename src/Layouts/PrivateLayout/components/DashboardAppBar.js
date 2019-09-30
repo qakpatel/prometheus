@@ -31,6 +31,7 @@ class DashboardAppBar extends Component {
     anchorEl: null,
     isMenuOpen: false,
     location: "",
+    title:'Dashboard'
   };
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget });
@@ -47,6 +48,15 @@ class DashboardAppBar extends Component {
 
   componentDidMount() {
     this.props.getAllNotification();
+    switch(this.props.title){
+      case '/dashboard':
+      this.setState({title:'Dashboard'})
+      break;
+      case '/leads-management':
+       this.setState({title:'Lead Management'})
+      break;
+    }
+    console.log(this.props.title)
   }
 
   handleProfileMenuOpen = event => {
@@ -117,7 +127,7 @@ class DashboardAppBar extends Component {
               noWrap
               className={classes.title}
             >
-              Dashboard
+             {this.state.title}
             </Typography>
             <IconButton onClick={this.handleClick}>
               <Badge
