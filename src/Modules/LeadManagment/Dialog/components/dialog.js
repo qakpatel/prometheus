@@ -225,7 +225,7 @@ class Dialog extends Component {
                   id="outlined-read-only-input"
                   label="Lead status"
                   autoFocus
-                  defaultValue={this.props.lead_data.lead_status!==null?this.props.lead_data.lead_status.title:''}
+                  defaultValue={this.props.lead_data.lead_status!==null?this.props.lead_data.lead_status.title:this.props.updateStatusData?this.props.updateStatusData.lead_status.title:''}
                   className={classes.textField}
                   margin="dense"
                   InputProps={{

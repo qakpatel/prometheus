@@ -1,6 +1,6 @@
 import React from "react";
 import 'date-fns';
-import { Container, Button, CssBaseline, TextField, Link, Grid, Typography, Paper } from "@material-ui/core";
+import { Container, Button, CssBaseline, TextField, Link, Grid, Typography, Paper, Snackbar } from "@material-ui/core";
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { withStyles } from "@material-ui/core/styles";
@@ -13,6 +13,7 @@ import SimpleSelect from "../../Common/components/simpleselect";
 import moment from "moment";
 import update from "immutability-helper";
 import { withRouter} from 'react-router-dom';
+import SnackBar from './../../Common/components/SnackBar' 
 
 class LeadForm extends React.Component {
 
@@ -22,7 +23,7 @@ class LeadForm extends React.Component {
 	}
 	componentDidMount() {
 		const { leadFormData } = this.props;
-		//TODO
+		console.log(this.state.errror)
 		this.props.actionGetCreateLeadData()
 		// .then((result) => {
 		// 	console.log("fetched result " ,result);
@@ -32,15 +33,15 @@ class LeadForm extends React.Component {
 		console.log("Lead form componentDidMount")
 	}
 
-	componentWillUpdate(nextProps, nextState) {
-		console.log("Lead form componentWillUpdate")
-	}
+	// componentWillUpdate(nextProps, nextState) {
+	// 	console.log("Lead form componentWillUpdate")
+	// }
 
-	componentDidUpdate(prevProps, PrevState) {
-		console.log("Lead form componentDidUpdate")
-		console.log("Lead form componentDidUpdate", LocalStorageHelper.get(LocalStorageConfig.KEY_LEAD_FORM_DATA))
+	// componentDidUpdate(prevProps, PrevState) {
+	// 	console.log("Lead form componentDidUpdate")
+	// 	console.log("Lead form componentDidUpdate", LocalStorageHelper.get(LocalStorageConfig.KEY_LEAD_FORM_DATA))
 
-	}
+	// }
 
 	shouldComponentUpdate(nextProps, nextState) {
 		console.log("Lead form shouldComponentUpdate")
@@ -49,19 +50,20 @@ class LeadForm extends React.Component {
 		return true;
 	}
 
-	componentWillReceiveProps(nextProps, nextContext) {
-		console.log("Lead form componentWillReceiveProps")
-	}
+	// componentWillReceiveProps(nextProps, nextContext) {
+	// 	console.log("Lead form componentWillReceiveProps")
+	// }
 
 	submitClick = () => {
-		// TODO
+	if(!this.state.enquirer_first_name || !this.state.enquirer_last_name || !this.state.enquirer_email || !this.state.enquirer_phone_number || !this.state.student_first_name || !this.state.student_last_name || !this.state.relationship_with_child || !this.state.student_gender || !this.state.date_of_birth || !this.state.student_current_city){
+		 this.setState({message:'Please fill all required field', variant:'error',snackBarOpen:true})
+		 return;	
+		}
 		this.props.actionCreateLead(this.state);
 		this.props.history.push("/leads-management")
 	};
 
 	onChangeDropDownObject = (label, value )=> {
-		console.log("e.target.value", value);
-		console.log("e.target.label", label);
 		this.setState({
 			[label]: value
 		},()=>console.log("current state ", this.state));
@@ -74,6 +76,7 @@ class LeadForm extends React.Component {
 	};
 
 	onChangeField = e => {
+		this.errorHandler(e.target.name,e.target.value)
 		this.setState({
 			[e.target.name]: e.target.value
 		},()=>console.log(this.state));
@@ -81,20 +84,76 @@ class LeadForm extends React.Component {
 
 
 	handleDateChange = (keyName,date) => {
-		console.log("selected date",date.toString())
-		console.log("selected date converted", moment(date).format("YYYY/MM/DD"))
 		//this.setState(prevState => update(prevState, { $merge: { student_dob: moment(date).format("ddd MMM DD YYYY HH:mm:ss zzZZ")}}));
 		this.setState({[keyName] : moment(date).format("YYYY/MM/DD")}, ()=>console.log("current state " ,this.state));
 	}
 
+    errorHandler = (name,value) => {
+		switch (name) {
+			case 'enquirer_first_name':
+				if (value === "") {
+					this.setState({ first_error: true, enquirer_first_name_error: 'Enquirer first name required' })
+				} else if (!value.match(/^[a-zA-Z]+$/)) {
+					this.setState({ first_error: true, enquirer_first_name_error: 'Enquirer first name should only contain alphabet' })
+				} else {
+					this.setState({ first_error: false, enquirer_first_name_error: '' })
+				}
+				break;
+			case 'enquirer_last_name':
+				if (value === "") {
+					this.setState({ last_error: true, enquirer_last_name_error: 'Enquirer last name required' })
+				} else if (!value.match(/^[a-zA-Z]+$/)) {
+					this.setState({ last_error: true, enquirer_last_name_error: 'Enquirer last name should only contain alphabet' })
+				} else {
+					this.setState({ last_error: false, enquirer_last_name_error: '' })
+				}
+				break;
+			case 'enquirer_email':
+				if (value === "") {
+					this.setState({ email_error: true, enquirer_email_error: 'Enquirer email required' })
+				} else if (!value.match(/^\w+[\w-\.]*\@\w+((-\w+)|(\w*))\.[a-z]{2,3}$/)) {
+					this.setState({ email_error: true, enquirer_email_error: 'Please enter the valid email' })
+				} else {
+					this.setState({ email_error: false, enquirer_email_error: '' })
+				}
+				break;
+			case 'enquirer_phone_number':
+				if (value === "") {
+					this.setState({ phone_error: true, enquirer_phone_error: 'Phone number is required' })
+				} else if (!value.match(/^[789]\d{9}$/)) {
+					this.setState({ phone_error: true, enquirer_phone_error: 'Please enter the valid phone number' })
+				} else {
+					this.setState({ phone_error: false, enquirer_phone_error: '' })
+				}
+				break;
+			case 'student_first_name':
+				if (value === "") {
+					this.setState({ student_first_error: true, student_first_name_error: 'Student first name required' })
+				} else if (!value.match(/^[a-zA-Z]+$/)) {
+					this.setState({ student_first_error: true, student_first_name_error: 'Name shuold only contain alphabet' })
+				} else {
+					this.setState({ student_first_error: false, student_first_name_error: '' })
+				}
+				break;
+			case 'student_last_name':
+				if (value === "") {
+					this.setState({ student_last_error: true, student_last_name_error: 'Student last name required' })
+				} else if (!value.match(/^[a-zA-Z]+$/)) {
+					this.setState({ student_last_error: true, student_last_name_error: 'Name shuold only contain alphabet' })
+				} else {
+					this.setState({ student_last_error: false, student_last_name_error: '' })
+				}
+				break;
+		}
+	}
+	handleClose=()=>{
+		this.setState({snackBarOpen:false})
+	}
+ 
 	render() {
-		console.log("Lead form render")
 		const { classes, leadFormData } = this.props;
 		const leadFormDataFetched = leadFormData && leadFormData.leadFormData && leadFormData.leadFormData.data;
-		console.log("leadFormDataFetched", leadFormDataFetched)
 		const leadFormFetchedData = leadFormDataFetched ? leadFormData.leadFormData.data : null;
-		console.log("state lead form data", this.state);
-		console.log('test data', leadFormFetchedData)
 		const LABELS = Lang.LABELS.LEAD_FORM;
 		const { loginClick, onChangeField } = this;
 		return (
@@ -123,7 +182,10 @@ class LeadForm extends React.Component {
 											label={LABELS.ENQUIRER_FIRST_NAME}
 											type="email"
 											autoComplete="off"
-											autoFocus />
+											autoFocus
+											error={this.state.first_error} 
+											helperText={this.state.enquirer_first_name_error}
+											/>
 									</Grid>
 									<Grid item xs={4}>
 										<TextField
@@ -148,7 +210,10 @@ class LeadForm extends React.Component {
 											fullWidth
 											label={LABELS.ENQUIRER_LAST_NAME}
 											type="email"
-											autoComplete="off" />
+											autoComplete="off"
+											error={this.state.last_error} 
+											helperText={this.state.enquirer_last_name_error}
+											/>
 									</Grid>
 									<Grid item xs={4}>
 										<TextField
@@ -161,7 +226,10 @@ class LeadForm extends React.Component {
 											fullWidth
 											label={LABELS.ENQUIRER_EMAIL}
 											type="email"
-											autoComplete="off" />
+											autoComplete="off"
+											error={this.state.email_error} 
+											helperText={this.state.enquirer_email_error}
+											/>
 									</Grid>
 
 									<Grid item xs={4}>
@@ -175,7 +243,11 @@ class LeadForm extends React.Component {
 											fullWidth
 											label={LABELS.ENQUIRER_PHONE_NUMBER}
 											type="phone"
-											autoComplete="off">
+											autoComplete="off"
+											error={this.state.phone_error} 
+											helperText={this.state.enquirer_phone_error}
+											inputProps={{ maxLength: 10 }}
+											>
 										</TextField>		
 									</Grid>
 									<Grid item xs={4}>
@@ -196,7 +268,10 @@ class LeadForm extends React.Component {
 											fullWidth
 											label={LABELS.STUDENT_FIRST_NAME}
 											type="email"
-											autoComplete="off" />
+											autoComplete="off"
+											error={this.state.student_first_error} 
+											helperText={this.state.student_first_name_error}
+											/>
 									</Grid>
 									<Grid item xs={4}>
 										<TextField
@@ -221,7 +296,10 @@ class LeadForm extends React.Component {
 											fullWidth
 											label={LABELS.STUDENT_LAST_NAME}
 											type="email"
-											autoComplete="off" />
+											autoComplete="off"
+											error={this.state.student_last_error} 
+											helperText={this.state.student_last_name_error}
+											/>
 									</Grid>
 									<Grid item xs={4}>
 										<SimpleSelect
@@ -242,6 +320,8 @@ class LeadForm extends React.Component {
 												name="student_dob"
 												value={this.state.student_dob ? moment(this.state.student_dob).format("ddd MMM DD YYYY HH:mm:ss zzZZ") : null}
 												required
+												 maxDate={new Date((new Date().getFullYear()-3)+'/'+(new Date().getMonth()+1)+'/'+(new Date().getDate()))}
+												 minDate={new Date('01/01/1990')}
 												format="dd/MM/yyyy"
 												onChange={date => this.handleDateChange("student_dob",date)}
 												label={LABELS.STUDENT_DOB}
@@ -283,7 +363,10 @@ class LeadForm extends React.Component {
 											fullWidth
 											label={LABELS.STUDENT_CURRENT_CITY}
 											type="email"
-											autoComplete="off" />
+											autoComplete="off"
+											error={this.state.student_current_city===""?true:false} 
+											helperText={this.state.student_current_city===""?'Students current city required':''}
+											/>
 									</Grid>
 									<Grid item xs={4}>
 										<SimpleSelect
@@ -308,6 +391,7 @@ class LeadForm extends React.Component {
 												name="tentative_school_visit_date"
 												value={this.state.tentative_school_visit_date ? moment(this.state.tentative_school_visit_date).format("ddd MMM DD YYYY HH:mm:ss zzZZ") : null}
 												required
+												minDate={new Date()}
 												format="dd/MM/yyyy"
 												onChange={date => this.handleDateChange("tentative_school_visit_date",date)}
 												label={LABELS.TENTATIVE_SCHOOL_VISIT_DATE}
@@ -336,7 +420,10 @@ class LeadForm extends React.Component {
 											fullWidth
 											label={LABELS.HOW_DID_YOU_HEAR_ABOUT_US}
 											type="text"
-											autoComplete="off" />
+											autoComplete="off"
+											error={this.state.source_to_reach_us===""?true:false} 
+											helperText={this.state.source_to_reach_us===""?'Please tell us how you reach':''}
+											/>
 									</Grid>
 									<Grid item xs={4}>
 										<SimpleSelect
@@ -351,13 +438,14 @@ class LeadForm extends React.Component {
 											optionValue='title' />
 									</Grid>
 								</Grid>
-								<Button disabled={!true} type="button" onClick={this.submitClick} variant="contained" color="primary" className={classes.submit}>
+								<Button disabled={this.state.error} type="button" onClick={this.submitClick} variant="contained" color="primary" className={classes.submit}>
 									{LABELS.CREATE}
 								</Button>
 							</Typography>
 						</div>
 						: null}
 				</Paper>
+				<SnackBar message={this.state.message} variant={this.state.variant} open={this.state.snackBarOpen} handleClose={this.handleClose}/>
 			</Container>
 		);
 	}

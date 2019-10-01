@@ -29,7 +29,7 @@ import { getTimeline, updateStatus,getDialogData,updateAssign, updatePriority,ta
       console.log(this.props.dialogData)
     return (
         <div>
-            <Timeline user={this.props.timelines.user} leadData={this.props.route.location.state.lead_data} onClick={this.startFollowup} assign_data={this.props.dialogData} updateAssignTo={this.updateAssignTo} updatePriority={this.updatePriority} taskComplete={this.taskComplete}/>
+            <Timeline user={this.props.timelines.user} leadData={this.props.route.location.state.lead_data} onClick={this.startFollowup} assign_data={this.props.dialogData} updateAssignTo={this.updateAssignTo} updatePriority={this.updatePriority} taskComplete={this.taskComplete} updateStatusData={this.props.updateStatusData}/>
         </div>
     );
   }
@@ -40,7 +40,8 @@ const mapStateToProps=state=>{
     console.log(state)
     return {
         timelines:state.leadReducer,
-        dialogData:state.leadReducer.dialogData
+        dialogData:state.leadReducer.dialogData,
+        updateStatusData:state.leadReducer.updateStatus
     }
 }
 

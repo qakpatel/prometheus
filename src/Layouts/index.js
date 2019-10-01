@@ -12,6 +12,8 @@ import ContentDialog from "../Modules/Common/components/ContentDialog";
 import FullScreenLoader from "../Modules/Common/components/FullScreenLoader";
 import { actionSetErrorDialogDisplayState } from "../Modules/Common/redux/Action";
 import Lang from "../Lang/en";
+import SnackBar from './../Modules/Common/components/SnackBar'
+
 class Layouts extends Component {
 	
 	state = {
