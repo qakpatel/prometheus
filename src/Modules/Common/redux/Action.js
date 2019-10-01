@@ -18,4 +18,3 @@ export const actionSetLoaderDisplayState = (show = false) => {
 	};
 };
 
-

@@ -1,6 +1,6 @@
 import React from "react";
 import 'date-fns';
-import { Container, Button, CssBaseline, TextField, Link, Grid, Typography, Paper } from "@material-ui/core";
+import { Container, Button, CssBaseline, TextField, Link, Grid, Typography, Paper, Snackbar } from "@material-ui/core";
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { withStyles } from "@material-ui/core/styles";
@@ -13,6 +13,7 @@ import SimpleSelect from "../../Common/components/simpleselect";
 import moment from "moment";
 import update from "immutability-helper";
 import { withRouter} from 'react-router-dom';
+import SnackBar from './../../Common/components/SnackBar' 
 
 class LeadForm extends React.Component {
 
@@ -22,7 +23,7 @@ class LeadForm extends React.Component {
 	}
 	componentDidMount() {
 		const { leadFormData } = this.props;
-		//TODO
+		console.log(this.state.errror)
 		this.props.actionGetCreateLeadData()
 		// .then((result) => {
 		// 	console.log("fetched result " ,result);
@@ -54,6 +55,10 @@ class LeadForm extends React.Component {
 	// }
 
 	submitClick = () => {
+	if(!this.state.enquirer_first_name || !this.state.enquirer_last_name || !this.state.enquirer_email || !this.state.enquirer_phone_number || !this.state.student_first_name || !this.state.student_last_name || !this.state.relationship_with_child || !this.state.student_gender || !this.state.date_of_birth || !this.state.student_current_city){
+		 this.setState({message:'Please fill all required field', variant:'error',snackBarOpen:true})
+		 return;	
+		}
 		this.props.actionCreateLead(this.state);
 		this.props.history.push("/leads-management")
 	};
@@ -71,6 +76,7 @@ class LeadForm extends React.Component {
 	};
 
 	onChangeField = e => {
+		this.errorHandler(e.target.name,e.target.value)
 		this.setState({
 			[e.target.name]: e.target.value
 		},()=>console.log(this.state));
@@ -82,6 +88,68 @@ class LeadForm extends React.Component {
 		this.setState({[keyName] : moment(date).format("YYYY/MM/DD")}, ()=>console.log("current state " ,this.state));
 	}
 
+    errorHandler = (name,value) => {
+		switch (name) {
+			case 'enquirer_first_name':
+				if (value === "") {
+					this.setState({ first_error: true, enquirer_first_name_error: 'Enquirer first name required' })
+				} else if (!value.match(/^[a-zA-Z]+$/)) {
+					this.setState({ first_error: true, enquirer_first_name_error: 'Enquirer first name should only contain alphabet' })
+				} else {
+					this.setState({ first_error: false, enquirer_first_name_error: '' })
+				}
+				break;
+			case 'enquirer_last_name':
+				if (value === "") {
+					this.setState({ last_error: true, enquirer_last_name_error: 'Enquirer last name required' })
+				} else if (!value.match(/^[a-zA-Z]+$/)) {
+					this.setState({ last_error: true, enquirer_last_name_error: 'Enquirer last name should only contain alphabet' })
+				} else {
+					this.setState({ last_error: false, enquirer_last_name_error: '' })
+				}
+				break;
+			case 'enquirer_email':
+				if (value === "") {
+					this.setState({ email_error: true, enquirer_email_error: 'Enquirer email required' })
+				} else if (!value.match(/^\w+[\w-\.]*\@\w+((-\w+)|(\w*))\.[a-z]{2,3}$/)) {
+					this.setState({ email_error: true, enquirer_email_error: 'Please enter the valid email' })
+				} else {
+					this.setState({ email_error: false, enquirer_email_error: '' })
+				}
+				break;
+			case 'enquirer_phone_number':
+				if (value === "") {
+					this.setState({ phone_error: true, enquirer_phone_error: 'Phone number is required' })
+				} else if (!value.match(/^[789]\d{9}$/)) {
+					this.setState({ phone_error: true, enquirer_phone_error: 'Please enter the valid phone number' })
+				} else {
+					this.setState({ phone_error: false, enquirer_phone_error: '' })
+				}
+				break;
+			case 'student_first_name':
+				if (value === "") {
+					this.setState({ student_first_error: true, student_first_name_error: 'Student first name required' })
+				} else if (!value.match(/^[a-zA-Z]+$/)) {
+					this.setState({ student_first_error: true, student_first_name_error: 'Name shuold only contain alphabet' })
+				} else {
+					this.setState({ student_first_error: false, student_first_name_error: '' })
+				}
+				break;
+			case 'student_last_name':
+				if (value === "") {
+					this.setState({ student_last_error: true, student_last_name_error: 'Student last name required' })
+				} else if (!value.match(/^[a-zA-Z]+$/)) {
+					this.setState({ student_last_error: true, student_last_name_error: 'Name shuold only contain alphabet' })
+				} else {
+					this.setState({ student_last_error: false, student_last_name_error: '' })
+				}
+				break;
+		}
+	}
+	handleClose=()=>{
+		this.setState({snackBarOpen:false})
+	}
+ 
 	render() {
 		const { classes, leadFormData } = this.props;
 		const leadFormDataFetched = leadFormData && leadFormData.leadFormData && leadFormData.leadFormData.data;
@@ -115,8 +183,8 @@ class LeadForm extends React.Component {
 											type="email"
 											autoComplete="off"
 											autoFocus
-											error={this.state.enquirer_first_name===""?true:false} 
-											helperText={this.state.enquirer_first_name===""?'Enquirer first name required':''}
+											error={this.state.first_error} 
+											helperText={this.state.enquirer_first_name_error}
 											/>
 									</Grid>
 									<Grid item xs={4}>
@@ -143,8 +211,8 @@ class LeadForm extends React.Component {
 											label={LABELS.ENQUIRER_LAST_NAME}
 											type="email"
 											autoComplete="off"
-											error={this.state.enquirer_last_name===""?true:false} 
-											helperText={this.state.enquirer_last_name===""?'Enquirer last name required':''}
+											error={this.state.last_error} 
+											helperText={this.state.enquirer_last_name_error}
 											/>
 									</Grid>
 									<Grid item xs={4}>
@@ -159,8 +227,8 @@ class LeadForm extends React.Component {
 											label={LABELS.ENQUIRER_EMAIL}
 											type="email"
 											autoComplete="off"
-											error={this.state.enquirer_email===""?true:false} 
-											helperText={this.state.enquirer_email===""?'Enquirer email required':''}
+											error={this.state.email_error} 
+											helperText={this.state.enquirer_email_error}
 											/>
 									</Grid>
 
@@ -176,8 +244,9 @@ class LeadForm extends React.Component {
 											label={LABELS.ENQUIRER_PHONE_NUMBER}
 											type="phone"
 											autoComplete="off"
-											error={this.state.enquirer_phone===""?true:false} 
-											helperText={this.state.enquirer_phone===""?'Enquirer phone number required':''}
+											error={this.state.phone_error} 
+											helperText={this.state.enquirer_phone_error}
+											inputProps={{ maxLength: 10 }}
 											>
 										</TextField>		
 									</Grid>
@@ -200,8 +269,8 @@ class LeadForm extends React.Component {
 											label={LABELS.STUDENT_FIRST_NAME}
 											type="email"
 											autoComplete="off"
-											error={this.state.student_first_name===""?true:false} 
-											helperText={this.state.student_first_name===""?'Student first name required':''}
+											error={this.state.student_first_error} 
+											helperText={this.state.student_first_name_error}
 											/>
 									</Grid>
 									<Grid item xs={4}>
@@ -228,8 +297,8 @@ class LeadForm extends React.Component {
 											label={LABELS.STUDENT_LAST_NAME}
 											type="email"
 											autoComplete="off"
-											error={this.state.student_last_name===""?true:false} 
-											helperText={this.state.student_last_name===""?'Student last name required':''}
+											error={this.state.student_last_error} 
+											helperText={this.state.student_last_name_error}
 											/>
 									</Grid>
 									<Grid item xs={4}>
@@ -369,13 +438,14 @@ class LeadForm extends React.Component {
 											optionValue='title' />
 									</Grid>
 								</Grid>
-								<Button disabled={!true} type="button" onClick={this.submitClick} variant="contained" color="primary" className={classes.submit}>
+								<Button disabled={this.state.error} type="button" onClick={this.submitClick} variant="contained" color="primary" className={classes.submit}>
 									{LABELS.CREATE}
 								</Button>
 							</Typography>
 						</div>
 						: null}
 				</Paper>
+				<SnackBar message={this.state.message} variant={this.state.variant} open={this.state.snackBarOpen} handleClose={this.handleClose}/>
 			</Container>
 		);
 	}
