@@ -12,6 +12,11 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import ListItemText from '@material-ui/core/ListItemText';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 
 const styles = theme => ({
@@ -47,6 +52,8 @@ class ActionPage extends Component {
         anchorEl:null,
         setAnchorEl:null,
         change_to: this.props.leadData.priority_label,
+        open: false,
+        setOpen: false,
       }
     
       
@@ -73,6 +80,12 @@ class ActionPage extends Component {
       handleClick = event => {
           this.setState({setAnchorEl:event.currentTarget})
       };
+      handleClickOpen = () => {
+        this.setState({setOpen:true})
+    };
+    assignhandleClose = () => {
+        this.setState({setOpen:false})
+    };
     
       handleClose = () => {
           this.setState({setAnchorEl:null});
@@ -199,6 +212,41 @@ class ActionPage extends Component {
 
 
                                 </ListItem>
+                                <ListItem>
+                              
+                                
+                                <div>
+      <Button variant="outlined" style={{marginBottom:'16px',backgroundColor:'#3b5998'}} onClick={this.handleClickOpen}>
+        Previous assignments
+      </Button>
+      <Dialog
+        open={this.setState.setOpen}
+        onClose={this.assignhandleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Previous Assignments History"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          <ListItem>
+                                    <FormLabel><span style={{ fontWeight: 'bold' }}>Enquirer Phone Number: </span><br /><a href={"tel:" + this.props.leadData.context.enquirer_phone_number}>{this.props.leadData.context.enquirer_phone_number}</a></FormLabel>
+                                </ListItem>
+                                <ListItem>
+                                    <FormLabel><span style={{ fontWeight: 'bold' }}>Student Name: </span>{this.props.leadData.context.student_first_name + ' ' + this.props.leadData.context.student_last_name}</FormLabel>
+                                </ListItem>
+                                <ListItem>
+                                    <FormLabel><span style={{ fontWeight: 'bold' }}>Student DOB: </span>{(new Date(this.props.leadData.context.student_dob)).toLocaleDateString('en-US', DATE_OPTIONS)}</FormLabel>
+                                </ListItem>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          
+          <Button onClick={this.assignhandleClose} color="primary" autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div></ListItem>
                                 {/* { <ListItem>
                                     <FormLabel><button ><span style={{ fontWeight: 'bold' }}>Previous assignments </span></button></FormLabel>
                                 </ListItem> } */}

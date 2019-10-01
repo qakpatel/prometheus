@@ -43,10 +43,10 @@ export const submitDialog = (data) => {
 	}
 }
 
-export const getTableData = () => {
+export const getTableData = (data) => {
 	return async dispatch => {
 		dispatch(actionSetLoaderDisplayState(true));
-		let response = await TableService.getTableData();
+		let response = await TableService.getTableData(data);
 		dispatch(actionSetLoaderDisplayState(false));
 		if (!response.isError) {
 			dispatch({

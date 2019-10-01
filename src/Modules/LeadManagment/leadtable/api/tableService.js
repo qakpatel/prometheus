@@ -5,11 +5,11 @@ import { base64StringToBlob } from 'blob-util';
 
 
 const TableService = {
-	getTableData: function() {
+	getTableData: function(page) {
 		let token=JSON.parse(localStorage.getItem('USER'))
 		return new Promise((resolve, reject) => {
             
-			ApiClient.executeRequest(ApiConfig.ENDPOINTS.LEADS, {}, {}, ApiConfig.METHODS.GET,token.access_token).then(function(response) {
+			ApiClient.executeRequest(`${ApiConfig.ENDPOINTS.LEADS}?page=${page}`, {}, {}, ApiConfig.METHODS.GET,token.access_token).then(function(response) {
 			    console.log('table service',response)
 				if (response.isError) {
 					resolve(response);

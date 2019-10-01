@@ -1,0 +1,21 @@
+.verticalNavlink{
+    display: flex;
+    color: black;
+    width: 100%;
+    text-decoration:none;
+    padding: .8em
+}
+
+.verticalNavlink:hover{
+    text-decoration:none;
+    color:black;
+}
+.verticalNavlink.active{
+    background-color: #3b5998;
+    color: white;
+}
+
+.verticalNavlink.active>div{
+    color: white;
+    
+}

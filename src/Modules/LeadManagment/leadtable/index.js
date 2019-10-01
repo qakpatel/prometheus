@@ -17,14 +17,14 @@ class index extends Component {
     }
 
     componentDidMount(){
-        alert(this.state.page);
+       
         this.props.getTableData(this.state.page)
         this.props.downloadToExcel(); 
     }
 
     componentDidUpdate(prevProp, prevState){
         if(prevState.page !== this.state.page) {
-            alert(this.state.page);
+          
             this.props.getTableData(this.state.page)
         } 
     }

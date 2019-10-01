@@ -33,6 +33,8 @@ export const AppBarStyles = theme => ({
 });
 
 export const DrawerStyles = theme => ({
+
+	
     drawerPaper: {
 		position: "relative",
 		whiteSpace: "nowrap",

@@ -12,12 +12,14 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import PeopleIcon from "@material-ui/icons/People";
+import { NavLink } from "react-router-dom";
+import './../styles/style.css'
 
 const menuItems = [
   {
     name: "Dashboard",
     icon: <DashboardIcon />,
-    link: "/"
+    link: "/dashboard"
   },
   {
     name: "Lead Managment",
@@ -57,13 +59,15 @@ const DashboardDrawer = props => {
         <List>
           {menuItems.map(item => {
             return (
-              <ListItem
+              <ListItem style={{ padding: 0 }}
                 button
                 link={item.link}
                 onClick={() => handleNavItemLink(item.link, history)}
-              >
+               >
+                  <NavLink className="verticalNavlink" to={item.link}>
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.name} />
+                </NavLink>
               </ListItem>
             );
           })}

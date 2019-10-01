@@ -76,14 +76,15 @@ const useStyles = makeStyles(theme => ({
   const [hotLeadFilter, setHotLeadFilter] = useState(false);
   const [sortName, setSortName] = useState(false);
   useEffect(() => {
-    setTableData(props.data.data)
+    setTableData(props.data)
     setFilterTableData(tableData ? tableData: [])
     console.log('call useeffect',tableData)
-  },tableData);
+  },[tableData, props.data]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   function handleChangePage(event, newPage) {
+    props.handlePageChange(newPage);
     setPage(newPage);
   }
 
@@ -178,7 +179,7 @@ const useStyles = makeStyles(theme => ({
     
       <div className={classes.search}>
       <InputGroup>
-        <InputGroupAddon addonType="prepend">Search</InputGroupAddon>
+       
         <Input placeholder="Search"  onChange={searchIntableData}/>
       </InputGroup>
       </div>
@@ -201,13 +202,13 @@ const useStyles = makeStyles(theme => ({
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <StyledTableCell>Lead ID</StyledTableCell>
-            <StyledTableCell style={{cursor:'pointer'}} onClick={sortByName}>{sortName?<ArrowDownwardIcon />:<ArrowUpwardIcon />}Name</StyledTableCell>
-            <StyledTableCell align="center" style={{cursor:'pointer'}}>Enquiry Email</StyledTableCell>
-            <StyledTableCell align="center">Location</StyledTableCell>
-            <StyledTableCell align="center">Contact</StyledTableCell>
-           <StyledTableCell align="center" onClick={leadFilter} style={{cursor:'pointer'}}>{hotLeadFilter?<ArrowDownwardIcon />:<ArrowUpwardIcon />}Priority</StyledTableCell>
-            <StyledTableCell align="center">Actions</StyledTableCell>
+            <StyledTableCell style={{ fontWeight: 'bold' }}>Lead ID</StyledTableCell>
+            <StyledTableCell style={{cursor:'pointer', fontWeight: 'bold'}} onClick={sortByName}>{sortName?<ArrowDownwardIcon />:<ArrowUpwardIcon />}Name</StyledTableCell>
+            <StyledTableCell align="center" style={{cursor:'pointer',fontWeight: 'bold'}}>Enquiry Email</StyledTableCell>
+            <StyledTableCell align="center" style={{ fontWeight: 'bold' }}>Location</StyledTableCell>
+            <StyledTableCell align="center" style={{ fontWeight: 'bold' }}>Contact</StyledTableCell>
+           <StyledTableCell align="center" onClick={leadFilter} style={{cursor:'pointer',fontWeight: 'bold'}}>{hotLeadFilter?<ArrowDownwardIcon />:<ArrowUpwardIcon />}Priority</StyledTableCell>
+            <StyledTableCell align="center" style={{ fontWeight: 'bold' }}>Actions</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -235,9 +236,9 @@ const useStyles = makeStyles(theme => ({
         </TableBody>
       </Table>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[10]}
         component="div"
-       count={props.data?props.data.total:10}
+       count={props.data?props.data.length:10}
         rowsPerPage={rowsPerPage}
         page={page}
         backIconButtonProps={{

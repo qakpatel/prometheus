@@ -7,7 +7,8 @@ const LeadReducer = (state = { dialogData: {}, submitDialog: {}, data: [], user:
         case 'SET_DATA':
             return { ...state, user: state.user.concat(action.payload) };
         case 'GET_TABLE':
-            return { ...state, data: action.payload };
+            console.log('ghuidghduigidgdghiighdhid', action.payload);
+            return { ...state, data:  [...state.data, ...action.payload.data] };
         case 'GET_TIMELINE':
             return { ...state, user: action.payload };
         case 'UPDATE_STATUS':

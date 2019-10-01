@@ -34,11 +34,37 @@ button:focus{
     outline: none !important
 }
 
+
 .footerSection {
-    position: absolute;
-   left: 0;
-   bottom: 10px;
-   width: 100%;
-   background-color:"primary";
-   text-align: center;
+    padding: 10px 0px;
+    width: 100%;
+    color: white;
+    background-color:#3b5998;
+    text-align: center;
+    margin-top: 2rem;
+    font-variant-caps: petite-caps;
+}
+
+main{
+    min-height: calc(100vh - 7.5rem);
+}
+.verticalNavlink{
+    display: flex;
+    color: black;
+    width: 100%;
+    text-decoration:none;
+    padding: .8em
+}
+
+.verticalNavlink:hover{
+    text-decoration:none;
+    color:black;
+}
+.verticalNavlink.active{
+    background-color: #3b5998;
+    color: white;
+}
+
+.verticalNavlink.active>div{
+    color: white;
 }
