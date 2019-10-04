@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
-import LeadList from './components/Lead-List'
-import PropTypes from "prop-types";
-import { getTableData,downloadToExcel } from './../redux/LeadAction'
+import React, { Component } from "react";
+import LeadList from "./components/Lead-List";
+import { getTableData, downloadToExcel } from "./../redux/LeadAction";
 import { connect } from "react-redux";
 
 class index extends Component {
@@ -60,4 +59,22 @@ const mapDispatchToProps = dispatch =>  {
     }
 }
 
-export default connect(mapStateToPros,mapDispatchToProps)(index);
+const mapStateToPros = state => {
+  console.log("index.js table", state);
+  return {
+    tabledata: state.leadReducer.data,
+    exceldata: state.leadReducer.excel
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getTableData: page => dispatch(getTableData(page)),
+    downloadToExcel: () => dispatch(downloadToExcel())
+  };
+};
+
+export default connect(
+  mapStateToPros,
+  mapDispatchToProps
+)(index);

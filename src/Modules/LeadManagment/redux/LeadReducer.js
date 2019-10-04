@@ -85,4 +85,3 @@ const LeadReducer = (state = { dialogData: {}, submitDialog: {}, data: [], user:
 };
 
 export default LeadReducer;
-
