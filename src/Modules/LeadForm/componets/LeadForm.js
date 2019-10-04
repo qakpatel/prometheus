@@ -55,12 +55,16 @@ class LeadForm extends React.Component {
 	// }
 
 	submitClick = () => {
-	if(!this.state.enquirer_first_name || !this.state.enquirer_last_name || !this.state.enquirer_email || !this.state.enquirer_phone_number || !this.state.student_first_name || !this.state.student_last_name || !this.state.relationship_with_child || !this.state.student_gender || !this.state.date_of_birth || !this.state.student_current_city){
+		console.log(this.state)
+	if(!this.state.enquirer_first_name || !this.state.enquirer_last_name || !this.state.enquirer_email || !this.state.enquirer_phone_number || !this.state.student_first_name || !this.state.student_last_name || !this.state.relationship_with_child || !this.state.student_gender || !this.state.student_dob || !this.state.student_current_city){
 		 this.setState({message:'Please fill all required field', variant:'error',snackBarOpen:true})
 		 return;	
 		}
 		this.props.actionCreateLead(this.state);
-		this.props.history.push("/leads-management")
+		this.setState({message:'Lead created successfully!', variant:'success',snackBarOpen:true},()=>{
+			this.props.history.push("/leads-management")
+		})
+		
 	};
 
 	onChangeDropDownObject = (label, value )=> {
@@ -99,6 +103,15 @@ class LeadForm extends React.Component {
 					this.setState({ first_error: false, enquirer_first_name_error: '' })
 				}
 				break;
+				case 'enquirer_middle_name':
+				if (value === "") {
+					this.setState({ middle_error: true, enquirer_middle_name_error: 'Enquirer middle name required' })
+				} else if (!value.match(/^[a-zA-Z]+$/)) {
+					this.setState({ middle_error: true, enquirer_middle_name_error: 'Enquirer middle name should only contain alphabet' })
+				} else {
+					this.setState({ middle_error: false, enquirer_middle_name_error: '' })
+				}
+				break;
 			case 'enquirer_last_name':
 				if (value === "") {
 					this.setState({ last_error: true, enquirer_last_name_error: 'Enquirer last name required' })
@@ -108,6 +121,15 @@ class LeadForm extends React.Component {
 					this.setState({ last_error: false, enquirer_last_name_error: '' })
 				}
 				break;
+				case 'student_current_city':
+						if (value === "") {
+							this.setState({ city_error: true, student_current_city_error: 'Student city name required' })
+						} else if (!value.match(/^[a-zA-Z]+$/)) {
+							this.setState({ city_error: true, student_current_city_error: 'Student city name should only contain alphabet' })
+						} else {
+							this.setState({ city_error: false, student_current_city_error: '' })
+						}
+						break;
 			case 'enquirer_email':
 				if (value === "") {
 					this.setState({ email_error: true, enquirer_email_error: 'Enquirer email required' })
@@ -120,7 +142,7 @@ class LeadForm extends React.Component {
 			case 'enquirer_phone_number':
 				if (value === "") {
 					this.setState({ phone_error: true, enquirer_phone_error: 'Phone number is required' })
-				} else if (!value.match(/^[789]\d{9}$/)) {
+				} else if (!value.match(/^[6789]\d{9}$/)) {
 					this.setState({ phone_error: true, enquirer_phone_error: 'Please enter the valid phone number' })
 				} else {
 					this.setState({ phone_error: false, enquirer_phone_error: '' })
@@ -130,11 +152,20 @@ class LeadForm extends React.Component {
 				if (value === "") {
 					this.setState({ student_first_error: true, student_first_name_error: 'Student first name required' })
 				} else if (!value.match(/^[a-zA-Z]+$/)) {
-					this.setState({ student_first_error: true, student_first_name_error: 'Name shuold only contain alphabet' })
+					this.setState({ student_first_error: true, student_first_name_error: 'Name should only contain alphabet' })
 				} else {
 					this.setState({ student_first_error: false, student_first_name_error: '' })
 				}
 				break;
+				case 'student_middle_name':
+						if (value === "") {
+							this.setState({ student_middle_error: true, student_middle_name_error: 'Student first name required' })
+						} else if (!value.match(/^[a-zA-Z]+$/)) {
+							this.setState({ student_middle_error: true, student_middle_name_error: 'Name shuold only contain alphabet' })
+						} else {
+							this.setState({ student_middle_error: false, student_middle_name_error: '' })
+						}
+						break;
 			case 'student_last_name':
 				if (value === "") {
 					this.setState({ student_last_error: true, student_last_name_error: 'Student last name required' })
@@ -197,7 +228,9 @@ class LeadForm extends React.Component {
 											fullWidth
 											label={LABELS.ENQUIRER_MIDDLE_NAME}
 											type="email"
-											autoComplete="off" />
+											autoComplete="off"
+											error={this.state.middle_error} 
+											helperText={this.state.enquirer_middle_name_error} />
 									</Grid>
 									<Grid item xs={4}>
 										<TextField
@@ -283,7 +316,9 @@ class LeadForm extends React.Component {
 											fullWidth
 											label={LABELS.STUDENT_MIDDLE_NAME}
 											type="email"
-											autoComplete="off" />
+											autoComplete="off"
+											error={this.state.student_middle_error} 
+											helperText={this.state.student_middle_name_error} />
 									</Grid>
 									<Grid item xs={4}>
 										<TextField
@@ -321,7 +356,7 @@ class LeadForm extends React.Component {
 												value={this.state.student_dob ? moment(this.state.student_dob).format("ddd MMM DD YYYY HH:mm:ss zzZZ") : null}
 												required
 												 maxDate={new Date((new Date().getFullYear()-3)+'/'+(new Date().getMonth()+1)+'/'+(new Date().getDate()))}
-												 minDate={new Date('01/01/1990')}
+												 minDate={new Date('01/01/1980')}
 												format="dd/MM/yyyy"
 												onChange={date => this.handleDateChange("student_dob",date)}
 												label={LABELS.STUDENT_DOB}
@@ -364,8 +399,10 @@ class LeadForm extends React.Component {
 											label={LABELS.STUDENT_CURRENT_CITY}
 											type="email"
 											autoComplete="off"
-											error={this.state.student_current_city===""?true:false} 
-											helperText={this.state.student_current_city===""?'Students current city required':''}
+											// error={this.state.student_current_city===""?true:false} 
+											error={this.state.city_error} 
+											// helperText={this.state.student_current_city===""?'Students current city required':''}
+											helperText={this.state.student_current_city_error}
 											/>
 									</Grid>
 									<Grid item xs={4}>
@@ -381,6 +418,7 @@ class LeadForm extends React.Component {
 											options={leadFormFetchedData.curriculum_current ? leadFormFetchedData.curriculum_current : []}
 											title={LABELS.CURRICULUM_CURRENT}
 											jsonkeyName={"curriculum_current"}
+										
 											onSelectChange={this.onChangeDropDown} />
 									</Grid>
 									<Grid item xs={4}>

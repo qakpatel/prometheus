@@ -36,8 +36,7 @@ export const actionCreateLead = (state) => {
 		let response = await LeadForm.createLead(state);
 		console.log(response)
 		dispatch(actionSetLoaderDisplayState(false));
-		if (!response.isError) {
-			LocalStorageHelper.add(LocalStorageConfig.KEY_USER, response.data);
+		if (!response.isError) {	
 			dispatch(actionGetCreateLeadSuccess(response));
 			return;
 		}

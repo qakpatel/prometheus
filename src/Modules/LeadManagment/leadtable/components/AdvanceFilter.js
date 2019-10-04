@@ -36,7 +36,14 @@ const Gender=['Male','Female']
       this.props.filterByGender(gender)
      }
      GradesChnage=(label,grade)=>{
-         this.props.filterByGrades(grade)
+         console.log(grade);
+         console.log(this.props.grades)
+         this.props.grades.forEach(a => {
+             if(a.name===grade){
+                this.props.filterByGrades(a.id)
+             }
+         });
+        
      }
     componentDidMount(){
       this.props.getGrades();
@@ -67,6 +74,7 @@ const Gender=['Male','Female']
                                 id="date-picker-dialog"
                                 label="End Date"
                                 format="yyyy-MM-dd"
+                                minDate={this.state.startDate}
                                 value={this.state.endDate}
                                 onChange={this.endDateHandel}
                                 KeyboardButtonProps={{

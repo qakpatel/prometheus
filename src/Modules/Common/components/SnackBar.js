@@ -58,6 +58,7 @@ function MySnackbarContentWrapper(props) {
     <SnackbarContent
       className={clsx(classes[variant], className)}
       aria-describedby="client-snackbar"
+      autoHideDuration={3000}
       message={
         <span id="client-snackbar" className={classes.message}>
           <Icon className={clsx(classes.icon, classes.iconVariant)} />
@@ -109,13 +110,14 @@ MySnackbarContentWrapper.propTypes = {
             horizontal: 'right',
           }}
           open={props.open}
-          autoHideDuration={4000}
+          autoHideDuration={3000}
           onClose={handleClose}
         >
           <MySnackbarContentWrapper
             onClose={props.handleClose}
             variant={props.variant}
             message={props.message}
+            autoHideDuration={3000}
           />
         </Snackbar>
        

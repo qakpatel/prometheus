@@ -147,7 +147,7 @@ let EnhancedTableToolbar = props => {
           </Typography>
         ) : (
           <Typography variant="h6" id="tableTitle">
-            {props.from===1?'':'Resent Leads'}
+            {props.from===1?'':'Recent Leads'}
           </Typography>
         )}
       </div>

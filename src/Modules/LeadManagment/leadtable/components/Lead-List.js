@@ -70,7 +70,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
  function CustomizedTables(props) {
-   console.log(props.data)
+   console.log(props)
   const [tableData, setTableData] = useState();
   const [filterTableData, setFilterTableData] = useState();
   const [hotLeadFilter, setHotLeadFilter] = useState(false);
@@ -166,9 +166,7 @@ const useStyles = makeStyles(theme => ({
     setAnchorEl(null);
   }
   
-  function downloadToExcel(){
-    props.downloadToExcel();
-  }
+  
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
   };
@@ -184,10 +182,10 @@ const useStyles = makeStyles(theme => ({
       </InputGroup>
       </div>
       <div className={classes.button1}>
-      <Button variant="contained" style={{backgroundColor:'#3b5998',color:'#ffffff',marginRight:'16px'}} aria-controls="simple-menu" aria-haspopup="true" onClick={downloadToExcel}>
+      <a href={props.fileurl}><Button variant="contained" style={{backgroundColor:'#3b5998',color:'#ffffff',marginRight:'16px'}} aria-controls="simple-menu" aria-haspopup="true" >
        Download to Excel
-                </Button>
-                <Link to={{pathname:'/leads-management/advancefilter',state:{tableData:tableData}}}><Button variant="contained" style={{backgroundColor:'#3b5998',color:'#ffffff',marginRight:'16px'}} aria-controls="simple-menu" aria-haspopup="true" onClick={downloadToExcel}>
+                </Button></a>
+                <Link to={{pathname:'/leads-management/advancefilter',state:{tableData:tableData}}}><Button variant="contained" style={{backgroundColor:'#3b5998',color:'#ffffff',marginRight:'16px'}} aria-controls="simple-menu" aria-haspopup="true" >
              Advance Filter
                 </Button></Link>
                 {/* <JsonToExcel
@@ -227,8 +225,8 @@ const useStyles = makeStyles(theme => ({
               <Chip label={data.priority_label}  color="secondary" className={classes.chip} variant="outlined" />
               </StyledTableCell>
               <StyledTableCell align="center"  style={{paddingLeft:'1px'}}>
-              <Link to={{pathname:'/leads-management/timeline',state:{lead_id: data.id,status_id:data.lead_status_id,lead_data:data}}}>
-                <Button variant="contained" color="primary" style={{padding:'5px'}}>Open Lead</Button></Link>           
+              <Link  to={data.lead_priority.id!==3?{pathname:'/leads-management/timeline',state:{lead_id: data.id,status_id:data.lead_status_id,lead_data:data}}:null}>
+                <Button variant="contained" color="primary" style={{padding:'5px'}} disabled={data.lead_priority.id===3}>Open Lead</Button></Link>           
               </StyledTableCell>
           
             </StyledTableRow>

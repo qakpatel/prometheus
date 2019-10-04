@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FormLabel } from '@material-ui/core';
+import { FormLabel,Divider } from '@material-ui/core';
 import { Button } from 'reactstrap'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -36,63 +36,65 @@ const styles = theme => ({
 })
 
 
- 
+
 
 const options = [
-    {id:1,name:'Hot Lead'},
-    {id:2,name:'Cold Lead'},
-    {id:3,name:'Dead Lead'},
-  ];
+    { id: 1, name: 'Hot Lead' },
+    { id: 2, name: 'Cold Lead' },
+    { id: 3, name: 'Dead Lead' },
+];
 
 
 class ActionPage extends Component {
-   
+
     state = {
         assign_to: this.props.leadData.assigned_to.name || '',
-        anchorEl:null,
-        setAnchorEl:null,
+        anchorEl: null,
+        setAnchorEl: null,
         change_to: this.props.leadData.priority_label,
         open: false,
         setOpen: false,
-      }
-    
-      
-      assignHandle = (e) => {
+    }
+
+
+    assignHandle = (e) => {
         console.log(e)
-        this.setState({ assign_to: e.target.value },()=>{
-            this.props.assign_data.assigned_to.map(a=>{
-                if(a.name===e.target.value){
-                    this.props.updateAssignTo(this.props.leadData.id,a.id)
+        this.setState({ assign_to: e.target.value }, () => {
+            this.props.assign_data.assigned_to.map(a => {
+                if (a.name === e.target.value) {
+                    this.props.updateAssignTo(this.props.leadData.id, a.id)
                 }
             })
-            
-       })
-      }
-      assignChange = (e) => {
-        this.setState({ change_to: e.target.value },()=>{
-             options.map(a=>{
-                if(a.name===e.target.value){
-                this.props.updatePriority(this.props.leadData.id,a.id);
+
+        })
+    }
+    assignChange = (e) => {
+        this.setState({ change_to: e.target.value }, () => {
+            options.map(a => {
+                if (a.name === e.target.value) {
+                    this.props.updatePriority(this.props.leadData.id, a.id);
                 }
             })
         })
-      }
-      handleClick = event => {
-          this.setState({setAnchorEl:event.currentTarget})
-      };
-      handleClickOpen = () => {
-        this.setState({setOpen:true})
+    }
+    handleClick = event => {
+        this.setState({ setAnchorEl: event.currentTarget })
+    };
+    handleClickOpen = () => {
+        this.setState({ setOpen: true },()=>{
+         this.props.getpreviousdata(this.props.leadData.context.id)
+        })
     };
     assignhandleClose = () => {
-        this.setState({setOpen:false})
+        this.setState({ setOpen: false })
     };
-    
-      handleClose = () => {
-          this.setState({setAnchorEl:null});
-    
-      };
-    
-      
+
+    handleClose = () => {
+        this.setState({ setAnchorEl: null });
+
+    };
+
+
 
     render() {
         console.log(this.props.leadData)
@@ -115,7 +117,7 @@ class ActionPage extends Component {
                                      {this.props.leadData.assigned_to.name}<br />{'{'}<a href={"mailto:" + this.props.leadData.assigned_to.email} target="_top">{this.props.leadData.assigned_to.email}</a>{'}'}
                                      </FormLabel>
                                 </ListItem> */}
-                            
+
                                 <ListItem>
                                     <FormLabel><span style={{ fontWeight: 'bold' }}>Enquirer Phone Number: </span><br /><a href={"tel:" + this.props.leadData.context.enquirer_phone_number}>{this.props.leadData.context.enquirer_phone_number}</a></FormLabel>
                                 </ListItem>
@@ -134,128 +136,121 @@ class ActionPage extends Component {
                                     <FormLabel><span style={{ fontWeight: 'bold' }}>Created On: </span>{this.props.leadData.created_at}</FormLabel>
                                 </ListItem>
                                 <ListItem>
-                                    <FormLabel><span style={{ fontWeight: 'bold',paddingTop:'5px' }}>Assign to:</span>
+                                    <FormLabel><span style={{ fontWeight: 'bold', paddingTop: '5px' }}>Assign to:</span>
                                     </FormLabel>
                                     <TextField
-                                    id="outlined-full-width"
-                                    select
-                                    autoFocus
-                                    // helperText={this.props.leadData.assigned_to.email}
-                                  
-                                    className={classes.textField}
-                                    style={{ margin: 8 }}
-                                    value={this.state.assign_to}
-                                    onChange={this.assignHandle}
-                                    SelectProps={{
-                                        MenuProps: {
-                                        className: classes.menu,
-                                        },
-                                    }}
-                                    
-                                    margin="dense"
-                                    variant="outlined"
-                                     >
-                                    {this.props.assign_data.assigned_to?this.props.assign_data.assigned_to.map(option => (
-                                        <MenuItem key={option.id} value={option.name}>
-                                        {option.name}
-                                        </MenuItem>
-                                    )) : null}
+                                        id="outlined-full-width"
+                                        select
+                                        autoFocus
+                                        // helperText={this.props.leadData.assigned_to.email}
+
+                                        className={classes.textField}
+                                        style={{ margin: 8 }}
+                                        value={this.state.assign_to}
+                                        onChange={this.assignHandle}
+                                        SelectProps={{
+                                            MenuProps: {
+                                                className: classes.menu,
+                                            },
+                                        }}
+
+                                        margin="dense"
+                                        variant="outlined"
+                                    >
+                                        {this.props.assign_data.assigned_to ? this.props.assign_data.assigned_to.map(option => (
+                                            <MenuItem key={option.id} value={option.name}>
+                                                {option.name}
+                                            </MenuItem>
+                                        )) : null}
                                     </TextField>
-                                   
-                                     
+
+
                                 </ListItem>
                                 <ListItem>
                                     <FormLabel>
                                         <span style={{ fontWeight: 'bold' }}>Lead Priority:</span>
                                     </FormLabel>
-                                    {/* <Button aria-controls="simple-menu" aria-haspopup="true" onClick={this.handleClick}>
-                                             Open Menu
-                                                   </Button>
-                                            <Menu
-                                                id="simple-menu"
-                                                anchorEl={this.state.anchorEl}
-                                                keepMounted
-                                                open={false}
-                                                onClose={this.handleClose}
-                                            >
-                                                <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                                                <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                                                <MenuItem onClick={this.handleClose}>Logout</MenuItem>
-                                            </Menu> */}
+                                    <TextField
+                                        id="outlined-full-width"
+                                        select
+                                        autoFocus
+                                        className={classes.textField}
+                                        style={{ margin: 8 }}
+                                        value={this.state.change_to}
+                                        onChange={this.assignChange}
+                                        SelectProps={{
+                                            MenuProps: {
+                                                className: classes.menu,
+                                            },
+                                        }}
 
-                                     <TextField
-                                    id="outlined-full-width"
-                                    select
-                                    autoFocus
-                                
-                                  
-                                    className={classes.textField}
-                                    style={{ margin: 8 }}
-                                    value={this.state.change_to}
-                                    onChange={this.assignChange}
-                                    SelectProps={{
-                                        MenuProps: {
-                                        className: classes.menu,
-                                        },
-                                    }}
-                                    
-                                    margin="dense"
-                                    variant="outlined"
-                                     >
-                                    {options.map((option,index) => (
-                                        <MenuItem key={option.id} 
-                                        selected={index === 1} value={option.name}>
-                                        {option.name}
-                                        </MenuItem>
-                                    ))}
+                                        margin="dense"
+                                        variant="outlined"
+                                    >
+                                        {options.map((option, index) => (
+                                            <MenuItem key={option.id}
+                                                selected={index === 1} value={option.name}>
+                                                {option.name}
+                                            </MenuItem>
+                                        ))}
                                     </TextField>
 
 
                                 </ListItem>
                                 <ListItem>
-                              
-                                
-                                <div>
-      <Button variant="outlined" style={{marginBottom:'16px',backgroundColor:'#3b5998'}} onClick={this.handleClickOpen}>
-        Previous assignments
-      </Button>
-      <Dialog
-        open={this.setState.setOpen}
-        onClose={this.assignhandleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Previous Assignments History"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-          <ListItem>
-                                    <FormLabel><span style={{ fontWeight: 'bold' }}>Enquirer Phone Number: </span><br /><a href={"tel:" + this.props.leadData.context.enquirer_phone_number}>{this.props.leadData.context.enquirer_phone_number}</a></FormLabel>
-                                </ListItem>
-                                <ListItem>
-                                    <FormLabel><span style={{ fontWeight: 'bold' }}>Student Name: </span>{this.props.leadData.context.student_first_name + ' ' + this.props.leadData.context.student_last_name}</FormLabel>
-                                </ListItem>
-                                <ListItem>
-                                    <FormLabel><span style={{ fontWeight: 'bold' }}>Student DOB: </span>{(new Date(this.props.leadData.context.student_dob)).toLocaleDateString('en-US', DATE_OPTIONS)}</FormLabel>
-                                </ListItem>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          
-          <Button onClick={this.assignhandleClose} color="primary" autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div></ListItem>
+
+
+                                    <div>
+                                        <Button variant="outlined" style={{ marginBottom: '16px', backgroundColor: '#3b5998' }} onClick={this.handleClickOpen}>
+                                            Previous assignments
+                                          </Button>
+                                        <Dialog
+                                            open={this.state.setOpen}
+                                            onClose={this.assignhandleClose}
+                                            aria-labelledby="alert-dialog-title"
+                                            aria-describedby="alert-dialog-description"
+                                        >
+                                            <DialogTitle  style={{backgroundColor: '#3b5998',color:'#ffffff'}} id="alert-dialog-title">{"Previous Assignments History"}</DialogTitle>
+                                            <DialogContent>
+                                                <DialogContentText id="alert-dialog-description">
+                                                    {this.props.historyData?this.props.historyData.map((a,i)=>(
+                                                        <List key={i}>
+                                                        
+                                                         <ListItem>
+                                                          <FormLabel><span style={{ fontWeight: 'bold' }}>Created At: </span>{a.created_at}</FormLabel>
+                                                         </ListItem>
+                                                         <ListItem>
+                                                          <FormLabel><span style={{ fontWeight: 'bold' }}>Old assigned user : </span>{a.old_assigned_user==null?'Not Assigned before':a.old_assigned_user.name}</FormLabel>
+                                                         </ListItem>
+                                                         <ListItem>
+                                                          <FormLabel><span style={{ fontWeight: 'bold' }}>New assigned user : </span>{a.new_assigned_user.name}</FormLabel>
+                                                         </ListItem>
+                                                         <ListItem>
+                                                          <FormLabel><span style={{ fontWeight: 'bold' }}>New assigned At : </span>{a.new_assigned_user.created_at}</FormLabel>
+                                                         </ListItem>
+                                                         <Divider />
+                                                        </List>
+                                                    )):null}
+                                                    
+                                                </DialogContentText>
+                                            </DialogContent>
+                                            <DialogActions>
+
+                                                <Button onClick={this.assignhandleClose} style={{backgroundColor: '#3b5998',color:'#ffffff'}} autoFocus >
+                                                   Exit
+                                               </Button>
+                                            </DialogActions>
+                                        </Dialog>
+                                    </div></ListItem>
                                 {/* { <ListItem>
                                     <FormLabel><button ><span style={{ fontWeight: 'bold' }}>Previous assignments </span></button></FormLabel>
                                 </ListItem> } */}
-                            </List> 
+                            </List>
                         </Paper>
-                       </Grid>
-                       <Grid item xs={8}>
+                    </Grid>
+                    <Grid item xs={8}>
                         <Paper className={classes.paper}>
-                            <Tabs label={['Face to Face', 'School Tour']} data={this.props.user} lead_data={this.props.leadData} onClick={this.props.onClick.bind(this, this.props.leadData.context.id, this.props.leadData.lead_status_id)} style={{width:'100%'}} taskComplete={this.props.taskComplete} updateStatusData={this.props.updateStatusData}/>
+                            <Tabs label={['Face to Face', 'School Tour']} data={this.props.user} lead_data={this.props.leadData} onClick={this.props.onClick.bind(this, this.props.leadData.context.id, this.props.leadData.lead_status_id)} style={{ width: '100%' }} taskComplete={this.props.taskComplete} updateStatusData={this.props.updateStatusData} rejectLead={this.props.rejectLead}/>
                         </Paper>
                     </Grid>
                 </Grid>

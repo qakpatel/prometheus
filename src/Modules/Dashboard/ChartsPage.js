@@ -45,7 +45,7 @@ class ChartsPage extends React.Component {
                     labels: labels,
                     datasets: [
                         {
-                            label: "leads",
+                            label: "Leads",
                             data: data,
                             backgroundColor: [
                                 "rgba(255, 134,159,0.4)",

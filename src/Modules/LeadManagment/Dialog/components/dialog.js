@@ -104,6 +104,8 @@ class Dialog extends Component {
   }
 
   handleDateChange=(date)=>{
+    console.log(date)
+    console.log(date.getFullYear())
     this.setState({selectedDate:date})
     
   }
@@ -152,7 +154,7 @@ class Dialog extends Component {
       comment: this.state.comments,
       schedule_date: this.state.selectedDate,
       schedule_time: this.state.selectedTime,
-      lead_status_id: this.props.lead_data.lead_status.id,
+      lead_status_id: this.props.lead_data.lead_status!=null?this.props.lead_data.lead_status.id:this.props.updateStatusData.lead_status.id,
       lead_task_status_id:this.props.where || 1,
     }
     console.log(data)
@@ -333,6 +335,7 @@ class Dialog extends Component {
                   value={this.state.selectedDate}
                   onChange={this.scheduleDateHandler}
                   className={classes.textField}
+                  onKeyDown={(e) => e.preventDefault()} 
                   InputLabelProps={{
                     shrink: true,
                   }}

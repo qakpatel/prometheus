@@ -14,7 +14,9 @@ const UPDATE_PRIORITY = "UPDATE_PRIORITY";
 const FILTER_BY_DATE = "FILTER_BY_DATE";
 const FILTER_BY_GENDER = "FILTER_BY_GENDER";
 const FILTER_BY_GRADES = "FILTER_BY_GRADES"
-const GET_GRADES = "GET_GRADES"
+const GET_GRADES = "GET_GRADES";
+const GET_HISTORY = "GET_HISTORY";
+
 
 export const getDialogData = (lead_id) => {
 	return async dispatch => {
@@ -72,7 +74,23 @@ export const getTimeline=(state)=>{
             });
         }
     }
-}
+};
+
+export const getpreviousdata=(state)=>{
+    console.log('get previous data',state)
+    return async dispatch => {
+		dispatch(actionSetLoaderDisplayState(true));
+		let response = await TimelineService.getpreviousdata(state);
+		dispatch(actionSetLoaderDisplayState(false));
+        console.log(response);
+		if (!response.isError) {
+			dispatch({
+				type: GET_HISTORY,
+				payload: response.data
+            });
+        }
+    }
+};
 export const updateStatus=(lead_id,lead_status_id)=>{
     return async dispatch => {
 		dispatch(actionSetLoaderDisplayState(true));
@@ -147,7 +165,8 @@ export const filterByDate = (startDate,endDate) => {
 		
 };
 
-export const filterByGender = gender => {
+export const filterByGender = gender => { // case 'GET_HISTORY':
+//         return { ...state, historydata: action.payload };
 	return async dispatch => {
 		dispatch(actionSetLoaderDisplayState(true));
 		let response = await TableService.filterByGender(gender);
@@ -203,6 +222,22 @@ export const taskComplete =(taskID,lead_task_status_id)=>{
         }
 	}
 }
+
+export const rejectLead =(lead_id)=>{
+	return async dispatch => {
+		dispatch(actionSetLoaderDisplayState(true));
+		let response = await TimelineService.rejectLead(lead_id);
+		dispatch(actionSetLoaderDisplayState(false));
+		if (!response.isError) {
+			dispatch({
+				type: 'REJECT_LEAD',
+				payload: response.data
+            });
+        }
+	}
+}
+
+
 const dateFormat =(date)=>{
 	return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()
 }

@@ -8,22 +8,24 @@ const LeadReducer = (state = { dialogData: {}, submitDialog: {}, data: [], user:
             return { ...state, user: state.user.concat(action.payload) };
         case 'GET_TABLE':
             console.log('ghuidghduigidgdghiighdhid', action.payload);
-            return { ...state, data:  [...state.data, ...action.payload.data] };
+            return { ...state, data: [...state.data, ...action.payload.data] };
         case 'GET_TIMELINE':
             return { ...state, user: action.payload };
+        case 'GET_HISTORY':
+            return { ...state, historydata: action.payload };
         case 'UPDATE_STATUS':
             return { ...state, updateStatus: action.payload };
         case 'TO_EXCEL':
             return { ...state, excel: action.payload };
         case 'UPDATE_ASSIGN':
-            state.data.data.forEach((a, index) => {
+            console.log(state.data)
+            state.data.forEach((a, index) => {
                 if (a.id === action.payload.id) {
                     state.data[index] = action.payload
                 }
             })
-            return {...state, data:state.data}
         case 'UPDATE_PRIORITY':
-            state.data.data.forEach((a, index) => {
+            state.data.forEach((a, index) => {
                 if (a.id === action.payload.id) {
                     state.data[index] = action.payload
                 }
@@ -38,19 +40,32 @@ const LeadReducer = (state = { dialogData: {}, submitDialog: {}, data: [], user:
             return {
                 ...state, advanceFilter: action.payload
             }
+        case 'FILTER_BY_GRADES':
+            return {
+                ...state, advanceFilter: action.payload
+            }
         case 'GET_GRADES':
             return {
                 ...state, grades: action.payload
             }
         case 'TASK_COMPLETE':
+            console.log(action.payload)
             state.user.forEach((a, index) => {
-                if (a.id === action.payload) {
+                if (a.id === action.payload.id) {
                     state.user[index] = action.payload
                 }
             })
             return {
                 ...state, user: state.user
             }
+        case 'REJECT_LEAD':
+            state.data.forEach((a, i) => {
+                if (a.id === action.payload.id) {
+                    state.data[i] = action.payload;
+                }
+            })
+            console.log(action.payload)
+            return { ...state, data: state.data };
         default:
             return state;
     }
