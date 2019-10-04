@@ -14,6 +14,7 @@ import moment from "moment";
 import update from "immutability-helper";
 import { withRouter} from 'react-router-dom';
 import SnackBar from './../../Common/components/SnackBar' 
+import { Redirect } from "react-router-dom";
 
 class LeadForm extends React.Component {
 
@@ -60,10 +61,10 @@ class LeadForm extends React.Component {
 		 this.setState({message:'Please fill all required field', variant:'error',snackBarOpen:true})
 		 return;	
 		}
-		this.props.actionCreateLead(this.state);
-		this.setState({message:'Lead created successfully!', variant:'success',snackBarOpen:true},()=>{
-			this.props.history.push("/leads-management")
-		})
+		this.props.actionCreateLead(this.state).then(
+			this.setState({ message: 'Lead created successfully!', variant: 'success', snackBarOpen: true })
+		)
+		
 		
 	};
 
@@ -182,11 +183,16 @@ class LeadForm extends React.Component {
 	}
  
 	render() {
-		const { classes, leadFormData } = this.props;
+		const { classes, leadFormData, success } = this.props;
 		const leadFormDataFetched = leadFormData && leadFormData.leadFormData && leadFormData.leadFormData.data;
 		const leadFormFetchedData = leadFormDataFetched ? leadFormData.leadFormData.data : null;
 		const LABELS = Lang.LABELS.LEAD_FORM;
 		const { loginClick, onChangeField } = this;
+
+		if (success){
+			return <Redirect to="/leads-management"/>
+		}
+
 		return (
 			<Container component="main" maxWidth="lg">
 				<Paper>
