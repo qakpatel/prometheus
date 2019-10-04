@@ -82,7 +82,31 @@ const TableService = {
 			}
 		})
 	})
- }
+ },
+ filterByPriority:(priority_id)=>{
+	let token=JSON.parse(localStorage.getItem('USER'))
+	return new Promise((resolve, reject) => {
+		ApiClient.executeRequest(`leads?lead_priority_id=${priority_id}`, {}, {}, ApiConfig.METHODS.GET,token.access_token).then(function(response) {
+			console.log('table service',response)
+			if (!response.isError) {
+				resolve(response);
+				return;
+			}
+		})
+	})
+ },
+ filterBySource:(source_id)=>{
+	let token=JSON.parse(localStorage.getItem('USER'))
+	return new Promise((resolve, reject) => {
+		ApiClient.executeRequest(`leads?source_id=${source_id}`, {}, {}, ApiConfig.METHODS.GET,token.access_token).then(function(response) {
+			console.log('table service',response)
+			if (!response.isError) {
+				resolve(response);
+				return;
+			}
+		})
+	})
+ },
 
 };
 

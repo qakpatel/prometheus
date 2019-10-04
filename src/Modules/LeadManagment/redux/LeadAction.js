@@ -195,6 +195,35 @@ export const filterByGrades = grade => {
 		
 };
 
+export const filterByPriority = priority_id => {
+	return async dispatch => {
+		dispatch(actionSetLoaderDisplayState(true));
+		let response = await TableService.filterByPriority(priority_id);
+		dispatch(actionSetLoaderDisplayState(false));
+		if (!response.isError) {
+			dispatch({
+				type: 'FILTER_BY_PRIORITY',
+				payload: response.data
+            });
+        }
+    }
+		
+};
+
+export const filterBySource = source_id => {
+	return async dispatch => {
+		dispatch(actionSetLoaderDisplayState(true));
+		let response = await TableService.filterBySource(source_id);
+		dispatch(actionSetLoaderDisplayState(false));
+		if (!response.isError) {
+			dispatch({
+				type: 'FILTER_BY_SOURCE',
+				payload: response.data
+            });
+        }
+    }
+		
+};
 export const getGrades = grade => {
 	return async dispatch => {
 		dispatch(actionSetLoaderDisplayState(true));
@@ -234,6 +263,15 @@ export const rejectLead =(lead_id)=>{
 				payload: response.data
             });
         }
+	}
+}
+
+export const clearFilter=()=>{
+	return dispatch=>{
+		dispatch({
+			type:'CLEAR_FILTER',
+			payload:undefined
+		})
 	}
 }
 

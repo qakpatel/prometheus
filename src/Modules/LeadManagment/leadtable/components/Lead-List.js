@@ -186,7 +186,7 @@ const useStyles = makeStyles(theme => ({
        Download to Excel
                 </Button></a>
                 <Link to={{pathname:'/leads-management/advancefilter',state:{tableData:tableData}}}><Button variant="contained" style={{backgroundColor:'#3b5998',color:'#ffffff',marginRight:'16px'}} aria-controls="simple-menu" aria-haspopup="true" >
-             Advance Filter
+             Advance Filters
                 </Button></Link>
                 {/* <JsonToExcel
             data={aaaaaa}

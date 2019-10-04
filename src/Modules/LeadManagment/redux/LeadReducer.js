@@ -8,7 +8,7 @@ const LeadReducer = (state = { dialogData: {}, submitDialog: {}, data: [], user:
             return { ...state, user: state.user.concat(action.payload) };
         case 'GET_TABLE':
             console.log('ghuidghduigidgdghiighdhid', action.payload);
-            return { ...state, data: [...state.data, ...action.payload.data] };
+            return { ...state, data: [...state.data, ...action.payload.data] , lastPage: action.payload.last_page, };
         case 'GET_TIMELINE':
             return { ...state, user: action.payload };
         case 'GET_HISTORY':
@@ -66,6 +66,19 @@ const LeadReducer = (state = { dialogData: {}, submitDialog: {}, data: [], user:
             })
             console.log(action.payload)
             return { ...state, data: state.data };
+
+        case 'CLEAR_FILTER':
+            return {
+                ...state, advanceFilter: action.payload
+            }
+        case 'FILTER_BY_SOURCE':
+            return {
+                ...state, advanceFilter: action.payload
+            }
+        case 'FILTER_BY_PRIORITY':
+            return {
+                ...state, advanceFilter: action.payload
+            }
         default:
             return state;
     }

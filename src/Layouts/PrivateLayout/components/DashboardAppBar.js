@@ -55,6 +55,15 @@ class DashboardAppBar extends Component {
       case '/leads-management':
        this.setState({title:'Lead Management'})
       break;
+      case '/leads-management/advancefilter':
+        this.setState({title:'Advanced Filters'})
+       break;
+       case '/leads-management/timeline':
+        this.setState({title:'Timeline'})
+       break;
+       case '/leads-management/create':
+        this.setState({title:'Create Lead'})
+       break;
     }
     console.log(this.props.title)
   }

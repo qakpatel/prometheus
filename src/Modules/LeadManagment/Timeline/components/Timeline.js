@@ -136,7 +136,7 @@ class ActionPage extends Component {
                                     <FormLabel><span style={{ fontWeight: 'bold' }}>Created On: </span>{this.props.leadData.created_at}</FormLabel>
                                 </ListItem>
                                 <ListItem>
-                                    <FormLabel><span style={{ fontWeight: 'bold', paddingTop: '5px' }}>Assign to:</span>
+                                    <FormLabel><span style={{ fontWeight: 'bold', paddingTop: '5px' }}>Assign To:</span>
                                     </FormLabel>
                                     <TextField
                                         id="outlined-full-width"
@@ -202,7 +202,7 @@ class ActionPage extends Component {
 
                                     <div>
                                         <Button variant="outlined" style={{ marginBottom: '16px', backgroundColor: '#3b5998' }} onClick={this.handleClickOpen}>
-                                            Previous assignments
+                                            Previous Assignments
                                           </Button>
                                         <Dialog
                                             open={this.state.setOpen}
@@ -217,16 +217,16 @@ class ActionPage extends Component {
                                                         <List key={i}>
                                                         
                                                          <ListItem>
-                                                          <FormLabel><span style={{ fontWeight: 'bold' }}>Created At: </span>{a.created_at}</FormLabel>
+                                                          <FormLabel><span style={{ fontWeight: 'bold' }}>New Assigned At :  </span>{a.created_at}</FormLabel>
                                                          </ListItem>
                                                          <ListItem>
-                                                          <FormLabel><span style={{ fontWeight: 'bold' }}>Old assigned user : </span>{a.old_assigned_user==null?'Not Assigned before':a.old_assigned_user.name}</FormLabel>
+                                                          <FormLabel><span style={{ fontWeight: 'bold' }}>Old Assigned User : </span>{a.old_assigned_user==null?'Not Assigned before':a.old_assigned_user.name}</FormLabel>
                                                          </ListItem>
                                                          <ListItem>
-                                                          <FormLabel><span style={{ fontWeight: 'bold' }}>New assigned user : </span>{a.new_assigned_user.name}</FormLabel>
+                                                          <FormLabel><span style={{ fontWeight: 'bold' }}>New Assigned User : </span>{a.new_assigned_user.name}</FormLabel>
                                                          </ListItem>
                                                          <ListItem>
-                                                          <FormLabel><span style={{ fontWeight: 'bold' }}>New assigned At : </span>{a.new_assigned_user.created_at}</FormLabel>
+                                                          <FormLabel><span style={{ fontWeight: 'bold' }}>Created At: </span>{a.new_assigned_user.created_at}</FormLabel>
                                                          </ListItem>
                                                          <Divider />
                                                         </List>

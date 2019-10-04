@@ -298,12 +298,12 @@ class EnhancedTable extends React.Component {
                       key={n.id}
                     >
 
-                      <TableCell align="center" component="th" scope="row" padding="none">
+                      <TableCell align="center" component="th" scope="row" style={{whiteSpace:'nowrap'}}>
                         {n.FirstName}
                       </TableCell>
                       <TableCell align="center">{n.LastName}</TableCell>
-                      <TableCell align="center">{n.Email}</TableCell>
-                      <TableCell align="center">{n.MobileNumber}</TableCell>
+                      <TableCell align="center"><a href={"mailto:"+n.Email} target="_top">{n.Email}</a></TableCell>
+                      <TableCell align="center"><a href={"tel:"+n.MobileNumber}>{n.MobileNumber}</a></TableCell>
                       <TableCell align="center">{n.Location}</TableCell>
                       <TableCell align="center">{n.LeadPriority}</TableCell>
                       <TableCell align="center">{n.CreatedDate}</TableCell>
@@ -320,7 +320,7 @@ class EnhancedTable extends React.Component {
           
         </div>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[5, 10]}
           component="div"
           count={data1.length}
           rowsPerPage={rowsPerPage}

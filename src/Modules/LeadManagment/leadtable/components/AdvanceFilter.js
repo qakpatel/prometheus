@@ -8,11 +8,12 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import SimpleSelect from "../../../Common/components/simpleselect";
-import { filterByDate,filterByGender, filterByGrades,getGrades } from './../../redux/LeadAction'
+import { filterByDate,filterByGender, filterByGrades,getGrades,clearFilter,filterByPriority,filterBySource } from './../../redux/LeadAction'
 import { connect } from "react-redux";
-
+import Button from '@material-ui/core/Button';
 const Gender=['Male','Female']
-
+const Priority=[{id:1,name:'Hot Lead'},{id:2,name:'Cold Lead'},{id:3,name:'Dead Lead'}]
+const Source=[{id:1,name:'Web'},{id:2,name:'Email'},{id:3,name:'Telephone'},{id:4,name:'Walk-in'},{id:5,name:'Newspaper'},{id:6,name:'Social Media'}]
  class AdvanceFilter extends Component {
 
     state={
@@ -36,8 +37,6 @@ const Gender=['Male','Female']
       this.props.filterByGender(gender)
      }
      GradesChnage=(label,grade)=>{
-         console.log(grade);
-         console.log(this.props.grades)
          this.props.grades.forEach(a => {
              if(a.name===grade){
                 this.props.filterByGrades(a.id)
@@ -47,6 +46,25 @@ const Gender=['Male','Female']
      }
     componentDidMount(){
       this.props.getGrades();
+    }
+    clearFilter=()=>{
+       this.props.clearFilter()
+    }
+    priorityChnage=(label,priority)=>{
+        Priority.forEach(a=>{
+            if(a.name===priority){
+                console.log(a)
+                this.props.filterByPriority(a.id);
+            }
+        })   
+    }
+    sourceChnage=(label,source)=>{
+        Source.forEach(a=>{
+            if(a.name===source){
+                console.log(a)
+                this.props.filterBySource(a.id);
+            }
+        })   
     }
 
     render() {
@@ -96,6 +114,30 @@ const Gender=['Male','Female']
                      jsonkeyName={"Filter By Grades"}
                     />
                     </Grid>
+                    <Grid item xs={3}>
+                    <SimpleSelect options={Priority.map(a=>a.name)}
+                     title={'Filter By Priority'}
+                     onSelectChange={this.priorityChnage} 
+                     jsonkeyName={"Filter By Priority"}
+                    />
+                    </Grid>
+                    <Grid item xs={3}>
+                    <SimpleSelect options={Source.map(a=>a.name)}
+                     title={'Filter By Source To Reach'}
+                     onSelectChange={this.sourceChnage} 
+                     jsonkeyName={"Filter By Source To Reach"}
+                    />
+                    </Grid>
+                    <Grid item xs={3}>
+                    <Button onClick={this.clearFilter} variant="contained" style={{backgroundColor:'#3b5998',color:'#ffffff',marginLeft:'46px',marginTop:'27px'}} aria-controls="simple-menu" aria-haspopup="true" >
+                  Clear Filters
+                </Button>
+                    </Grid>
+                    <Grid item xs={3}>
+                    <a><Button variant="contained" style={{backgroundColor:'#3b5998',color:'#ffffff',marginLeft:'16px',marginTop:'27px'}} aria-controls="simple-menu" aria-haspopup="true" >
+                  Download Excel
+                </Button></a>
+                    </Grid>
                 </Grid>
                <EnhancedTable tableData={this.props.advanceFilterData?this.props.advanceFilterData.data:this.props.route.location.state.tableData} from={1}/> 
             </div>
@@ -112,4 +154,4 @@ const mapStateToPros=state=>{
     }
 }
 
-export default connect(mapStateToPros,{filterByDate, filterByGender,filterByGrades,getGrades})(AdvanceFilter);
+export default connect(mapStateToPros,{filterByDate, filterByGender,filterByGrades,getGrades,clearFilter,filterByPriority,filterBySource})(AdvanceFilter);

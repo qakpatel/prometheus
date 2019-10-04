@@ -8,6 +8,7 @@ class index extends Component {
 
     state = {
         page: 1,
+        callApi: true, //this is for call the API
     }
 
     handlePageChange =(pageNumer) => {
@@ -20,12 +21,17 @@ class index extends Component {
        
         this.props.getTableData(this.state.page)
         this.props.downloadToExcel(); 
+        
     }
 
     componentDidUpdate(prevProp, prevState){
-        if(prevState.page !== this.state.page) {
-          
+        if(prevState.page !== this.state.page && this.state.callApi) {
             this.props.getTableData(this.state.page)
+           if(this.state.page === this.props.lastPage) {
+            this.setState({
+                callApi: false,
+            });
+        }
         } 
     }
     render() {
@@ -41,6 +47,7 @@ const mapStateToPros=state=>{
     console.log('index.js table',state)
     return {
         tabledata:state.leadReducer.data,
+        lastPage: state.leadReducer.lastPage,
         exceldata:state.leadReducer.excel
 
     }
