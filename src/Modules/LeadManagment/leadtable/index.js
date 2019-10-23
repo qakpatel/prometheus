@@ -52,29 +52,29 @@ const mapStateToPros=state=>{
     }
 }
 
-const mapDispatchToProps = dispatch =>  {
-    return {
-        getTableData: (page) => dispatch(getTableData(page)),
-        downloadToExcel: () => dispatch(downloadToExcel())
-    }
-}
+// const mapDispatchToProps = dispatch =>  {
+//     return {
+//         getTableData: (page) => dispatch(),
+//         downloadToExcel: () => dispatch()
+//     }
+// }
 
-const mapStateToPros = state => {
-  console.log("index.js table", state);
-  return {
-    tabledata: state.leadReducer.data,
-    exceldata: state.leadReducer.excel
-  };
-};
+// const mapStateToPros = state => {
+//   console.log("index.js table", state);
+//   return {
+//     tabledata: state.leadReducer.data,
+//     exceldata: state.leadReducer.excel
+//   };
+// };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTableData: page => dispatch(getTableData(page)),
-    downloadToExcel: () => dispatch(downloadToExcel())
-  };
-};
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     getTableData: page => dispatch(getTableData(page)),
+//     downloadToExcel: () => dispatch(downloadToExcel())
+//   };
+// };
 
 export default connect(
   mapStateToPros,
-  mapDispatchToProps
+  {getTableData,downloadToExcel}
 )(index);

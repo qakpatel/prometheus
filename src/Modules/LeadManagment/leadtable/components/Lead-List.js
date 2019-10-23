@@ -76,7 +76,7 @@ const useStyles = makeStyles(theme => ({
   const [hotLeadFilter, setHotLeadFilter] = useState(false);
   const [sortName, setSortName] = useState(false);
   useEffect(() => {
-    setTableData(props.data)
+    setTableData(props.data?props.data.data:[])
     setFilterTableData(tableData ? tableData: [])
     console.log('call useeffect',tableData)
   },[tableData, props.data]);
@@ -84,6 +84,7 @@ const useStyles = makeStyles(theme => ({
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   function handleChangePage(event, newPage) {
+    console.log(event,newPage)
     props.handlePageChange(newPage);
     setPage(newPage);
   }
@@ -210,7 +211,7 @@ const useStyles = makeStyles(theme => ({
           </TableRow>
         </TableHead>
         <TableBody>
-            {filterTableData?filterTableData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((data,index) => (
+            {filterTableData?filterTableData.map((data,index) => (
             <StyledTableRow key={index}>
               <StyledTableCell component="th">
                 {data.context_id}
@@ -234,10 +235,10 @@ const useStyles = makeStyles(theme => ({
         </TableBody>
       </Table>
       <TablePagination
-        rowsPerPageOptions={[10]}
+        rowsPerPageOptions={[15]}
         component="div"
-       count={props.data?props.data.length:10}
-        rowsPerPage={rowsPerPage}
+       count={props.data?props.data.total:15}
+        rowsPerPage={props.data?props.data.per_page:15}
         page={page}
         backIconButtonProps={{
           'aria-label': 'previous page',
